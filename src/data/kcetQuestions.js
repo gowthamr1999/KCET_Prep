@@ -1,9 +1,9 @@
 // ============================================================
 // KCET QUESTION BANK
-// Pattern: 60 Physics + 60 Chemistry + 60 Mathematics = 180
-// Each full mock: 60 questions (20 per subject)
+// Pattern: 60 Physics + 60 Chemistry + 60 Mathematics = 180 per paper
+// Bank size: 120 per subject (2 non-overlapping sets of 60)
 // Scoring: +1 correct, 0 wrong (no negative marking)
-// Duration: 180 minutes  |  Total: 180 marks (for full paper)
+// Duration: 80 min per subject × 3 = 240 min (4 hours)  |  Total: 180 marks
 // ============================================================
 
 export const physicsBank = [
@@ -430,6 +430,427 @@ export const physicsBank = [
     correct: 1,
     explanation: 'Object between F and pole of concave mirror → virtual, erect, and magnified image behind the mirror.'
   },
+  // ── Set D: Waves, Optics, Electricity, Modern Physics (ph61-ph120) ──
+  {
+    id: 'ph61', subject: 'Physics',
+    text: 'The speed of sound in air at 0°C is 332 m/s. At 22°C it will be approximately:',
+    options: ['340 m/s', '345 m/s', '350 m/s', '360 m/s'],
+    correct: 1,
+    explanation: 'v ∝ √T. v₂ = 332 × √(295/273) ≈ 332 × 1.039 ≈ 345 m/s.'
+  },
+  {
+    id: 'ph62', subject: 'Physics',
+    text: 'In a standing wave, the distance between a node and the adjacent antinode is:',
+    options: ['λ/4', 'λ/2', 'λ', '3λ/4'],
+    correct: 0,
+    explanation: 'Adjacent node and antinode are λ/4 apart in a standing wave.'
+  },
+  {
+    id: 'ph63', subject: 'Physics',
+    text: 'A source moves towards a stationary observer with speed 10 m/s. If the source frequency is 400 Hz and v = 340 m/s, the observed frequency is:',
+    options: ['412 Hz', '388 Hz', '400 Hz', '420 Hz'],
+    correct: 0,
+    explanation: 'f′ = f × v/(v − vs) = 400 × 340/330 ≈ 412 Hz.'
+  },
+  {
+    id: 'ph64', subject: 'Physics',
+    text: 'A ray of light goes from medium 1 (n=1.5) to medium 2 (n=1.0) at angle of incidence 30°. The angle of refraction is:',
+    options: ['48.6°', '19.5°', '30°', '90°'],
+    correct: 0,
+    explanation: 'n₁sinθ₁ = n₂sinθ₂ → 1.5×sin30° = 1.0×sinθ₂ → sinθ₂ = 0.75 → θ₂ ≈ 48.6°.'
+  },
+  {
+    id: 'ph65', subject: 'Physics',
+    text: 'The critical angle for glass (n = 1.5) with respect to air is:',
+    options: ['41.8°', '48.6°', '30°', '60°'],
+    correct: 0,
+    explanation: 'sin C = 1/n = 1/1.5 = 0.667 → C ≈ 41.8°.'
+  },
+  {
+    id: 'ph66', subject: 'Physics',
+    text: 'An object is placed 30 cm from a convex lens of focal length 10 cm. The image distance is:',
+    options: ['15 cm', '20 cm', '30 cm', '10 cm'],
+    correct: 0,
+    explanation: '1/v − 1/u = 1/f → 1/v − 1/(−30) = 1/10 → 1/v = 1/10 − 1/30 = 2/30 → v = 15 cm.'
+  },
+  {
+    id: 'ph67', subject: 'Physics',
+    text: 'For a convex lens, if the object is at 2F, the image is:',
+    options: ['At F, real, inverted', 'At 2F, real, inverted, same size', 'At infinity', 'Virtual, erect'],
+    correct: 1,
+    explanation: 'Object at 2F → image at 2F on the other side; real, inverted, same size.'
+  },
+  {
+    id: 'ph68', subject: 'Physics',
+    text: 'In Young\'s double slit experiment, fringe width β = λD/d. If d is doubled keeping D and λ constant, fringe width:',
+    options: ['Doubles', 'Halves', 'Remains same', 'Quadruples'],
+    correct: 1,
+    explanation: 'β = λD/d. If d → 2d, β → λD/(2d) = β/2. Fringe width halves.'
+  },
+  {
+    id: 'ph69', subject: 'Physics',
+    text: 'In a YDSE with λ = 600 nm, D = 1 m, d = 0.6 mm, the fringe width is:',
+    options: ['1 mm', '0.5 mm', '2 mm', '0.1 mm'],
+    correct: 0,
+    explanation: 'β = λD/d = (600×10⁻⁹ × 1)/(0.6×10⁻³) = 1×10⁻³ m = 1 mm.'
+  },
+  {
+    id: 'ph70', subject: 'Physics',
+    text: 'A wire of resistance 4Ω is stretched to double its length. Its new resistance is:',
+    options: ['8 Ω', '16 Ω', '2 Ω', '32 Ω'],
+    correct: 1,
+    explanation: 'R = ρL/A. If L doubles, A halves (constant volume). R′ = ρ(2L)/(A/2) = 4R = 16 Ω.'
+  },
+  {
+    id: 'ph71', subject: 'Physics',
+    text: 'The drift velocity of electrons in a conductor is of the order of:',
+    options: ['10⁸ m/s', '10⁻⁴ m/s', '10⁻² m/s', '3×10⁸ m/s'],
+    correct: 1,
+    explanation: 'Drift velocity is very small, typically of the order of 10⁻⁴ m/s.'
+  },
+  {
+    id: 'ph72', subject: 'Physics',
+    text: 'Kirchhoff\'s junction rule is a consequence of:',
+    options: ['Conservation of energy', 'Conservation of charge', 'Conservation of momentum', 'Ohm\'s law'],
+    correct: 1,
+    explanation: 'Kirchhoff\'s current law (junction rule) expresses conservation of electric charge at a node.'
+  },
+  {
+    id: 'ph73', subject: 'Physics',
+    text: 'In a balanced Wheatstone bridge, the galvanometer reads:',
+    options: ['Maximum current', 'Zero current', 'Half of total current', 'Depends on EMF'],
+    correct: 1,
+    explanation: 'When the bridge is balanced (P/Q = R/S), no current flows through the galvanometer.'
+  },
+  {
+    id: 'ph74', subject: 'Physics',
+    text: 'A cell of EMF 2V and internal resistance 0.5Ω is connected to a 3.5Ω resistor. Terminal voltage is:',
+    options: ['1.75 V', '2 V', '1.5 V', '0.5 V'],
+    correct: 0,
+    explanation: 'I = E/(R+r) = 2/4 = 0.5 A. V = E − Ir = 2 − 0.5×0.5 = 1.75 V.'
+  },
+  {
+    id: 'ph75', subject: 'Physics',
+    text: 'The magnetic field at the centre of a circular loop of radius R carrying current I is:',
+    options: ['μ₀I/2R', 'μ₀I/4πR', 'μ₀I/(2πR)', '2μ₀I/R'],
+    correct: 0,
+    explanation: 'By Biot-Savart law, B = μ₀I/(2R) at the centre of a circular loop.'
+  },
+  {
+    id: 'ph76', subject: 'Physics',
+    text: 'A solenoid has n turns per unit length carrying current I. The magnetic field inside is:',
+    options: ['μ₀nI/2', 'μ₀nI', '2μ₀nI', 'μ₀nI/4π'],
+    correct: 1,
+    explanation: 'By Ampere\'s law, B = μ₀nI inside an ideal solenoid.'
+  },
+  {
+    id: 'ph77', subject: 'Physics',
+    text: 'A proton moving with velocity v enters a magnetic field B perpendicular to its motion. The radius of circular motion is:',
+    options: ['mv/qB', 'qB/mv', 'mv/B', 'qv/mB'],
+    correct: 0,
+    explanation: 'Lorentz force provides centripetal force: qvB = mv²/r → r = mv/(qB).'
+  },
+  {
+    id: 'ph78', subject: 'Physics',
+    text: 'The torque on a current-carrying loop of area A, carrying current I in a uniform field B is:',
+    options: ['IAB sinθ', 'IAB cosθ', 'IA/B', 'I²AB'],
+    correct: 0,
+    explanation: 'τ = nIAB sinθ; for single loop n=1 → τ = IAB sinθ.'
+  },
+  {
+    id: 'ph79', subject: 'Physics',
+    text: 'A conductor of length L moves with velocity v perpendicular to a field B. The induced EMF is:',
+    options: ['BLv', 'BL/v', 'Bv/L', 'L/(Bv)'],
+    correct: 0,
+    explanation: 'Motional EMF ε = BLv (when v, L, B are mutually perpendicular).'
+  },
+  {
+    id: 'ph80', subject: 'Physics',
+    text: 'Lenz\'s law is a consequence of:',
+    options: ['Conservation of charge', 'Conservation of energy', 'Newton\'s third law', 'Gauss\'s law'],
+    correct: 1,
+    explanation: 'Lenz\'s law states the induced current opposes the change causing it — this ensures energy conservation.'
+  },
+  {
+    id: 'ph81', subject: 'Physics',
+    text: 'The energy stored in an inductor of inductance L carrying current I is:',
+    options: ['LI', 'LI²/2', 'L²I', 'I²/2L'],
+    correct: 1,
+    explanation: 'Energy stored in an inductor = ½LI².'
+  },
+  {
+    id: 'ph82', subject: 'Physics',
+    text: 'For an AC supply, the peak voltage is 311 V. The RMS voltage is approximately:',
+    options: ['311 V', '220 V', '156 V', '440 V'],
+    correct: 1,
+    explanation: 'V_rms = V₀/√2 = 311/√2 ≈ 220 V.'
+  },
+  {
+    id: 'ph83', subject: 'Physics',
+    text: 'In a series LCR circuit, resonance occurs when:',
+    options: ['XL = R', 'XL = XC', 'XC = R', 'XL + XC = R'],
+    correct: 1,
+    explanation: 'At resonance, inductive reactance XL equals capacitive reactance XC, giving minimum impedance.'
+  },
+  {
+    id: 'ph84', subject: 'Physics',
+    text: 'The power factor of a purely resistive AC circuit is:',
+    options: ['0', '0.5', '1', '∞'],
+    correct: 2,
+    explanation: 'In a purely resistive circuit, voltage and current are in phase → cos φ = cos 0° = 1.'
+  },
+  {
+    id: 'ph85', subject: 'Physics',
+    text: 'Two point charges +4μC and −4μC are placed 20 cm apart. The force between them (k = 9×10⁹) is:',
+    options: ['3.6 N attractive', '3.6 N repulsive', '0.36 N attractive', '36 N repulsive'],
+    correct: 0,
+    explanation: 'F = kq₁q₂/r² = 9×10⁹ × 16×10⁻¹² / 0.04 = 3.6 N; unlike charges → attractive.'
+  },
+  {
+    id: 'ph86', subject: 'Physics',
+    text: 'Electric field lines originate from:',
+    options: ['Negative charges', 'Positive charges', 'Neutral regions', 'Magnetic poles'],
+    correct: 1,
+    explanation: 'Electric field lines originate from positive charges and terminate on negative charges.'
+  },
+  {
+    id: 'ph87', subject: 'Physics',
+    text: 'A capacitor of 4μF is charged to 100 V. The energy stored is:',
+    options: ['0.02 J', '0.04 J', '0.01 J', '0.08 J'],
+    correct: 0,
+    explanation: 'U = ½CV² = ½ × 4×10⁻⁶ × 10000 = 0.02 J.'
+  },
+  {
+    id: 'ph88', subject: 'Physics',
+    text: 'Dielectric constant of a medium is always:',
+    options: ['Less than 1', 'Equal to 1', 'Greater than or equal to 1', 'Negative'],
+    correct: 2,
+    explanation: 'Dielectric constant K = ε/ε₀ ≥ 1; for vacuum K = 1, for all other media K > 1.'
+  },
+  {
+    id: 'ph89', subject: 'Physics',
+    text: 'According to Gauss\'s law, the total electric flux through a closed surface is:',
+    options: ['Zero always', 'q_enclosed/ε₀', 'ε₀/q_enclosed', 'Depends on shape'],
+    correct: 1,
+    explanation: 'Gauss\'s law: Φ = q_enclosed/ε₀, independent of the shape of the surface.'
+  },
+  {
+    id: 'ph90', subject: 'Physics',
+    text: 'The work function of a metal is 2 eV. The threshold frequency for photoelectric effect is (h = 6.6×10⁻³⁴ J·s):',
+    options: ['4.8×10¹⁴ Hz', '3.0×10¹⁴ Hz', '6.0×10¹⁴ Hz', '9.6×10¹⁴ Hz'],
+    correct: 0,
+    explanation: 'φ = hν₀ → ν₀ = φ/h = (2×1.6×10⁻¹⁹)/(6.6×10⁻³⁴) ≈ 4.8×10¹⁴ Hz.'
+  },
+  {
+    id: 'ph91', subject: 'Physics',
+    text: 'The de Broglie wavelength of an electron accelerated through 100 V is approximately:',
+    options: ['0.123 nm', '1.23 nm', '12.3 nm', '0.0123 nm'],
+    correct: 0,
+    explanation: 'λ = h/√(2meV) = 1.226/√V nm = 1.226/10 ≈ 0.123 nm.'
+  },
+  {
+    id: 'ph92', subject: 'Physics',
+    text: 'In the Bohr model of hydrogen, the radius of the nth orbit is proportional to:',
+    options: ['n', '1/n', 'n²', '1/n²'],
+    correct: 2,
+    explanation: 'Bohr radius rₙ = 0.529n² Å, so rₙ ∝ n².'
+  },
+  {
+    id: 'ph93', subject: 'Physics',
+    text: 'The half-life of a radioactive element is 10 years. After 30 years, the fraction remaining is:',
+    options: ['1/4', '1/8', '1/6', '1/3'],
+    correct: 1,
+    explanation: '30 years = 3 half-lives. Fraction remaining = (1/2)³ = 1/8.'
+  },
+  {
+    id: 'ph94', subject: 'Physics',
+    text: 'In nuclear fission, the energy released is due to:',
+    options: ['Mass defect converted to energy (E = mc²)', 'Chemical reaction', 'Kinetic energy of electrons', 'Photon emission only'],
+    correct: 0,
+    explanation: 'In fission, total mass of products is less than reactants; the mass defect (Δm) appears as energy via E = mc².'
+  },
+  {
+    id: 'ph95', subject: 'Physics',
+    text: 'In a p-n junction diode, the depletion region:',
+    options: ['Has no charge carriers', 'Has excess free electrons', 'Conducts electricity', 'Has high carrier concentration'],
+    correct: 0,
+    explanation: 'The depletion region is depleted of free charge carriers (mobile electrons and holes).'
+  },
+  {
+    id: 'ph96', subject: 'Physics',
+    text: 'A full-wave rectifier uses:',
+    options: ['1 diode', '2 diodes', '4 diodes', '3 diodes'],
+    correct: 1,
+    explanation: 'A centre-tap full-wave rectifier uses 2 diodes; a bridge rectifier uses 4. Most basic full-wave = 2 diodes.'
+  },
+  {
+    id: 'ph97', subject: 'Physics',
+    text: 'The output of an AND gate for inputs A=1, B=0 is:',
+    options: ['0', '1', 'A', 'B'],
+    correct: 0,
+    explanation: 'AND gate: output = A·B = 1·0 = 0.'
+  },
+  {
+    id: 'ph98', subject: 'Physics',
+    text: 'In a common emitter transistor, the current gain β = IC/IB. If IB = 50 μA and β = 100, then IC is:',
+    options: ['5 mA', '0.5 mA', '50 mA', '500 μA'],
+    correct: 0,
+    explanation: 'IC = β × IB = 100 × 50×10⁻⁶ = 5000 μA = 5 mA.'
+  },
+  {
+    id: 'ph99', subject: 'Physics',
+    text: 'Amplitude modulation (AM) is used in:',
+    options: ['TV audio', 'MW/SW radio broadcasting', 'Satellite communication', 'Mobile phones'],
+    correct: 1,
+    explanation: 'AM is primarily used for medium wave (MW) and short wave (SW) radio broadcasting.'
+  },
+  {
+    id: 'ph100', subject: 'Physics',
+    text: 'The bandwidth of a signal occupying frequencies from 5 MHz to 6 MHz is:',
+    options: ['5 MHz', '6 MHz', '1 MHz', '11 MHz'],
+    correct: 2,
+    explanation: 'Bandwidth = upper frequency − lower frequency = 6 − 5 = 1 MHz.'
+  },
+  {
+    id: 'ph101', subject: 'Physics',
+    text: 'Efficiency of a Carnot engine operating between 300 K and 500 K is:',
+    options: ['40%', '60%', '20%', '80%'],
+    correct: 0,
+    explanation: 'η = 1 − T₂/T₁ = 1 − 300/500 = 1 − 0.6 = 0.4 = 40%.'
+  },
+  {
+    id: 'ph102', subject: 'Physics',
+    text: 'Which statement is consistent with the second law of thermodynamics?',
+    options: ['Heat flows naturally from cold to hot', 'Entropy of an isolated system decreases over time', 'No process is 100% efficient in converting heat to work', 'All reversible processes are impossible'],
+    correct: 2,
+    explanation: 'Second law implies no heat engine can be 100% efficient in converting heat to work.'
+  },
+  {
+    id: 'ph103', subject: 'Physics',
+    text: 'The equation y = A sin(ωt − kx) represents a wave travelling in:',
+    options: ['Negative x-direction', 'Positive x-direction', 'y-direction', 'z-direction'],
+    correct: 1,
+    explanation: 'y = A sin(ωt − kx): phase (ωt − kx) constant → x increases with t → wave moves in +x direction.'
+  },
+  {
+    id: 'ph104', subject: 'Physics',
+    text: 'A simple pendulum of length 1 m has time period T (g = π² m/s²). T is:',
+    options: ['1 s', '2 s', 'π s', '0.5 s'],
+    correct: 1,
+    explanation: 'T = 2π√(L/g) = 2π√(1/π²) = 2π × (1/π) = 2 s.'
+  },
+  {
+    id: 'ph105', subject: 'Physics',
+    text: 'In SHM, when displacement is maximum (at amplitude A), the kinetic energy is:',
+    options: ['Maximum', 'Zero', 'Equal to PE', '½mω²A²'],
+    correct: 1,
+    explanation: 'At maximum displacement (x = A), velocity = 0 → KE = 0. All energy is potential.'
+  },
+  {
+    id: 'ph106', subject: 'Physics',
+    text: 'An object is placed 40 cm from a concave mirror of focal length 20 cm. The image distance is:',
+    options: ['20 cm (real)', '40 cm (real)', '80 cm (virtual)', '20 cm (virtual)'],
+    correct: 1,
+    explanation: '1/v + 1/u = 1/f → 1/v + 1/(−40) = 1/(−20) → 1/v = −1/20 + 1/40 = −1/40 → v = −40 cm (real, inverted).'
+  },
+  {
+    id: 'ph107', subject: 'Physics',
+    text: 'A prism of apex angle 60° has minimum deviation 30°. The refractive index of prism is:',
+    options: ['1.41', '1.73', '1.5', '1.0'],
+    correct: 0,
+    explanation: 'n = sin((A+D)/2)/sin(A/2) = sin(45°)/sin(30°) = (1/√2)/(1/2) = √2 ≈ 1.41.'
+  },
+  {
+    id: 'ph108', subject: 'Physics',
+    text: 'Energy of a photon of wavelength 600 nm (h = 6.6×10⁻³⁴ J·s, c = 3×10⁸ m/s) is:',
+    options: ['3.3×10⁻¹⁹ J', '2.07 eV', 'Both A and B', '5×10⁻¹⁹ J'],
+    correct: 2,
+    explanation: 'E = hc/λ = (6.6×10⁻³⁴ × 3×10⁸)/(600×10⁻⁹) = 3.3×10⁻¹⁹ J = 3.3×10⁻¹⁹/1.6×10⁻¹⁹ ≈ 2.07 eV.'
+  },
+  {
+    id: 'ph109', subject: 'Physics',
+    text: 'Rutherford\'s gold foil experiment proved that:',
+    options: ['Electrons are negatively charged', 'Atom has a tiny, dense, positive nucleus', 'Electrons orbit in fixed shells', 'Atom is electrically neutral overall'],
+    correct: 1,
+    explanation: 'The large-angle scattering of α particles proved most of the atom\'s mass and positive charge is in a tiny nucleus.'
+  },
+  {
+    id: 'ph110', subject: 'Physics',
+    text: 'Binding energy per nucleon is highest for:',
+    options: ['Hydrogen', 'Iron-56 (Fe)', 'Uranium-238', 'Helium-4'],
+    correct: 1,
+    explanation: 'Iron-56 has the highest binding energy per nucleon (~8.8 MeV), making it the most stable nucleus.'
+  },
+  {
+    id: 'ph111', subject: 'Physics',
+    text: 'In forward bias of a p-n junction:',
+    options: ['Depletion region widens', 'Barrier potential increases', 'Majority carriers flow across the junction', 'Reverse current increases'],
+    correct: 2,
+    explanation: 'In forward bias, the barrier potential decreases and majority carriers (holes and electrons) flow across, giving large current.'
+  },
+  {
+    id: 'ph112', subject: 'Physics',
+    text: 'Bernoulli\'s theorem is based on:',
+    options: ['Conservation of mass', 'Conservation of energy', 'Newton\'s third law', 'Pascal\'s law'],
+    correct: 1,
+    explanation: 'Bernoulli\'s theorem (P + ½ρv² + ρgh = constant) is a statement of conservation of energy for fluid flow.'
+  },
+  {
+    id: 'ph113', subject: 'Physics',
+    text: 'The orbital velocity of a satellite at height h from Earth\'s surface (R = radius) is:',
+    options: ['√(gR²/(R+h))', '√(g(R+h))', '√(gR)', '√(2gR)'],
+    correct: 0,
+    explanation: 'v₀ = √(GM/(R+h)) = √(gR²/(R+h)) since GM = gR².'
+  },
+  {
+    id: 'ph114', subject: 'Physics',
+    text: 'In a closed pipe, the fundamental frequency of vibration (length L, speed v) is:',
+    options: ['v/2L', 'v/4L', '2v/L', 'v/L'],
+    correct: 1,
+    explanation: 'Closed pipe: L = λ/4 at fundamental → f = v/λ = v/4L.'
+  },
+  {
+    id: 'ph115', subject: 'Physics',
+    text: 'The electric potential due to a point charge Q at distance r is:',
+    options: ['kQ/r²', 'kQ/r', 'kQr', 'kQ²/r'],
+    correct: 1,
+    explanation: 'Electric potential V = kQ/r (or Q/4πε₀r), which is a scalar quantity.'
+  },
+  {
+    id: 'ph116', subject: 'Physics',
+    text: 'A bar magnet\'s magnetic moment M is defined as:',
+    options: ['Pole strength × distance between poles', 'Pole strength / 2l', 'Pole strength + 2l', 'M/2l'],
+    correct: 0,
+    explanation: 'Magnetic moment M = m × 2l, where m = pole strength and 2l = length of magnet.'
+  },
+  {
+    id: 'ph117', subject: 'Physics',
+    text: 'Mutual inductance between two coils is 2 H. If current in primary changes at 3 A/s, the induced EMF in secondary is:',
+    options: ['6 V', '1.5 V', '0.67 V', '3 V'],
+    correct: 0,
+    explanation: 'ε = M × dI/dt = 2 × 3 = 6 V.'
+  },
+  {
+    id: 'ph118', subject: 'Physics',
+    text: 'Resolving power of a microscope is improved by:',
+    options: ['Using longer wavelengths', 'Using shorter wavelengths of light', 'Reducing the aperture', 'Reducing magnification'],
+    correct: 1,
+    explanation: 'Resolving power ∝ 1/λ. Using shorter wavelengths (e.g., blue light or UV) improves resolution.'
+  },
+  {
+    id: 'ph119', subject: 'Physics',
+    text: 'Which process is reversible in nature?',
+    options: ['Free expansion of a gas', 'Slow isothermal expansion of ideal gas', 'Heat conduction across finite ΔT', 'Mixing of gases'],
+    correct: 1,
+    explanation: 'A quasi-static isothermal expansion of an ideal gas is considered reversible; others are irreversible.'
+  },
+  {
+    id: 'ph120', subject: 'Physics',
+    text: 'In a single slit diffraction, the condition for first minimum is (a = slit width, λ = wavelength):',
+    options: ['a sinθ = λ', 'a sinθ = λ/2', 'a cosθ = λ', 'a tanθ = λ'],
+    correct: 0,
+    explanation: 'First minimum in single slit: a sinθ = mλ with m = 1 → a sinθ = λ.'
+  },
 ];
 
 export const chemistryBank = [
@@ -855,6 +1276,427 @@ export const chemistryBank = [
     options: ['London dispersion forces', 'Dipole-dipole interactions', 'Hydrogen bonding', 'Ion-dipole interactions'],
     correct: 3,
     explanation: 'Ion-dipole interactions are the strongest of the intermolecular forces listed, followed by H-bonding.'
+  },
+  // ── Set D: Equilibrium, Electrochemistry, Organic & Applied (ch61-ch120) ──
+  {
+    id: 'ch61', subject: 'Chemistry',
+    text: 'For a reaction N₂ + 3H₂ ⇌ 2NH₃, the equilibrium constant Kp and Kc are related by:',
+    options: ['Kp = Kc(RT)⁻²', 'Kp = Kc(RT)²', 'Kp = Kc', 'Kp = Kc/RT'],
+    correct: 0,
+    explanation: 'Δn = 2 − 4 = −2. Kp = Kc(RT)^Δn = Kc(RT)⁻².'
+  },
+  {
+    id: 'ch62', subject: 'Chemistry',
+    text: 'According to Le Chatelier\'s principle, increasing pressure on N₂(g) + 3H₂(g) ⇌ 2NH₃(g) will:',
+    options: ['Shift equilibrium to the left', 'Shift equilibrium to the right', 'No effect', 'Decrease Kc'],
+    correct: 1,
+    explanation: 'Increasing pressure favours the side with fewer moles of gas. Products (2 mol) < reactants (4 mol) → shift right.'
+  },
+  {
+    id: 'ch63', subject: 'Chemistry',
+    text: 'The pH of 0.01 M HCl solution is:',
+    options: ['1', '2', '3', '0.01'],
+    correct: 1,
+    explanation: 'HCl is a strong acid, fully dissociated. [H⁺] = 0.01 M. pH = −log(0.01) = 2.'
+  },
+  {
+    id: 'ch64', subject: 'Chemistry',
+    text: 'A buffer solution resists change in pH because it contains:',
+    options: ['Strong acid and its salt', 'Weak acid and its conjugate base (salt)', 'Pure water', 'Strong base only'],
+    correct: 1,
+    explanation: 'A buffer contains a weak acid and its conjugate base (or weak base and conjugate acid), which can neutralise added acid or base.'
+  },
+  {
+    id: 'ch65', subject: 'Chemistry',
+    text: 'Solubility product (Ksp) of AgCl at 25°C is 1.8×10⁻¹⁰. Its solubility in mol/L is:',
+    options: ['1.34×10⁻⁵', '1.8×10⁻¹⁰', '3.6×10⁻¹⁰', '9×10⁻⁶'],
+    correct: 0,
+    explanation: 'AgCl ⇌ Ag⁺ + Cl⁻. Ksp = s² → s = √(1.8×10⁻¹⁰) ≈ 1.34×10⁻⁵ mol/L.'
+  },
+  {
+    id: 'ch66', subject: 'Chemistry',
+    text: 'The standard electrode potential for the Standard Hydrogen Electrode (SHE) is:',
+    options: ['0 V', '+1 V', '−1 V', '+0.76 V'],
+    correct: 0,
+    explanation: 'SHE is assigned a standard electrode potential of exactly 0 V by convention.'
+  },
+  {
+    id: 'ch67', subject: 'Chemistry',
+    text: 'In electrolysis of molten NaCl, at the cathode:',
+    options: ['Na is deposited', 'Cl₂ is liberated', 'O₂ is evolved', 'H₂ is liberated'],
+    correct: 0,
+    explanation: 'Na⁺ ions are reduced at the cathode: Na⁺ + e⁻ → Na. Cl₂ is liberated at the anode.'
+  },
+  {
+    id: 'ch68', subject: 'Chemistry',
+    text: 'Faraday\'s second law of electrolysis states that the masses of substances deposited by the same charge are:',
+    options: ['Equal for all substances', 'Proportional to their equivalent masses', 'Proportional to their molar masses', 'Independent of the substance'],
+    correct: 1,
+    explanation: 'Faraday\'s second law: when same charge passes through different electrolytes, masses deposited are in ratio of their equivalent masses.'
+  },
+  {
+    id: 'ch69', subject: 'Chemistry',
+    text: 'The rate of a chemical reaction generally increases with temperature because:',
+    options: ['Activation energy decreases', 'Collision frequency increases and more molecules have energy ≥ Ea', 'Products become more stable', 'Equilibrium shifts right'],
+    correct: 1,
+    explanation: 'Higher temperature increases molecular kinetic energy; more collisions have energy ≥ activation energy Ea, increasing rate.'
+  },
+  {
+    id: 'ch70', subject: 'Chemistry',
+    text: 'For a first-order reaction, the half-life is:',
+    options: ['Proportional to initial concentration', 'ln2/k (independent of concentration)', '1/(k[A]₀)', '2/k'],
+    correct: 1,
+    explanation: 'For first-order: t₁/₂ = ln2/k = 0.693/k, which is independent of initial concentration.'
+  },
+  {
+    id: 'ch71', subject: 'Chemistry',
+    text: 'Adsorption is an example of:',
+    options: ['Bulk phenomenon', 'Surface phenomenon', 'Thermal phenomenon', 'Electrochemical phenomenon'],
+    correct: 1,
+    explanation: 'Adsorption occurs at the surface of a solid or liquid; it is a surface phenomenon.'
+  },
+  {
+    id: 'ch72', subject: 'Chemistry',
+    text: 'Colloidal gold is a:',
+    options: ['Suspension', 'True solution', 'Lyophilic colloid', 'Lyophobic colloid'],
+    correct: 3,
+    explanation: 'Colloidal gold is a lyophobic (solvent-repelling) colloid — it does not have affinity for the dispersion medium.'
+  },
+  {
+    id: 'ch73', subject: 'Chemistry',
+    text: 'The atomic number of the first element in the d-block is:',
+    options: ['19', '20', '21', '22'],
+    correct: 2,
+    explanation: 'Scandium (Sc, Z=21) is the first d-block (transition) element with configuration [Ar]3d¹4s².'
+  },
+  {
+    id: 'ch74', subject: 'Chemistry',
+    text: 'The oxidation state of manganese in KMnO₄ is:',
+    options: ['+4', '+6', '+7', '+5'],
+    correct: 2,
+    explanation: 'K is +1, O is −2: +1 + x + 4(−2) = 0 → x = +7. Mn is +7 in KMnO₄.'
+  },
+  {
+    id: 'ch75', subject: 'Chemistry',
+    text: 'Which of the following has the highest paramagnetism? (Unpaired electrons):',
+    options: ['Fe²⁺ (4 unpaired)', 'Mn²⁺ (5 unpaired)', 'Cu²⁺ (1 unpaired)', 'Zn²⁺ (0 unpaired)'],
+    correct: 1,
+    explanation: 'Mn²⁺ has configuration [Ar]3d⁵ with 5 unpaired electrons → highest paramagnetism.'
+  },
+  {
+    id: 'ch76', subject: 'Chemistry',
+    text: 'In coordination compound [Co(NH₃)₆]Cl₃, the coordination number of Co is:',
+    options: ['3', '6', '9', '4'],
+    correct: 1,
+    explanation: 'Six NH₃ ligands coordinate to Co → coordination number = 6.'
+  },
+  {
+    id: 'ch77', subject: 'Chemistry',
+    text: 'EDTA is a:',
+    options: ['Monodentate ligand', 'Bidentate ligand', 'Hexadentate ligand', 'Unidentate ligand'],
+    correct: 2,
+    explanation: 'EDTA (ethylenediaminetetraacetate) is a hexadentate ligand, coordinating through 6 donor atoms.'
+  },
+  {
+    id: 'ch78', subject: 'Chemistry',
+    text: 'A primary haloalkane undergoes SN2 reaction preferentially because:',
+    options: ['It has more substituents', 'Less steric hindrance allows backside attack', 'It forms a stable carbocation', 'It is more polar'],
+    correct: 1,
+    explanation: 'Primary substrates have less steric hindrance → easier backside nucleophilic attack → SN2 preferred.'
+  },
+  {
+    id: 'ch79', subject: 'Chemistry',
+    text: 'Grignard reagent is:',
+    options: ['RMgX (organomagnesium halide)', 'RLi', 'R₂CuLi', 'R₂Mg'],
+    correct: 0,
+    explanation: 'Grignard reagent: RMgX where R = alkyl/aryl group, X = halide. Used extensively in organic synthesis.'
+  },
+  {
+    id: 'ch80', subject: 'Chemistry',
+    text: 'Lucas test is used to distinguish between:',
+    options: ['Primary, secondary and tertiary alcohols', 'Aldehydes and ketones', 'Alcohols and ethers', 'Carboxylic acids and esters'],
+    correct: 0,
+    explanation: 'Lucas test (conc. HCl + ZnCl₂) distinguishes between 1°, 2°, and 3° alcohols by rate of reaction.'
+  },
+  {
+    id: 'ch81', subject: 'Chemistry',
+    text: 'Phenol is more acidic than ethanol because:',
+    options: ['Phenol has higher molecular weight', 'The phenoxide ion is stabilised by resonance', 'Phenol dissolves in water', 'Phenol is a primary alcohol'],
+    correct: 1,
+    explanation: 'The phenoxide (C₆H₅O⁻) ion is stabilised by resonance with the benzene ring, making phenol a stronger acid.'
+  },
+  {
+    id: 'ch82', subject: 'Chemistry',
+    text: 'Williamson\'s synthesis is used to prepare:',
+    options: ['Alcohols', 'Ethers', 'Esters', 'Aldehydes'],
+    correct: 1,
+    explanation: 'Williamson synthesis: R-ONa + R\'X → R-O-R\' (ether) + NaX.'
+  },
+  {
+    id: 'ch83', subject: 'Chemistry',
+    text: 'Tollens\' reagent is used to distinguish:',
+    options: ['Aldehydes from ketones', 'Primary from secondary alcohols', 'Alkenes from alkanes', 'Phenols from alcohols'],
+    correct: 0,
+    explanation: 'Tollens\' reagent (ammoniacal AgNO₃) gives silver mirror with aldehydes but not ketones.'
+  },
+  {
+    id: 'ch84', subject: 'Chemistry',
+    text: 'The product of oxidation of a primary alcohol with K₂Cr₂O₇/H₂SO₄ (limited oxidant) is:',
+    options: ['Carboxylic acid', 'Aldehyde', 'Ketone', 'Ester'],
+    correct: 1,
+    explanation: 'Limited oxidation of primary alcohol gives aldehyde; excess oxidant gives carboxylic acid.'
+  },
+  {
+    id: 'ch85', subject: 'Chemistry',
+    text: 'Carboxylic acids are more acidic than phenols because:',
+    options: ['They have higher molar mass', 'The carboxylate ion is more stabilised by resonance than phenoxide', 'They contain more oxygen', 'They are stronger bases'],
+    correct: 1,
+    explanation: 'The carboxylate (RCOO⁻) has two equivalent resonance structures, giving greater stabilisation than phenoxide.'
+  },
+  {
+    id: 'ch86', subject: 'Chemistry',
+    text: 'Aspirin is:',
+    options: ['Acetylsalicylic acid', 'Salicylic acid', 'Methyl salicylate', 'Acetaminophen'],
+    correct: 0,
+    explanation: 'Aspirin (acetylsalicylic acid) is prepared by acetylation of salicylic acid with acetic anhydride.'
+  },
+  {
+    id: 'ch87', subject: 'Chemistry',
+    text: 'Primary amines react with HNO₂ (NaNO₂ + HCl) at 0–5°C to give:',
+    options: ['Secondary amine', 'Diazonium salt', 'Nitroamine', 'Amide'],
+    correct: 1,
+    explanation: 'Primary aromatic amines react with NaNO₂/HCl at 0–5°C to form diazonium salts (ArN₂⁺Cl⁻).'
+  },
+  {
+    id: 'ch88', subject: 'Chemistry',
+    text: 'The monomer of nylon-6 is:',
+    options: ['Caprolactam', 'Adipic acid', 'Hexamethylenediamine', 'Ethylene glycol'],
+    correct: 0,
+    explanation: 'Nylon-6 is made by ring-opening polymerisation of caprolactam (a cyclic amide).'
+  },
+  {
+    id: 'ch89', subject: 'Chemistry',
+    text: 'Bakelite is a:',
+    options: ['Addition polymer', 'Condensation polymer', 'Copolymer', 'Natural polymer'],
+    correct: 1,
+    explanation: 'Bakelite is a condensation polymer of phenol and formaldehyde.'
+  },
+  {
+    id: 'ch90', subject: 'Chemistry',
+    text: 'The peptide bond in proteins is:',
+    options: ['C−O bond', 'C−N bond formed by condensation of amino and carboxyl groups', 'N−H bond', 'C−C bond'],
+    correct: 1,
+    explanation: 'Peptide bond: −CO−NH− formed by condensation between −COOH of one amino acid and −NH₂ of another, releasing H₂O.'
+  },
+  {
+    id: 'ch91', subject: 'Chemistry',
+    text: 'DNA differs from RNA in that DNA contains:',
+    options: ['Thymine instead of Uracil', 'Uracil instead of Thymine', 'Ribose instead of Deoxyribose', 'Single-stranded structure'],
+    correct: 0,
+    explanation: 'DNA contains Thymine (T); RNA contains Uracil (U). Also DNA has deoxyribose sugar, RNA has ribose.'
+  },
+  {
+    id: 'ch92', subject: 'Chemistry',
+    text: 'Enzyme action is best described as:',
+    options: ['Non-specific catalysis at high temperature', 'Specific biological catalyst that reduces activation energy', 'Inorganic catalyst', 'Cofactor only'],
+    correct: 1,
+    explanation: 'Enzymes are biological catalysts (proteins) that are highly specific and reduce the activation energy of biochemical reactions.'
+  },
+  {
+    id: 'ch93', subject: 'Chemistry',
+    text: 'Bithional is used as an antiseptic in soaps. This is an example of:',
+    options: ['Disinfectant', 'Antiseptic', 'Analgesic', 'Antibiotic'],
+    correct: 1,
+    explanation: 'Bithional is added to soaps as an antiseptic to prevent body odour due to bacterial decomposition.'
+  },
+  {
+    id: 'ch94', subject: 'Chemistry',
+    text: 'The common name of 2,4,6-trinitrotoluene (TNT) classification is:',
+    options: ['Analgesic', 'Explosive', 'Antibiotic', 'Antacid'],
+    correct: 1,
+    explanation: 'TNT is a well-known explosive widely used in military and construction.'
+  },
+  {
+    id: 'ch95', subject: 'Chemistry',
+    text: 'Hybridisation of carbon in benzene is:',
+    options: ['sp³', 'sp²', 'sp', 'sp³d'],
+    correct: 1,
+    explanation: 'Each carbon in benzene is sp² hybridised; the remaining p orbital forms the π system.'
+  },
+  {
+    id: 'ch96', subject: 'Chemistry',
+    text: 'Which test distinguishes an aldehyde from a ketone?',
+    options: ['Fehling\'s test', 'Iodoform test', 'Benedict\'s test', 'Both A and C'],
+    correct: 3,
+    explanation: 'Fehling\'s and Benedict\'s tests are positive for aldehydes (reducing agents) but not for most ketones. Both A and C are correct.'
+  },
+  {
+    id: 'ch97', subject: 'Chemistry',
+    text: 'Iodoform test is positive for:',
+    options: ['All ketones', 'Methyl ketones (CH₃CO−) and ethanol', 'Primary alcohols only', 'Aldehydes only'],
+    correct: 1,
+    explanation: 'Iodoform (CHI₃) precipitate forms with methyl ketones (CH₃COR) and ethanol (which is oxidised to CH₃CHO).'
+  },
+  {
+    id: 'ch98', subject: 'Chemistry',
+    text: 'The IUPAC name of CH₃−CH(OH)−CH₃ is:',
+    options: ['1-propanol', 'Propan-2-ol', '2-methylethanol', 'Isopropyl alcohol (only common name)'],
+    correct: 1,
+    explanation: 'OH on carbon 2 of propane → IUPAC name: propan-2-ol.'
+  },
+  {
+    id: 'ch99', subject: 'Chemistry',
+    text: 'Dehydration of alcohols to alkenes requires:',
+    options: ['NaOH/water', 'Conc. H₂SO₄ at 170°C', 'Dilute HCl', 'PCl₅'],
+    correct: 1,
+    explanation: 'Dehydration (−H₂O) of alcohols to alkenes uses conc. H₂SO₄ at 170°C; at 140°C it forms ethers.'
+  },
+  {
+    id: 'ch100', subject: 'Chemistry',
+    text: 'Which of the following is an example of a nucleophilic addition reaction?',
+    options: ['Addition of HBr to benzene', 'Addition of HCN to acetaldehyde', 'Chlorination of methane', 'Dehydration of alcohol'],
+    correct: 1,
+    explanation: 'Aldehydes and ketones undergo nucleophilic addition. HCN adds to CH₃CHO to give a cyanohydrin.'
+  },
+  {
+    id: 'ch101', subject: 'Chemistry',
+    text: 'The van\'t Hoff factor (i) for Na₂SO₄ completely dissociated is:',
+    options: ['1', '2', '3', '4'],
+    correct: 2,
+    explanation: 'Na₂SO₄ → 2Na⁺ + SO₄²⁻; 3 ions → i = 3.'
+  },
+  {
+    id: 'ch102', subject: 'Chemistry',
+    text: 'Raoult\'s law states that the partial vapour pressure of a component in an ideal solution is:',
+    options: ['Equal to its mole fraction', 'Proportional to its mole fraction times pure component vapour pressure', 'Independent of composition', 'Inversely proportional to mole fraction'],
+    correct: 1,
+    explanation: 'Raoult\'s law: p_A = x_A × p°_A (partial pressure = mole fraction × pure vapour pressure).'
+  },
+  {
+    id: 'ch103', subject: 'Chemistry',
+    text: 'Osmotic pressure π of a solution with molar concentration C at temperature T is:',
+    options: ['π = CRT', 'π = nRT/V', 'Both A and B', 'π = CT/R'],
+    correct: 2,
+    explanation: 'π = CRT = nRT/V (van\'t Hoff equation for osmotic pressure).'
+  },
+  {
+    id: 'ch104', subject: 'Chemistry',
+    text: 'Colligative properties depend on:',
+    options: ['Nature of solute', 'Number of solute particles', 'Molecular mass of solute', 'Chemical composition'],
+    correct: 1,
+    explanation: 'Colligative properties (boiling point elevation, depression in freezing point, osmotic pressure) depend on the number (not nature) of solute particles.'
+  },
+  {
+    id: 'ch105', subject: 'Chemistry',
+    text: 'The s-block elements are called so because:',
+    options: ['They are soft metals', 'Their last electron enters the s-orbital', 'They react with sulphur', 'They are found in sea'],
+    correct: 1,
+    explanation: 'Classification of elements into s, p, d, f blocks is based on which subshell the differentiating electron enters.'
+  },
+  {
+    id: 'ch106', subject: 'Chemistry',
+    text: 'Down the group in alkali metals, the ionisation energy:',
+    options: ['Increases', 'Decreases', 'Remains constant', 'First increases then decreases'],
+    correct: 1,
+    explanation: 'Atomic radius increases down the group → nuclear pull on outer electron decreases → ionisation energy decreases.'
+  },
+  {
+    id: 'ch107', subject: 'Chemistry',
+    text: 'Plaster of Paris is:',
+    options: ['CaSO₄·2H₂O', 'CaSO₄·½H₂O', 'CaCO₃', 'Ca(OH)₂'],
+    correct: 1,
+    explanation: 'Plaster of Paris = CaSO₄·½H₂O (hemihydrate of calcium sulphate).'
+  },
+  {
+    id: 'ch108', subject: 'Chemistry',
+    text: 'The shape of NH₃ molecule is:',
+    options: ['Trigonal planar', 'Trigonal pyramidal', 'Tetrahedral', 'Linear'],
+    correct: 1,
+    explanation: 'NH₃ has 3 bonding pairs and 1 lone pair → trigonal pyramidal shape (VSEPR theory).'
+  },
+  {
+    id: 'ch109', subject: 'Chemistry',
+    text: 'Bond order of O₂ molecule is:',
+    options: ['1', '2', '3', '2.5'],
+    correct: 1,
+    explanation: 'O₂ has bond order = (8 bonding − 4 antibonding)/2 = 2.'
+  },
+  {
+    id: 'ch110', subject: 'Chemistry',
+    text: 'Which of the following is a Lewis acid?',
+    options: ['NH₃', 'H₂O', 'BF₃', 'NaOH'],
+    correct: 2,
+    explanation: 'Lewis acid is an electron pair acceptor. BF₃ has an empty p orbital and accepts electron pairs.'
+  },
+  {
+    id: 'ch111', subject: 'Chemistry',
+    text: 'The enthalpy change (ΔH) for a reaction at constant pressure equals:',
+    options: ['ΔU + PΔV', 'ΔU − PΔV', 'ΔU/PΔV', 'ΔU × T'],
+    correct: 0,
+    explanation: 'ΔH = ΔU + PΔV (at constant pressure), relating enthalpy and internal energy.'
+  },
+  {
+    id: 'ch112', subject: 'Chemistry',
+    text: 'Hess\'s law is a consequence of:',
+    options: ['Second law of thermodynamics', 'Conservation of energy (first law)', 'Le Chatelier\'s principle', 'Raoult\'s law'],
+    correct: 1,
+    explanation: 'Hess\'s law: enthalpy is a state function (path-independent), a consequence of first law of thermodynamics.'
+  },
+  {
+    id: 'ch113', subject: 'Chemistry',
+    text: 'Gibbs free energy change ΔG = ΔH − TΔS. A reaction is spontaneous when:',
+    options: ['ΔG > 0', 'ΔG < 0', 'ΔG = 0 always', 'ΔS < 0 always'],
+    correct: 1,
+    explanation: 'A spontaneous process has ΔG < 0. At equilibrium ΔG = 0.'
+  },
+  {
+    id: 'ch114', subject: 'Chemistry',
+    text: 'Nitrogen is inert at room temperature mainly because:',
+    options: ['It is a noble gas', 'N≡N has high bond energy (945 kJ/mol)', 'Nitrogen is non-polar', 'It lacks lone pairs'],
+    correct: 1,
+    explanation: 'The N≡N triple bond has very high bond dissociation energy (945 kJ/mol), making nitrogen chemically inert at low temperatures.'
+  },
+  {
+    id: 'ch115', subject: 'Chemistry',
+    text: 'Ozone depletion in the stratosphere is primarily caused by:',
+    options: ['CO₂', 'SO₂', 'Chlorofluorocarbons (CFCs)', 'NOₓ from cars'],
+    correct: 2,
+    explanation: 'CFCs release Cl radicals under UV radiation which catalytically destroy ozone: Cl + O₃ → ClO + O₂.'
+  },
+  {
+    id: 'ch116', subject: 'Chemistry',
+    text: 'The molecular formula of glucose is:',
+    options: ['C₆H₁₂O₆', 'C₁₂H₂₂O₁₁', 'C₆H₁₀O₅', 'C₅H₁₀O₅'],
+    correct: 0,
+    explanation: 'Glucose (a hexose monosaccharide) has molecular formula C₆H₁₂O₆.'
+  },
+  {
+    id: 'ch117', subject: 'Chemistry',
+    text: 'Hydrolysis of sucrose gives:',
+    options: ['Two glucose molecules', 'Glucose and fructose', 'Two fructose molecules', 'Glucose and galactose'],
+    correct: 1,
+    explanation: 'Sucrose → glucose + fructose upon hydrolysis (both are hexoses, C₆H₁₂O₆).'
+  },
+  {
+    id: 'ch118', subject: 'Chemistry',
+    text: 'The shape of [Ni(CN)₄]²⁻ complex is:',
+    options: ['Tetrahedral', 'Square planar', 'Octahedral', 'Trigonal bipyramidal'],
+    correct: 1,
+    explanation: 'Ni²⁺ with strong field CN⁻ ligands → dsp² hybridisation → square planar geometry.'
+  },
+  {
+    id: 'ch119', subject: 'Chemistry',
+    text: 'The effective atomic number (EAN) rule was proposed by:',
+    options: ['Werner', 'Sidgwick', 'Pauling', 'Taube'],
+    correct: 1,
+    explanation: 'Sidgwick proposed the effective atomic number (EAN) rule for coordination compounds.'
+  },
+  {
+    id: 'ch120', subject: 'Chemistry',
+    text: 'Which of the following is used as a tranquiliser?',
+    options: ['Aspirin', 'Valium (diazepam)', 'Penicillin', 'Chloramphenicol'],
+    correct: 1,
+    explanation: 'Valium (diazepam) is a benzodiazepine used as a tranquiliser. Aspirin is analgesic, penicillin is antibiotic.'
   },
 ];
 
@@ -1283,11 +2125,432 @@ export const mathBank = [
     correct: 1,
     explanation: 'Order = highest derivative present = 2 (d²y/dx²).'
   },
+  // ── Set D: Advanced Topics (ma61-ma120) ──────────────────
+  {
+    id: 'ma61', subject: 'Mathematics',
+    text: 'The domain of f(x) = sin⁻¹(x) is:',
+    options: ['[0, π]', '[−1, 1]', '(−∞, ∞)', '[−π/2, π/2]'],
+    correct: 1,
+    explanation: 'sin⁻¹(x) (arcsin) is defined for x ∈ [−1, 1] and has range [−π/2, π/2].'
+  },
+  {
+    id: 'ma62', subject: 'Mathematics',
+    text: 'The principal value of tan⁻¹(1) is:',
+    options: ['π/4', 'π/3', 'π/6', 'π/2'],
+    correct: 0,
+    explanation: 'tan⁻¹(1) = π/4 (since tan(π/4) = 1) and π/4 ∈ (−π/2, π/2).'
+  },
+  {
+    id: 'ma63', subject: 'Mathematics',
+    text: 'sin⁻¹(x) + cos⁻¹(x) equals:',
+    options: ['π/4', 'π/2', 'π', '0'],
+    correct: 1,
+    explanation: 'Identity: sin⁻¹(x) + cos⁻¹(x) = π/2 for all x ∈ [−1, 1].'
+  },
+  {
+    id: 'ma64', subject: 'Mathematics',
+    text: 'If A is a square matrix of order 3 and |A| = 5, then |2A| is:',
+    options: ['10', '40', '20', '80'],
+    correct: 1,
+    explanation: '|kA| = kⁿ|A| for n×n matrix. |2A| = 2³ × 5 = 8 × 5 = 40.'
+  },
+  {
+    id: 'ma65', subject: 'Mathematics',
+    text: 'The cofactor of element 3 in the matrix [[1,2],[3,4]] is:',
+    options: ['−2', '2', '4', '−4'],
+    correct: 0,
+    explanation: 'Cofactor of a₂₁ (element 3): C₂₁ = (−1)^(2+1) × M₂₁ = −1 × 2 = −2.'
+  },
+  {
+    id: 'ma66', subject: 'Mathematics',
+    text: 'A matrix A is skew-symmetric if:',
+    options: ['A = Aᵀ', 'A = −Aᵀ', 'A = A⁻¹', 'A² = I'],
+    correct: 1,
+    explanation: 'Skew-symmetric matrix: Aᵀ = −A (equivalently A = −Aᵀ). Diagonal elements are zero.'
+  },
+  {
+    id: 'ma67', subject: 'Mathematics',
+    text: 'f(x) = |x| is continuous at x = 0 but:',
+    options: ['Not defined at x = 0', 'Not differentiable at x = 0', 'Has a removable discontinuity', 'Is differentiable everywhere'],
+    correct: 1,
+    explanation: 'f(x) = |x| is continuous everywhere but has a corner at x = 0, so it is not differentiable there.'
+  },
+  {
+    id: 'ma68', subject: 'Mathematics',
+    text: 'The derivative of eˣ with respect to x is:',
+    options: ['xeˣ⁻¹', 'eˣ', 'eˣ/x', '1/eˣ'],
+    correct: 1,
+    explanation: 'd/dx(eˣ) = eˣ (exponential function is its own derivative).'
+  },
+  {
+    id: 'ma69', subject: 'Mathematics',
+    text: 'If y = ln(sinx), then dy/dx is:',
+    options: ['cosecx', 'cotx', 'sinx/cosx', '−cotx'],
+    correct: 1,
+    explanation: 'dy/dx = (1/sinx) × cosx = cosx/sinx = cotx.'
+  },
+  {
+    id: 'ma70', subject: 'Mathematics',
+    text: 'By Rolle\'s theorem, if f is continuous on [a, b], differentiable on (a, b), and f(a) = f(b), then there exists c ∈ (a, b) such that:',
+    options: ['f(c) = 0', 'f′(c) = 0', 'f′(c) = f(c)', 'f(c) = f(a)'],
+    correct: 1,
+    explanation: 'Rolle\'s theorem guarantees at least one c where f′(c) = 0 (tangent parallel to x-axis).'
+  },
+  {
+    id: 'ma71', subject: 'Mathematics',
+    text: 'The function f(x) = x³ − 3x is increasing on:',
+    options: ['(−1, 1)', '(−∞, −1) ∪ (1, ∞)', '(0, ∞)', '(−∞, 0)'],
+    correct: 1,
+    explanation: 'f′(x) = 3x² − 3 = 3(x²−1) > 0 when x < −1 or x > 1. So f is increasing on (−∞, −1) ∪ (1, ∞).'
+  },
+  {
+    id: 'ma72', subject: 'Mathematics',
+    text: 'The maximum value of sin x + cos x is:',
+    options: ['1', '√2', '2', 'π'],
+    correct: 1,
+    explanation: 'sin x + cos x = √2 sin(x + π/4). Maximum value = √2.'
+  },
+  {
+    id: 'ma73', subject: 'Mathematics',
+    text: '∫ eˣ(f(x) + f′(x)) dx equals:',
+    options: ['eˣf′(x) + C', 'eˣf(x) + C', 'eˣ(f(x) + 1) + C', 'f(x)/eˣ + C'],
+    correct: 1,
+    explanation: 'd/dx[eˣf(x)] = eˣf(x) + eˣf′(x) = eˣ(f(x) + f′(x)). So ∫eˣ(f(x)+f′(x))dx = eˣf(x) + C.'
+  },
+  {
+    id: 'ma74', subject: 'Mathematics',
+    text: '∫ 1/(1+x²) dx is:',
+    options: ['tan x + C', 'tan⁻¹x + C', 'sec⁻¹x + C', '1/2 ln(1+x²) + C'],
+    correct: 1,
+    explanation: '∫ 1/(1+x²) dx = tan⁻¹x + C (standard integral formula).'
+  },
+  {
+    id: 'ma75', subject: 'Mathematics',
+    text: 'The area bounded by y = x², x-axis, x = 0 and x = 3 is:',
+    options: ['9', '6', '27', '3'],
+    correct: 0,
+    explanation: 'Area = ∫₀³ x² dx = [x³/3]₀³ = 27/3 − 0 = 9 sq. units.'
+  },
+  {
+    id: 'ma76', subject: 'Mathematics',
+    text: '∫₋₁¹ x³ dx equals:',
+    options: ['2', '0', '1/2', '−1/2'],
+    correct: 1,
+    explanation: 'x³ is an odd function. Integral of an odd function over a symmetric interval [−a, a] = 0.'
+  },
+  {
+    id: 'ma77', subject: 'Mathematics',
+    text: 'The solution of dy/dx = y is:',
+    options: ['y = x + C', 'y = Ceˣ', 'y = Ce⁻ˣ', 'y = x² + C'],
+    correct: 1,
+    explanation: 'dy/y = dx → ln|y| = x + C₁ → y = Ce^x where C = e^C₁.'
+  },
+  {
+    id: 'ma78', subject: 'Mathematics',
+    text: 'The degree of the differential equation (dy/dx)² + y = x is:',
+    options: ['1', '2', '3', '0'],
+    correct: 1,
+    explanation: 'Degree = power of the highest-order derivative = 2 (because (dy/dx)² has power 2).'
+  },
+  {
+    id: 'ma79', subject: 'Mathematics',
+    text: 'If â and b̂ are unit vectors and the angle between them is 60°, then |â + b̂| is:',
+    options: ['1', '√3', '2', '√2'],
+    correct: 1,
+    explanation: '|â + b̂|² = 1 + 1 + 2cos60° = 2 + 2(0.5) = 3. So |â + b̂| = √3.'
+  },
+  {
+    id: 'ma80', subject: 'Mathematics',
+    text: 'The dot product of vectors (2î + 3ĵ) and (4î − ĵ) is:',
+    options: ['5', '8', '11', '2'],
+    correct: 0,
+    explanation: '(2î + 3ĵ)·(4î − ĵ) = 2×4 + 3×(−1) = 8 − 3 = 5.'
+  },
+  {
+    id: 'ma81', subject: 'Mathematics',
+    text: 'The cross product î × ĵ is:',
+    options: ['0', '1', 'k̂', '−k̂'],
+    correct: 2,
+    explanation: 'î × ĵ = k̂ (right-hand rule; cyclic order: î → ĵ → k̂).'
+  },
+  {
+    id: 'ma82', subject: 'Mathematics',
+    text: 'The projection of vector a⃗ on vector b⃗ is:',
+    options: ['|a⃗||b⃗|cosθ', '(a⃗·b⃗)/|b⃗|', '|a⃗|cosθ/|b⃗|', 'a⃗ × b⃗'],
+    correct: 1,
+    explanation: 'Projection of a⃗ on b⃗ = (a⃗·b⃗)/|b⃗| (scalar projection).'
+  },
+  {
+    id: 'ma83', subject: 'Mathematics',
+    text: 'The direction cosines of the line joining A(1, 2, 3) and B(4, 6, 3) are:',
+    options: ['(3/5, 4/5, 0)', '(1, 1, 0)', '(3, 4, 0)', '(1/√2, 1/√2, 0)'],
+    correct: 0,
+    explanation: 'AB = (3, 4, 0). |AB| = 5. Direction cosines: (3/5, 4/5, 0/5) = (3/5, 4/5, 0).'
+  },
+  {
+    id: 'ma84', subject: 'Mathematics',
+    text: 'The equation of the plane through the origin with normal vector (1, 2, 3) is:',
+    options: ['x + 2y + 3z = 0', 'x + 2y + 3z = 1', '2x + y + 3z = 0', 'x − 2y + 3z = 0'],
+    correct: 0,
+    explanation: 'Plane through origin with normal (a, b, c): ax + by + cz = 0 → x + 2y + 3z = 0.'
+  },
+  {
+    id: 'ma85', subject: 'Mathematics',
+    text: 'The angle between lines with direction ratios (1, 1, 0) and (0, 1, 1) is:',
+    options: ['60°', '90°', '30°', '45°'],
+    correct: 0,
+    explanation: 'cosθ = (1·0 + 1·1 + 0·1)/(√2 · √2) = 1/2 → θ = 60°.'
+  },
+  {
+    id: 'ma86', subject: 'Mathematics',
+    text: 'In linear programming, the feasible region is:',
+    options: ['The region outside all constraints', 'The region satisfying all constraints simultaneously', 'Any convex set', 'The objective function line'],
+    correct: 1,
+    explanation: 'Feasible region is the set of all points satisfying every constraint (including non-negativity).'
+  },
+  {
+    id: 'ma87', subject: 'Mathematics',
+    text: 'The maximum value of Z = 3x + 4y subject to x + y ≤ 4, x ≥ 0, y ≥ 0 is:',
+    options: ['12', '16', '3', '4'],
+    correct: 1,
+    explanation: 'Corner points: (0,0)→0, (4,0)→12, (0,4)→16. Maximum Z = 16 at (0, 4).'
+  },
+  {
+    id: 'ma88', subject: 'Mathematics',
+    text: 'P(A|B) equals (Bayes\' theorem notation):',
+    options: ['P(A∩B)/P(B)', 'P(A)P(B)', 'P(B|A)/P(A)', 'P(A)/P(B)'],
+    correct: 0,
+    explanation: 'Conditional probability: P(A|B) = P(A∩B)/P(B), provided P(B) > 0.'
+  },
+  {
+    id: 'ma89', subject: 'Mathematics',
+    text: 'Two events A and B are independent if:',
+    options: ['P(A∩B) = P(A) + P(B)', 'P(A∩B) = P(A)·P(B)', 'P(A∪B) = 1', 'P(A) = P(B)'],
+    correct: 1,
+    explanation: 'Events A and B are independent if and only if P(A∩B) = P(A)·P(B).'
+  },
+  {
+    id: 'ma90', subject: 'Mathematics',
+    text: 'In a random experiment, the variance of a Bernoulli distribution with probability p is:',
+    options: ['p', '1−p', 'p(1−p)', '√(p(1−p))'],
+    correct: 2,
+    explanation: 'For Bernoulli distribution: Var = pq = p(1−p).'
+  },
+  {
+    id: 'ma91', subject: 'Mathematics',
+    text: 'The equation x² + y² − 6x − 8y = 0 represents a circle with centre:',
+    options: ['(3, 4)', '(−3, −4)', '(6, 8)', '(0, 0)'],
+    correct: 0,
+    explanation: 'Completing the square: (x−3)² + (y−4)² = 25. Centre = (3, 4), radius = 5.'
+  },
+  {
+    id: 'ma92', subject: 'Mathematics',
+    text: 'The eccentricity of the parabola y² = 4ax is:',
+    options: ['0', '1', '< 1', '> 1'],
+    correct: 1,
+    explanation: 'A parabola always has eccentricity e = 1.'
+  },
+  {
+    id: 'ma93', subject: 'Mathematics',
+    text: 'The number of ways to arrange 5 different books on a shelf is:',
+    options: ['25', '60', '120', '720'],
+    correct: 2,
+    explanation: '5! = 5 × 4 × 3 × 2 × 1 = 120.'
+  },
+  {
+    id: 'ma94', subject: 'Mathematics',
+    text: 'The number of ways to choose 3 students from a class of 10 is:',
+    options: ['10', '30', '120', '720'],
+    correct: 2,
+    explanation: '¹⁰C₃ = 10!/(3!·7!) = (10×9×8)/(3×2×1) = 120.'
+  },
+  {
+    id: 'ma95', subject: 'Mathematics',
+    text: 'The coefficient of x² in the expansion of (1 + x)⁵ is:',
+    options: ['5', '10', '20', '1'],
+    correct: 1,
+    explanation: '⁵C₂ = 5!/(2!3!) = 10. The coefficient of x² is ⁵C₂ = 10.'
+  },
+  {
+    id: 'ma96', subject: 'Mathematics',
+    text: 'The general term of an AP is aₙ = a + (n−1)d. If a = 3, d = 4, then a₁₀ is:',
+    options: ['39', '43', '40', '36'],
+    correct: 0,
+    explanation: 'a₁₀ = 3 + (10−1)×4 = 3 + 36 = 39.'
+  },
+  {
+    id: 'ma97', subject: 'Mathematics',
+    text: 'The sum of first n terms of a GP with first term a and common ratio r (r ≠ 1) is:',
+    options: ['a(1−rⁿ)/(1−r)', 'a(rⁿ−1)/(r−1)', 'Both A and B', 'na'],
+    correct: 2,
+    explanation: 'Sₙ = a(1−rⁿ)/(1−r) = a(rⁿ−1)/(r−1) — these are equivalent forms of the same formula.'
+  },
+  {
+    id: 'ma98', subject: 'Mathematics',
+    text: 'If z = 3 + 4i, the modulus |z| is:',
+    options: ['3', '4', '5', '7'],
+    correct: 2,
+    explanation: '|z| = √(3² + 4²) = √(9+16) = √25 = 5.'
+  },
+  {
+    id: 'ma99', subject: 'Mathematics',
+    text: 'The argument of the complex number i is:',
+    options: ['0', 'π/2', 'π', '−π/2'],
+    correct: 1,
+    explanation: 'i = 0 + 1i. arg(i) = tan⁻¹(1/0) = π/2.'
+  },
+  {
+    id: 'ma100', subject: 'Mathematics',
+    text: 'The roots of x² + 1 = 0 are:',
+    options: ['±1', '±i', '0 and 1', '1 and −1'],
+    correct: 1,
+    explanation: 'x² = −1 → x = ±√(−1) = ±i.'
+  },
+  {
+    id: 'ma101', subject: 'Mathematics',
+    text: 'The equation of the tangent to y = x² at x = 2 is:',
+    options: ['y = 4x − 4', 'y = 2x + 4', 'y = 4x + 4', 'y = x + 4'],
+    correct: 0,
+    explanation: 'At x=2: y=4, slope=dy/dx=2x=4. Tangent: y − 4 = 4(x − 2) → y = 4x − 4.'
+  },
+  {
+    id: 'ma102', subject: 'Mathematics',
+    text: 'lim(x→0) sinx/x is:',
+    options: ['0', '∞', '1', 'sin(0)'],
+    correct: 2,
+    explanation: 'Standard limit: lim(x→0) sinx/x = 1.'
+  },
+  {
+    id: 'ma103', subject: 'Mathematics',
+    text: 'The total number of subsets of a set with 4 elements is:',
+    options: ['4', '8', '16', '12'],
+    correct: 2,
+    explanation: 'A set with n elements has 2ⁿ subsets. 2⁴ = 16.'
+  },
+  {
+    id: 'ma104', subject: 'Mathematics',
+    text: 'If n(A) = 10, n(B) = 15, n(A∪B) = 20, then n(A∩B) is:',
+    options: ['5', '10', '45', '25'],
+    correct: 0,
+    explanation: 'n(A∩B) = n(A) + n(B) − n(A∪B) = 10 + 15 − 20 = 5.'
+  },
+  {
+    id: 'ma105', subject: 'Mathematics',
+    text: 'The value of cos²θ + sin²θ is:',
+    options: ['0', '2', '1', 'sinθcosθ'],
+    correct: 2,
+    explanation: 'Pythagorean identity: sin²θ + cos²θ = 1 for all θ.'
+  },
+  {
+    id: 'ma106', subject: 'Mathematics',
+    text: 'tan(A + B) equals:',
+    options: ['tanA + tanB', '(tanA + tanB)/(1 − tanA·tanB)', '(tanA − tanB)/(1 + tanA·tanB)', 'tanA·tanB'],
+    correct: 1,
+    explanation: 'Addition formula: tan(A+B) = (tanA + tanB)/(1 − tanA·tanB).'
+  },
+  {
+    id: 'ma107', subject: 'Mathematics',
+    text: 'The general solution of sinx = 1/2 is:',
+    options: ['x = π/6 + 2nπ only', 'x = nπ + (−1)ⁿ π/6', 'x = π/6 or 5π/6 + 2nπ', 'x = π/6 + nπ'],
+    correct: 1,
+    explanation: 'General solution of sinx = k: x = nπ + (−1)ⁿ α, where sinα = k. Here α = π/6.'
+  },
+  {
+    id: 'ma108', subject: 'Mathematics',
+    text: 'In a triangle, the cosine rule states: a² =',
+    options: ['b² + c² + 2bc cosA', 'b² + c² − 2bc cosA', 'b + c − 2cosA', '(b+c)² − 4bc cos²A'],
+    correct: 1,
+    explanation: 'Cosine rule: a² = b² + c² − 2bc cosA.'
+  },
+  {
+    id: 'ma109', subject: 'Mathematics',
+    text: 'The slope of a vertical line is:',
+    options: ['0', '1', 'Undefined', '−1'],
+    correct: 2,
+    explanation: 'A vertical line has an undefined (infinite) slope since Δx = 0 → slope = Δy/0.'
+  },
+  {
+    id: 'ma110', subject: 'Mathematics',
+    text: 'The distance between points (1, 2) and (4, 6) is:',
+    options: ['5', '3', '7', '√7'],
+    correct: 0,
+    explanation: 'd = √((4−1)² + (6−2)²) = √(9+16) = √25 = 5.'
+  },
+  {
+    id: 'ma111', subject: 'Mathematics',
+    text: 'The midpoint of line segment joining (2, 4) and (6, 8) is:',
+    options: ['(4, 6)', '(8, 12)', '(2, 2)', '(3, 5)'],
+    correct: 0,
+    explanation: 'Midpoint = ((2+6)/2, (4+8)/2) = (4, 6).'
+  },
+  {
+    id: 'ma112', subject: 'Mathematics',
+    text: 'The equation of a line with slope 2 and y-intercept 3 is:',
+    options: ['y = 3x + 2', 'y = 2x + 3', '2x − y + 3 = 0', 'Both B and C'],
+    correct: 3,
+    explanation: 'Slope-intercept form: y = 2x + 3. Rearranging: 2x − y + 3 = 0. Both are equivalent.'
+  },
+  {
+    id: 'ma113', subject: 'Mathematics',
+    text: '∫ sec²x dx is:',
+    options: ['secx·tanx + C', 'tanx + C', '−tanx + C', 'sec²x/2 + C'],
+    correct: 1,
+    explanation: '∫ sec²x dx = tanx + C (standard integral).'
+  },
+  {
+    id: 'ma114', subject: 'Mathematics',
+    text: 'The value of ∫₀^(π/2) cos x dx is:',
+    options: ['0', '1', '−1', 'π/2'],
+    correct: 1,
+    explanation: '∫₀^(π/2) cosx dx = [sinx]₀^(π/2) = sin(π/2) − sin(0) = 1 − 0 = 1.'
+  },
+  {
+    id: 'ma115', subject: 'Mathematics',
+    text: 'By the fundamental theorem of calculus, d/dx[∫₀ˣ f(t) dt] equals:',
+    options: ['f(0)', 'f(x)', 'F(x) − F(0)', '0'],
+    correct: 1,
+    explanation: 'Fundamental Theorem of Calculus Part 1: d/dx[∫₀ˣ f(t)dt] = f(x).'
+  },
+  {
+    id: 'ma116', subject: 'Mathematics',
+    text: 'The differential equation of all circles with centre at origin is:',
+    options: ['x dx + y dy = 0', 'x dy − y dx = 0', 'x + y = r', 'dy/dx = −x/y'],
+    correct: 3,
+    explanation: 'x² + y² = r² → differentiating: 2x + 2y(dy/dx) = 0 → dy/dx = −x/y.'
+  },
+  {
+    id: 'ma117', subject: 'Mathematics',
+    text: 'The relationship between AM, GM, and HM for positive numbers is:',
+    options: ['AM < GM < HM', 'AM ≥ GM ≥ HM', 'AM = GM = HM always', 'HM > AM > GM'],
+    correct: 1,
+    explanation: 'For positive numbers, AM ≥ GM ≥ HM, with equality only when all numbers are equal.'
+  },
+  {
+    id: 'ma118', subject: 'Mathematics',
+    text: 'The sum of infinite GP 1 + 1/2 + 1/4 + ... is:',
+    options: ['2', '3', '4', 'Diverges'],
+    correct: 0,
+    explanation: 'S∞ = a/(1−r) = 1/(1−1/2) = 1/(1/2) = 2.'
+  },
+  {
+    id: 'ma119', subject: 'Mathematics',
+    text: 'If a relation R on set A = {1,2,3} is defined as R = {(1,1),(2,2),(3,3)}, then R is:',
+    options: ['Only reflexive', 'Reflexive and symmetric only', 'Equivalence relation', 'Only transitive'],
+    correct: 2,
+    explanation: 'R is reflexive (all (a,a) ∈ R), symmetric (trivially), and transitive → equivalence relation.'
+  },
+  {
+    id: 'ma120', subject: 'Mathematics',
+    text: 'The number of one-one functions from a set A (3 elements) to set B (5 elements) is:',
+    options: ['15', '60', '125', '243'],
+    correct: 1,
+    explanation: 'Number of injections from A (m) to B (n) where m ≤ n: P(n, m) = n!/(n−m)! = 5×4×3 = 60.'
+  },
 ];
 
 // ── PAPER ASSEMBLY ──────────────────────────────────────────
-// Each paper: 20 Physics + 20 Chemistry + 20 Math = 60 Qs
-// Papers 1-3 use non-overlapping sets; 4-10 use full-bank shuffles seeded by paper ID
+// KCET pattern: 60 Physics + 60 Chemistry + 60 Mathematics = 180 Qs per paper
+// Bank: 120 per subject. Papers 1-2 use non-overlapping halves; 3-10 use seeded shuffles.
 
 function seededShuffle(arr, seed) {
   const a = [...arr];
@@ -1302,54 +2565,43 @@ function seededShuffle(arr, seed) {
 
 export function getKcetPaper(paperId) {
   const id = parseInt(paperId, 10);
-  
-  // Papers 1-3: fixed non-overlapping slices
+
+  // Papers 1-2: fixed non-overlapping slices of 60
   if (id === 1) {
     return {
       id: 1, title: 'KCET 2026 Analysis Paper',
-      description: 'Curated from 5-year trend analysis (2021–2025)',
-      duration: 180, totalMarks: 60, negativeMarking: false,
+      description: 'Curated from 10-year trend analysis (2016–2025) — 60 Qs per subject',
+      duration: 240, totalMarks: 180, negativeMarking: false,
       questions: [
-        ...physicsBank.slice(0, 20),
-        ...chemistryBank.slice(0, 20),
-        ...mathBank.slice(0, 20),
+        ...physicsBank.slice(0, 60),
+        ...chemistryBank.slice(0, 60),
+        ...mathBank.slice(0, 60),
       ]
     };
   }
   if (id === 2) {
     return {
       id: 2, title: 'KCET Mock Test 2',
-      description: 'Electrostatics, Organic Chemistry, Calculus focus',
-      duration: 180, totalMarks: 60, negativeMarking: false,
+      description: 'Electrostatics, Organic Chemistry, Calculus focus — 60 Qs per subject',
+      duration: 240, totalMarks: 180, negativeMarking: false,
       questions: [
-        ...physicsBank.slice(20, 40),
-        ...chemistryBank.slice(20, 40),
-        ...mathBank.slice(20, 40),
+        ...physicsBank.slice(60, 120),
+        ...chemistryBank.slice(60, 120),
+        ...mathBank.slice(60, 120),
       ]
     };
   }
-  if (id === 3) {
-    return {
-      id: 3, title: 'KCET Mock Test 3',
-      description: 'Modern Physics, Biomolecules, Vectors & 3D',
-      duration: 180, totalMarks: 60, negativeMarking: false,
-      questions: [
-        ...physicsBank.slice(40, 60),
-        ...chemistryBank.slice(40, 60),
-        ...mathBank.slice(40, 60),
-      ]
-    };
-  }
-  
-  // Papers 4-10: seeded shuffle of entire bank
+
+  // Papers 3-10: seeded shuffle of entire 120-question bank, taking 60 per subject
   const names = [
-    '', '', '', '',
-    'KCET Mock Test 4 – Full Syllabus Mixed',
-    'KCET Mock Test 5 – High Difficulty',
-    'KCET Mock Test 6 – Previous Year Pattern',
-    'KCET Mock Test 7 – Concept Based',
-    'KCET Mock Test 8 – Speed Test',
-    'KCET Mock Test 9 – Revision Blend',
+    '', '', '',
+    'KCET Mock Test 3 – Full Syllabus Mixed',
+    'KCET Mock Test 4 – High Difficulty',
+    'KCET Mock Test 5 – Previous Year Pattern',
+    'KCET Mock Test 6 – Concept Based',
+    'KCET Mock Test 7 – Speed Test',
+    'KCET Mock Test 8 – Revision Blend',
+    'KCET Mock Test 9 – Formula Heavy',
     'KCET Mock Test 10 – Final Practice',
   ];
   const shuffledPh = seededShuffle(physicsBank, id * 31337);
@@ -1358,12 +2610,12 @@ export function getKcetPaper(paperId) {
   return {
     id,
     title: names[id] || `KCET Mock Test ${id}`,
-    description: 'Mixed syllabus adaptive paper',
-    duration: 180, totalMarks: 60, negativeMarking: false,
+    description: 'Mixed syllabus adaptive paper — 60 Qs per subject',
+    duration: 240, totalMarks: 180, negativeMarking: false,
     questions: [
-      ...shuffledPh.slice(0, 20),
-      ...shuffledCh.slice(0, 20),
-      ...shuffledMa.slice(0, 20),
+      ...shuffledPh.slice(0, 60),
+      ...shuffledCh.slice(0, 60),
+      ...shuffledMa.slice(0, 60),
     ]
   };
 }
@@ -1387,12 +2639,12 @@ export const kcetRankBands = [
 export const allPapers = Array.from({ length: 10 }, (_, i) => {
   const id = i + 1;
   const topics = [
-    'Trend Analysis 2021-2026 | All Chapters',
+    'Trend Analysis 2016-2026 | All Chapters',
     'Electrostatics · Organic Chemistry · Calculus',
     'Modern Physics · Biomolecules · Vectors & 3D',
     'Full Syllabus Mixed | Medium Difficulty',
     'High Difficulty | Previous Year Pattern',
-    'Speed Test | 3 Hours | Mixed Topics',
+    'Speed Test | 4 Hours | Mixed Topics',
     'Concept Based | Weak-Area Focus',
     'Formula Heavy | Numerical Intensive',
     'Revision Blend | Important Topics',
@@ -1403,8 +2655,8 @@ export const allPapers = Array.from({ length: 10 }, (_, i) => {
     title: id === 1 ? 'KCET 2026 Analysis Paper' : `Mock Test ${id}`,
     topics: topics[i],
     difficulty: ['Hard', 'Hard', 'Medium', 'Medium', 'Hard', 'Easy', 'Medium', 'Hard', 'Medium', 'Hard'][i],
-    questions: 60,
-    duration: '3 Hours',
-    marks: 60,
+    questions: 180,
+    duration: '4 Hours',
+    marks: 180,
   };
 });

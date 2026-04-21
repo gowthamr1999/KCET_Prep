@@ -21,16 +21,16 @@ export default function KcetTestsPage() {
             10 Full-Length <span className="text-gradient">KCET Mock Tests</span>
           </h1>
           <p style={styles.subtitle}>
-            Physics · Chemistry · Mathematics &nbsp;|&nbsp; 60 Questions · 3 Hours · No Negative Marking
+            Physics · Chemistry · Mathematics &nbsp;|&nbsp; 180 Questions · 4 Hours · No Negative Marking
           </p>
           <div style={styles.patternBox} className="glass-panel">
             <div style={styles.patternItem}><span style={styles.patternLabel}>Papers</span><span style={styles.patternValue}>3 Subjects</span></div>
             <div style={styles.patternDivider} />
-            <div style={styles.patternItem}><span style={styles.patternLabel}>Per Subject</span><span style={styles.patternValue}>20 Questions</span></div>
+            <div style={styles.patternItem}><span style={styles.patternLabel}>Per Subject</span><span style={styles.patternValue}>60 Questions</span></div>
             <div style={styles.patternDivider} />
             <div style={styles.patternItem}><span style={styles.patternLabel}>Marking</span><span style={styles.patternValue}>+1 / 0</span></div>
             <div style={styles.patternDivider} />
-            <div style={styles.patternItem}><span style={styles.patternLabel}>Duration</span><span style={styles.patternValue}>3 Hours</span></div>
+            <div style={styles.patternItem}><span style={styles.patternLabel}>Duration</span><span style={styles.patternValue}>4 Hours</span></div>
           </div>
         </div>
 
