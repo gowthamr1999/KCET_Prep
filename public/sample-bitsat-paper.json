@@ -1,0 +1,409 @@
+{
+  "title": "BITSAT 2026 Full Mock Paper",
+  "examType": "BITSAT",
+  "year": "2026",
+  "correctMarks": 3,
+  "wrongMarks": -1,
+  "duration": 180,
+  "questions": [
+    {
+      "text": "A ball is thrown vertically upward with velocity 20 m/s. The maximum height reached (g = 10 m/s²) is:",
+      "options": ["10 m", "20 m", "40 m", "80 m"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "H = v²/2g = 400/20 = 20 m."
+    },
+    {
+      "text": "Two identical capacitors C are connected in series and then in parallel. The ratio of equivalent capacitance (series : parallel) is:",
+      "options": ["1:4", "1:2", "2:1", "4:1"],
+      "correct": 0,
+      "subject": "Physics",
+      "explanation": "Series: C/2. Parallel: 2C. Ratio = (C/2):(2C) = 1:4."
+    },
+    {
+      "text": "The de Broglie wavelength of an electron accelerated through potential V is proportional to:",
+      "options": ["V", "√V", "1/√V", "1/V"],
+      "correct": 2,
+      "subject": "Physics",
+      "explanation": "λ = h/√(2meV) ∝ 1/√V."
+    },
+    {
+      "text": "A wire of resistance 12 Ω is bent to form a complete circle. The resistance between two diametrically opposite points is:",
+      "options": ["6 Ω", "3 Ω", "12 Ω", "1 Ω"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "Each half has 6 Ω. Two halves in parallel: (6×6)/(6+6) = 3 Ω."
+    },
+    {
+      "text": "The escape velocity from Earth's surface (R = 6400 km, g = 9.8 m/s²) is approximately:",
+      "options": ["7.9 km/s", "11.2 km/s", "3.0 km/s", "16.0 km/s"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "v_e = √(2gR) = √(2 × 9.8 × 6.4×10⁶) ≈ 11.2 km/s."
+    },
+    {
+      "text": "In a p-n junction diode, the depletion region is formed due to:",
+      "options": ["Drift of majority carriers", "Diffusion of majority carriers", "Drift of minority carriers", "Recombination of minority carriers"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "Majority carriers (electrons from n, holes from p) diffuse across junction and recombine → depletion region."
+    },
+    {
+      "text": "The magnetic field at the centre of a circular loop of radius r carrying current I is:",
+      "options": ["μ₀I/2r", "μ₀I/4r", "μ₀Ir/2", "2μ₀I/r"],
+      "correct": 0,
+      "subject": "Physics",
+      "explanation": "B = μ₀I/(2r) at the centre of a circular current loop."
+    },
+    {
+      "text": "A block of mass 2 kg slides down a smooth incline of 30°. Its acceleration is (g = 10 m/s²):",
+      "options": ["10 m/s²", "5 m/s²", "8.66 m/s²", "2.5 m/s²"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "a = g sin30° = 10 × 0.5 = 5 m/s²."
+    },
+    {
+      "text": "For total internal reflection to occur, the light must travel from:",
+      "options": ["Rarer to denser medium at any angle", "Denser to rarer medium at angle > critical angle", "Rarer to denser at angle > critical angle", "Denser to rarer at any angle"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "TIR: light in denser medium hits denser–rarer boundary at angle ≥ critical angle."
+    },
+    {
+      "text": "Which law relates the EMF induced to rate of change of flux?",
+      "options": ["Ampere's law", "Gauss's law", "Faraday's law", "Biot-Savart law"],
+      "correct": 2,
+      "subject": "Physics",
+      "explanation": "Faraday's law: ε = −dΦ/dt (induced EMF = −rate of change of magnetic flux)."
+    },
+    {
+      "text": "The specific heat of water is 4200 J kg⁻¹ K⁻¹. Heat required to raise 500 g of water by 20°C is:",
+      "options": ["42 000 J", "4 200 J", "420 J", "84 000 J"],
+      "correct": 0,
+      "subject": "Physics",
+      "explanation": "Q = mcΔT = 0.5 × 4200 × 20 = 42 000 J."
+    },
+    {
+      "text": "A body at rest explodes into two fragments of mass ratio 1:3. The ratio of their velocities is:",
+      "options": ["1:3", "3:1", "1:9", "9:1"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "Conservation of momentum: m₁v₁ = m₂v₂ → v₁/v₂ = m₂/m₁ = 3:1."
+    },
+    {
+      "text": "Poisson's ratio is defined as:",
+      "options": ["Longitudinal strain / Lateral strain", "Lateral strain / Longitudinal strain", "Stress / Strain", "Lateral stress / Longitudinal stress"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "Poisson's ratio σ = −(lateral strain)/(longitudinal strain). Its magnitude = lateral/longitudinal."
+    },
+    {
+      "text": "The SI unit of electric flux is:",
+      "options": ["N·m/C", "N·m²/C", "V/m", "C/m²"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "Electric flux Φ = E·A → [N/C]·[m²] = N·m²/C."
+    },
+    {
+      "text": "A photon has wavelength 0.1 nm (X-ray). Its energy in keV is (h = 6.63×10⁻³⁴, c = 3×10⁸):",
+      "options": ["1.24 keV", "12.4 keV", "124 keV", "0.124 keV"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "E = hc/λ = (6.63e-34 × 3e8)/(0.1e-9) ≈ 1.99e-15 J ≈ 12.4 keV."
+    },
+    {
+      "text": "Nernst equation for electrode potential is E = E° − (RT/nF)lnQ. At 25°C, RT/F ≈ 0.025 V, so for n = 2 the Nernst term per unit log is approximately:",
+      "options": ["0.059 V", "0.030 V", "0.025 V", "0.118 V"],
+      "correct": 1,
+      "subject": "Physics",
+      "explanation": "RT/nF = 0.025/2 ≈ 0.0125 V per natural log unit → 0.0296 V per log₁₀ unit ≈ 0.030 V."
+    },
+    {
+      "text": "The enthalpy of neutralization of strong acid with strong base is approximately:",
+      "options": ["−57 kJ/mol", "−100 kJ/mol", "+57 kJ/mol", "−28 kJ/mol"],
+      "correct": 0,
+      "subject": "Chemistry",
+      "explanation": "Strong acid + strong base → water: ΔH_neut ≈ −57.3 kJ/mol (heat of ionisation of water, released)."
+    },
+    {
+      "text": "Hess's law is based on conservation of:",
+      "options": ["Mass", "Charge", "Energy", "Momentum"],
+      "correct": 2,
+      "subject": "Chemistry",
+      "explanation": "Hess's law: total enthalpy change is path-independent (first law / conservation of energy)."
+    },
+    {
+      "text": "The hybridization of carbon in CO₂ is:",
+      "options": ["sp", "sp²", "sp³", "sp³d"],
+      "correct": 0,
+      "subject": "Chemistry",
+      "explanation": "CO₂: O=C=O. Carbon has 2 bonding regions (double bonds) → sp hybridization → linear shape."
+    },
+    {
+      "text": "Which of the following has the highest boiling point?",
+      "options": ["CH₄", "C₂H₆", "C₃H₈", "n-C₄H₁₀"],
+      "correct": 3,
+      "subject": "Chemistry",
+      "explanation": "Higher molar mass → stronger London dispersion forces → higher boiling point. n-C₄H₁₀ is heaviest."
+    },
+    {
+      "text": "The order of acidic strength of haloacids is:",
+      "options": ["HF > HCl > HBr > HI", "HI > HBr > HCl > HF", "HCl > HI > HBr > HF", "HF > HI > HBr > HCl"],
+      "correct": 1,
+      "subject": "Chemistry",
+      "explanation": "Bond strength decreases down the group (H−X bond): HI weakest → easiest to ionise → strongest acid."
+    },
+    {
+      "text": "What is the product of reaction of ethanol with concentrated H₂SO₄ at 170°C?",
+      "options": ["Diethyl ether", "Ethylene", "Acetic acid", "Ethyl hydrogen sulphate"],
+      "correct": 1,
+      "subject": "Chemistry",
+      "explanation": "At 170°C, concentrated H₂SO₄ causes dehydration → CH₂=CH₂ (ethylene). At 140°C → ether."
+    },
+    {
+      "text": "Phenol is more acidic than ethanol because:",
+      "options": ["Phenol is liquid", "Phenoxide ion is stabilised by resonance with ring", "Phenol has higher molar mass", "Ethanol is a gas"],
+      "correct": 1,
+      "subject": "Chemistry",
+      "explanation": "Phenoxide ion (C₆H₅O⁻) delocalises negative charge over benzene ring → more stable → phenol loses H⁺ more readily."
+    },
+    {
+      "text": "The reaction of Grignard reagent (RMgX) with HCHO gives (after hydrolysis):",
+      "options": ["Secondary alcohol", "Tertiary alcohol", "Primary alcohol", "Aldehyde"],
+      "correct": 2,
+      "subject": "Chemistry",
+      "explanation": "RMgX + HCHO → RCH₂OMgX → RCH₂OH (primary alcohol) after hydrolysis."
+    },
+    {
+      "text": "Amino acids exist as zwitterions at:",
+      "options": ["Low pH", "High pH", "Isoelectric point", "Any pH"],
+      "correct": 2,
+      "subject": "Chemistry",
+      "explanation": "At the isoelectric point (pI), the net charge is zero; the molecule exists as a dipolar zwitterion (NH₃⁺ and COO⁻)."
+    },
+    {
+      "text": "Which is not a colligative property?",
+      "options": ["Osmotic pressure", "Elevation of boiling point", "Depression of freezing point", "Optical rotation"],
+      "correct": 3,
+      "subject": "Chemistry",
+      "explanation": "Colligative properties depend on number of solute particles, not their nature. Optical rotation depends on molecular structure."
+    },
+    {
+      "text": "The rate-determining step in SN1 reaction is:",
+      "options": ["Attack by nucleophile", "Formation of carbocation", "Loss of leaving group + nucleophile attack simultaneously", "Proton transfer"],
+      "correct": 1,
+      "subject": "Chemistry",
+      "explanation": "SN1: slow step is heterolytic C−X bond cleavage → carbocation intermediate. Rate = k[RX]."
+    },
+    {
+      "text": "Bleaching powder is a mixture of:",
+      "options": ["Ca(OH)₂ and CaCl₂", "Ca(OCl)₂ and CaCl₂", "Ca(OH)₂ and Cl₂", "CaCl(OCl) (calcium hypochlorite and chloride)"],
+      "correct": 3,
+      "subject": "Chemistry",
+      "explanation": "Bleaching powder = Ca(OCl)Cl·Ca(OH)₂ — essentially CaCl(OCl), a mixed salt of hypochlorous and hydrochloric acids."
+    },
+    {
+      "text": "The CFSE (Crystal Field Stabilisation Energy) for d⁶ in a strong field octahedral complex is:",
+      "options": ["−2.4 Δₒ", "−0.4 Δₒ", "0", "−4 Δₒ"],
+      "correct": 0,
+      "subject": "Chemistry",
+      "explanation": "Strong field d⁶: t₂g⁶ eg⁰. CFSE = 6×(−0.4Δₒ) = −2.4Δₒ (pairing energy ignored)."
+    },
+    {
+      "text": "Which lanthanide is used as a dopant in Nd:YAG lasers?",
+      "options": ["Europium", "Neodymium", "Samarium", "Gadolinium"],
+      "correct": 1,
+      "subject": "Chemistry",
+      "explanation": "Nd:YAG laser uses Neodymium (Nd³⁺) as the active dopant in yttrium aluminium garnet."
+    },
+    {
+      "text": "The number of σ and π bonds in HC≡C−CH=CH₂ respectively is:",
+      "options": ["6σ, 3π", "5σ, 3π", "6σ, 2π", "7σ, 2π"],
+      "correct": 0,
+      "subject": "Chemistry",
+      "explanation": "H−C≡C−CH=CH₂: bonds: H–C(1σ), C≡C(1σ+2π), C–C(1σ), C=C(1σ+1π), C–H×2(2σ). Total: 6σ, 3π."
+    },
+    {
+      "text": "The integral ∫₀¹ x³ dx equals:",
+      "options": ["1/2", "1/3", "1/4", "1/5"],
+      "correct": 2,
+      "subject": "Mathematics",
+      "explanation": "∫x³ dx = x⁴/4. Evaluated from 0 to 1: 1/4 − 0 = 1/4."
+    },
+    {
+      "text": "The sum of an infinite geometric series with first term a = 3 and common ratio r = 1/3 is:",
+      "options": ["3", "4", "4.5", "9/2"],
+      "correct": 2,
+      "subject": "Mathematics",
+      "explanation": "S = a/(1−r) = 3/(1−1/3) = 3/(2/3) = 9/2 = 4.5."
+    },
+    {
+      "text": "If A and B are two events with P(A) = 0.4, P(B) = 0.5 and P(A∩B) = 0.2, then P(A|B) is:",
+      "options": ["0.4", "0.5", "0.2", "0.8"],
+      "correct": 0,
+      "subject": "Mathematics",
+      "explanation": "P(A|B) = P(A∩B)/P(B) = 0.2/0.5 = 0.4."
+    },
+    {
+      "text": "The derivative of tan⁻¹(x) with respect to x is:",
+      "options": ["1/(1+x)", "1/(1+x²)", "−1/(1+x²)", "1/√(1−x²)"],
+      "correct": 1,
+      "subject": "Mathematics",
+      "explanation": "d/dx[tan⁻¹x] = 1/(1+x²)."
+    },
+    {
+      "text": "The number of ways to arrange the letters of the word 'MISSISSIPPI' is:",
+      "options": ["34 650", "69 300", "138 600", "277 200"],
+      "correct": 0,
+      "subject": "Mathematics",
+      "explanation": "11! / (4! × 4! × 2!) = 39916800 / (24 × 24 × 2) = 39916800 / 1152 = 34 650."
+    },
+    {
+      "text": "The area of the ellipse x²/a² + y²/b² = 1 is:",
+      "options": ["πab", "πa²b", "2πab", "πa²b²"],
+      "correct": 0,
+      "subject": "Mathematics",
+      "explanation": "Area of ellipse = πab (generalisation of πr² when a = b = r for a circle)."
+    },
+    {
+      "text": "If f(x) = x² − 4x + 3, the minimum value of f(x) is:",
+      "options": ["3", "−1", "0", "1"],
+      "correct": 1,
+      "subject": "Mathematics",
+      "explanation": "f'(x) = 2x − 4 = 0 → x = 2. f(2) = 4 − 8 + 3 = −1."
+    },
+    {
+      "text": "The equation of a circle with centre (2, −3) and radius 5 is:",
+      "options": ["(x+2)²+(y−3)²=25", "(x−2)²+(y+3)²=25", "(x−2)²+(y+3)²=5", "(x+2)²+(y+3)²=25"],
+      "correct": 1,
+      "subject": "Mathematics",
+      "explanation": "Standard form: (x−h)²+(y−k)²=r². h=2, k=−3, r=5 → (x−2)²+(y+3)²=25."
+    },
+    {
+      "text": "The value of lim(x→0) (sin x)/x is:",
+      "options": ["0", "∞", "1", "undefined"],
+      "correct": 2,
+      "subject": "Mathematics",
+      "explanation": "Standard limit: lim(x→0) (sin x)/x = 1 (in radians)."
+    },
+    {
+      "text": "The angle between vectors A = î + ĵ and B = î − ĵ is:",
+      "options": ["0°", "45°", "90°", "180°"],
+      "correct": 2,
+      "subject": "Mathematics",
+      "explanation": "A·B = (1)(1)+(1)(−1) = 0. cos θ = 0 → θ = 90°."
+    },
+    {
+      "text": "The solution of dy/dx = y/x with y(1) = 2 is:",
+      "options": ["y = 2x", "y = x + 1", "y = 2x²", "y = e^x"],
+      "correct": 0,
+      "subject": "Mathematics",
+      "explanation": "Separable: dy/y = dx/x → ln y = ln x + C → y = kx. y(1)=2 → k=2. So y = 2x."
+    },
+    {
+      "text": "In the arithmetic progression 3, 7, 11, …, the 20th term is:",
+      "options": ["79", "80", "83", "77"],
+      "correct": 0,
+      "subject": "Mathematics",
+      "explanation": "aₙ = a + (n−1)d = 3 + 19×4 = 3 + 76 = 79."
+    },
+    {
+      "text": "The maximum value of sin x + cos x is:",
+      "options": ["1", "√2", "2", "1/√2"],
+      "correct": 1,
+      "subject": "Mathematics",
+      "explanation": "sin x + cos x = √2 sin(x + π/4). Maximum = √2."
+    },
+    {
+      "text": "Which matrix operation is NOT defined for non-square matrices?",
+      "options": ["Addition", "Scalar multiplication", "Determinant", "Transpose"],
+      "correct": 2,
+      "subject": "Mathematics",
+      "explanation": "Determinant is defined only for square matrices."
+    },
+    {
+      "text": "The binary number 1101₂ in decimal is:",
+      "options": ["11", "12", "13", "14"],
+      "correct": 2,
+      "subject": "Mathematics",
+      "explanation": "1×8 + 1×4 + 0×2 + 1×1 = 8 + 4 + 0 + 1 = 13."
+    },
+    {
+      "text": "Choose the word that best completes: The scientist's discovery was ______, revolutionising the entire field.",
+      "options": ["trivial", "mundane", "groundbreaking", "redundant"],
+      "correct": 2,
+      "subject": "English",
+      "explanation": "'Groundbreaking' means pioneering / revolutionary, fitting 'revolutionising the field'."
+    },
+    {
+      "text": "Identify the error: 'Neither of the students have submitted their assignment.'",
+      "options": ["Neither of", "the students", "have submitted", "their assignment"],
+      "correct": 2,
+      "subject": "English",
+      "explanation": "'Neither' is singular → 'has submitted', not 'have submitted'."
+    },
+    {
+      "text": "The antonym of 'benevolent' is:",
+      "options": ["kind", "generous", "malevolent", "magnanimous"],
+      "correct": 2,
+      "subject": "English",
+      "explanation": "Benevolent = kind/charitable. Antonym: malevolent = wishing harm."
+    },
+    {
+      "text": "Choose the correctly punctuated sentence:",
+      "options": ["Its a dogs life.", "Its a dog's life.", "It's a dogs life.", "It's a dog's life."],
+      "correct": 3,
+      "subject": "English",
+      "explanation": "'It's' (it is) + 'dog's' (possessive). Both apostrophes are required."
+    },
+    {
+      "text": "The passage says: 'Despite the rain, the farmers were pleased.' The word 'despite' indicates:",
+      "options": ["Cause", "Effect", "Contrast", "Addition"],
+      "correct": 2,
+      "subject": "English",
+      "explanation": "'Despite' introduces a contrast (concession): rain is negative, farmers pleased is positive."
+    },
+    {
+      "text": "Choose the correct indirect speech: He said, 'I will come tomorrow.'",
+      "options": ["He said he will come tomorrow.", "He said he would come the next day.", "He said I would come tomorrow.", "He told he would come tomorrow."],
+      "correct": 1,
+      "subject": "English",
+      "explanation": "Reported speech: 'will' → 'would'; 'tomorrow' → 'the next day'; subject shifts to 'he'."
+    },
+    {
+      "text": "Find the odd one out: 16, 25, 36, 48, 64",
+      "options": ["16", "25", "48", "64"],
+      "correct": 2,
+      "subject": "Logical Reasoning",
+      "explanation": "16=4², 25=5², 36=6², 64=8². 48 is not a perfect square — it's the odd one out."
+    },
+    {
+      "text": "If SCHOOL is coded as SOHCOL, TEACHER is coded as:",
+      "options": ["TCAEHRE", "TAECEHR", "TEAHCRE", "TCEHARE"],
+      "correct": 0,
+      "subject": "Logical Reasoning",
+      "explanation": "Pattern: pairs of letters swap (SC→SC, HO→OH, OL→OL → SOHCOL). Applying same: TE→TE, AC→CA, HE→EH, R → TEACEHR... pattern gives TCAEHRE."
+    },
+    {
+      "text": "A is B's sister. B is C's brother. D is C's father. How is A related to D?",
+      "options": ["Son", "Daughter", "Niece", "Nephew"],
+      "correct": 1,
+      "subject": "Logical Reasoning",
+      "explanation": "A is B's sister (female). B and C are siblings. D is C's father → also B's and A's father. So A is D's daughter."
+    },
+    {
+      "text": "In a certain code, 'go home now' = 4 7 2 and 'now play here' = 2 5 8. What is the code for 'now'?",
+      "options": ["4", "7", "2", "5"],
+      "correct": 2,
+      "subject": "Logical Reasoning",
+      "explanation": "'now' appears in both phrases. The common code digit is 2."
+    },
+    {
+      "text": "Statement: All roses are flowers. All flowers are plants. Conclusion: All roses are plants.",
+      "options": ["Conclusion does not follow", "Conclusion follows", "Data is insufficient", "Conclusion partially follows"],
+      "correct": 1,
+      "subject": "Logical Reasoning",
+      "explanation": "Syllogism: All A are B; All B are C → All A are C. The conclusion 'All roses are plants' logically follows."
+    }
+  ]
+}
