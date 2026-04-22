@@ -2563,6 +2563,21 @@ function seededShuffle(arr, seed) {
   return a;
 }
 
+export const kcetTenYearBlueprint = {
+  span: '2016-2025',
+  strategy: [
+    'Physics: heavier focus on Electricity + Magnetism + Optics with moderate numericals.',
+    'Chemistry: strong NCERT-direct questions with Organic + Inorganic dominance.',
+    'Mathematics: Calculus + Vectors/3D + Matrices/Determinants as high-yield core.',
+    'Final 15-20 questions in each subject increase in calculation depth in tougher years.',
+  ],
+  difficultyMix: {
+    easy: 0.28,
+    medium: 0.5,
+    hard: 0.22,
+  },
+};
+
 export function getKcetPaper(paperId) {
   const id = parseInt(paperId, 10);
 
@@ -2592,7 +2607,7 @@ export function getKcetPaper(paperId) {
     };
   }
 
-  // Papers 3-10: seeded shuffle of entire 120-question bank, taking 60 per subject
+  // Papers 3+: seeded shuffle of entire 120-question bank, taking 60 per subject
   const names = [
     '', '', '',
     'KCET Mock Test 3 – Full Syllabus Mixed',
@@ -2602,8 +2617,32 @@ export function getKcetPaper(paperId) {
     'KCET Mock Test 7 – Speed Test',
     'KCET Mock Test 8 – Revision Blend',
     'KCET Mock Test 9 – Formula Heavy',
-    'KCET Mock Test 10 – Final Practice',
+    'KCET Mock Test 10 – Rank Pressure Challenge',
+    'KCET Mock Test 11 – 10-Year Trend Mirror',
+    'KCET Mock Test 12 – Last Mile Simulation',
   ];
+
+  // Paper 10 is made harder after feedback by sampling from harder half of each bank.
+  if (id === 10) {
+    const hardPh = seededShuffle(physicsBank.slice(50, 120), 10 * 31337);
+    const hardCh = seededShuffle(chemistryBank.slice(50, 120), 10 * 31337 + 1);
+    const hardMa = seededShuffle(mathBank.slice(50, 120), 10 * 31337 + 2);
+
+    return {
+      id,
+      title: names[id] || `KCET Mock Test ${id}`,
+      description: 'Higher-complexity paper aligned to tougher KCET years (2016-2025 trend).',
+      duration: 240,
+      totalMarks: 180,
+      negativeMarking: false,
+      questions: [
+        ...hardPh.slice(0, 60),
+        ...hardCh.slice(0, 60),
+        ...hardMa.slice(0, 60),
+      ]
+    };
+  }
+
   const shuffledPh = seededShuffle(physicsBank, id * 31337);
   const shuffledCh = seededShuffle(chemistryBank, id * 31337 + 1);
   const shuffledMa = seededShuffle(mathBank, id * 31337 + 2);
@@ -2636,7 +2675,7 @@ export const kcetRankBands = [
   { minCombined: 0,   maxCombined: 109, rankRange: '90,000+',         colleges: 'Management quota / less popular branches' },
 ];
 
-export const allPapers = Array.from({ length: 10 }, (_, i) => {
+export const allPapers = Array.from({ length: 12 }, (_, i) => {
   const id = i + 1;
   const topics = [
     'Trend Analysis 2016-2026 | All Chapters',
@@ -2648,13 +2687,15 @@ export const allPapers = Array.from({ length: 10 }, (_, i) => {
     'Concept Based | Weak-Area Focus',
     'Formula Heavy | Numerical Intensive',
     'Revision Blend | Important Topics',
-    'Final Practice | Exam Simulation',
+    'Rank Pressure | Hard Mix | 10-Year Tough Pattern',
+    '10-Year Trend Mirror | PYQ Structure Driven',
+    'Last Mile Simulation | Final Adaptive Paper',
   ];
   return {
     id,
     title: id === 1 ? 'KCET 2026 Analysis Paper' : `Mock Test ${id}`,
     topics: topics[i],
-    difficulty: ['Hard', 'Hard', 'Medium', 'Medium', 'Hard', 'Easy', 'Medium', 'Hard', 'Medium', 'Hard'][i],
+    difficulty: ['Hard', 'Hard', 'Medium', 'Medium', 'Hard', 'Easy', 'Medium', 'Hard', 'Medium', 'Hard', 'Hard', 'Hard'][i],
     questions: 180,
     duration: '4 Hours',
     marks: 180,

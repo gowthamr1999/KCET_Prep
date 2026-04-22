@@ -4,7 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { getKcetPaper, kcetRankBands } from '@/data/kcetQuestions';
+import { getKcetPaper } from '@/data/kcetQuestions';
+import { estimateKcetRank, kcetResearchSignals } from '@/lib/kcetPredictor';
+import { getScoreHistory, getStanding, saveAttempt } from '@/lib/kcetScoreHistory';
 
 // ── Helpers ─────────────────────────────────────────────────
 function formatTime(seconds) {
@@ -38,6 +40,10 @@ export default function KcetTestPage() {
   const [answers, setAnswers]   = useState({});       // { questionId: optionIndex }
   const [flagged, setFlagged]   = useState({});       // { questionId: bool }
   const [timeTaken, setTimeTaken] = useState(0);
+  const [rankEstimate, setRankEstimate] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [standing, setStanding] = useState(null);
+  const [isSavedResult, setIsSavedResult] = useState(false);
 
   // Per-subject timers: each subject gets SUBJECT_DURATION seconds
   const [subjectTimers, setSubjectTimers] = useState(
@@ -58,6 +64,17 @@ export default function KcetTestPage() {
       setTimeTaken(t => t + 1);
     }, 1000);
     return () => clearInterval(id);
+  }, [phase]);
+
+  useEffect(() => {
+    setHistory(getScoreHistory());
+  }, []);
+
+  useEffect(() => {
+    if (phase !== 'test') return;
+
+    // Ensure the question panel is visible immediately after starting the test.
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [phase]);
 
   // Lock subjects when their timer reaches 0; auto-submit when all locked
@@ -89,6 +106,7 @@ export default function KcetTestPage() {
   };
 
   const handleSubmit = useCallback(() => {
+    setIsSavedResult(false);
     setPhase('result');
   }, []);
 
@@ -107,20 +125,34 @@ export default function KcetTestPage() {
     return { correct, wrong, unattempted, perSubject };
   };
 
-  // ── Rank Prediction from KCET score ──────────────────────
-  const predictRank = (score) => {
-    // Scale mock score (out of 60) to full KCET equivalent
-    // Assume board score = 85% for prediction (270/300 as estimate)
-    const kcetFull = (score / 60) * 180; // scale to full 180 marks
-    const boardPCM = 270; // estimated board marks out of 300
-    const kcetPct  = (kcetFull / 180) * 100;
-    const boardPct = (boardPCM / 300) * 100;
-    const combined = (kcetPct + boardPct) / 2; // 50-50 formula, max 100
+  useEffect(() => {
+    if (phase !== 'result' || isSavedResult) return;
 
-    // Map combined % to rank bands
-    const band = kcetRankBands.find(b => combined >= b.minCombined);
-    return band || kcetRankBands[kcetRankBands.length - 1];
-  };
+    const { correct } = calcResults();
+    const score = correct;
+    const kcetEquivalent = (score / paper.totalMarks) * 180;
+    const difficulty = paper.id >= 10 ? 'hard' : 'moderate';
+
+    const estimate = estimateKcetRank({
+      kcetMarks: kcetEquivalent,
+      boardMarks: 270,
+      paperDifficulty: difficulty,
+      candidateGrowthPct: kcetResearchSignals.defaults.candidateGrowthPct,
+      repeaterPct: kcetResearchSignals.defaults.repeaterPct,
+    });
+
+    const nextHistory = saveAttempt({
+      paperId: paper.id,
+      score,
+      totalMarks: paper.totalMarks,
+      timeTaken,
+    });
+
+    setRankEstimate(estimate);
+    setHistory(nextHistory);
+    setStanding(getStanding(nextHistory, score));
+    setIsSavedResult(true);
+  }, [phase, isSavedResult, paper.id, paper.totalMarks, timeTaken]);
 
   // ── INTRO SCREEN ──────────────────────────────────────────
   if (phase === 'intro') {
@@ -183,6 +215,12 @@ export default function KcetTestPage() {
               })}<br />
               <span style={{ fontSize: '0.8rem' }}>All subject timers run simultaneously. When a subject's time ends, it locks automatically.</span>
             </div>
+            {history.length > 0 && (
+              <div style={{ padding: '12px 16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', marginBottom: '16px', fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                <strong style={{ color: 'var(--accent-secondary)' }}>Previous attempts on this device:</strong> {history.length}<br />
+                <span>Best score so far: {Math.max(...history.map(item => Number(item.score) || 0))}/{paper.totalMarks}</span>
+              </div>
+            )}
             <button className="btn-primary" style={{ width: '100%', padding: '18px', fontSize: '1.1rem', marginTop: '8px' }}
               onClick={() => setPhase('test')}>
               Start Test →
@@ -197,7 +235,15 @@ export default function KcetTestPage() {
   if (phase === 'result') {
     const { correct, wrong, unattempted, perSubject } = calcResults();
     const score = correct;
-    const rankBand = predictRank(score);
+    const fallbackEstimate = estimateKcetRank({
+      kcetMarks: (score / paper.totalMarks) * 180,
+      boardMarks: 270,
+      paperDifficulty: paper.id >= 10 ? 'hard' : 'moderate',
+      candidateGrowthPct: kcetResearchSignals.defaults.candidateGrowthPct,
+      repeaterPct: kcetResearchSignals.defaults.repeaterPct,
+    });
+    const effectiveEstimate = rankEstimate || fallbackEstimate;
+    const effectiveStanding = standing || getStanding(history, score);
 
     return (
       <>
@@ -230,26 +276,35 @@ export default function KcetTestPage() {
             </div>
           </div>
 
+          <div className="glass-panel" style={{ ...styles.rankCard, marginTop: '8px', borderColor: 'rgba(0,245,212,0.25)' }}>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '10px' }}>🏁 Standing Tracker</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '12px' }}>
+              <div style={styles.standingPill}><span style={styles.standingLabel}>Previous Best</span><span style={styles.standingValue}>{effectiveStanding.previousBest ?? '-'} / {paper.totalMarks}</span></div>
+              <div style={styles.standingPill}><span style={styles.standingLabel}>Attempts</span><span style={styles.standingValue}>{effectiveStanding.totalAttempts}</span></div>
+              <div style={styles.standingPill}><span style={styles.standingLabel}>Average Score</span><span style={styles.standingValue}>{effectiveStanding.averageScore ? effectiveStanding.averageScore.toFixed(1) : '-'}</span></div>
+              <div style={styles.standingPill}><span style={styles.standingLabel}>Percentile</span><span style={styles.standingValue}>{effectiveStanding.percentile.toFixed(1)}%</span></div>
+            </div>
+          </div>
+
           {/* Rank Prediction */}
           <div className="glass-panel" style={{ ...styles.rankCard, borderColor: 'rgba(123, 44, 191, 0.4)' }}>
             <h2 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '4px' }}>🎯 KCET Rank Prediction</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '20px' }}>
-              Based on your mock score + estimated board marks of 270/300 (85%)
+              50:50 formula + trend factors: paper difficulty, candidate growth, repeaters
             </p>
             <div style={styles.rankDisplay}>
               <div>
-                <div style={styles.rankValue}>{rankBand.rankRange}</div>
+                <div style={styles.rankValue}>{effectiveEstimate.estimatedRankRange}</div>
                 <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Estimated Rank</div>
               </div>
               <div style={styles.rankDivider} />
               <div>
-                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--accent-secondary)' }}>{rankBand.colleges}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--accent-secondary)' }}>{effectiveEstimate.colleges}</div>
                 <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '4px' }}>Likely Admission at</div>
               </div>
             </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '16px' }}>
-              ⚠️ This is an estimate. Actual rank depends on your real board marks, competition, and KCET difficulty level.
-              Visit <strong>/kcet</strong> to use our full rank predictor with custom board marks.
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '16px', lineHeight: 1.6 }}>
+              Combined score index: {effectiveEstimate.adjustedIndex.toFixed(2)} | Difficulty: {effectiveEstimate.factors.paperDifficulty} | Candidate growth: {effectiveEstimate.factors.candidateGrowthPct}% | Reappearing candidates: {effectiveEstimate.factors.repeaterPct}%.
             </p>
           </div>
 
@@ -324,7 +379,7 @@ export default function KcetTestPage() {
 
           <div style={{ display: 'flex', gap: '16px', marginTop: '32px', justifyContent: 'center' }}>
             <Link href="/kcet/tests"><button className="btn-secondary">← All Tests</button></Link>
-            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged({}); setCurrent(0); setTimeTaken(0); setSubjectTimers(Object.fromEntries(subjects.map(s => [s, SUBJECT_DURATION]))); setLockedSubjects(new Set()); setPhase('intro'); }}>
+            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged({}); setCurrent(0); setTimeTaken(0); setSubjectTimers(Object.fromEntries(subjects.map(s => [s, SUBJECT_DURATION]))); setLockedSubjects(new Set()); setRankEstimate(null); setStanding(null); setIsSavedResult(false); setPhase('intro'); }}>
               Retake Test
             </button>
             <Link href="/kcet"><button className="btn-secondary">Rank Predictor →</button></Link>
@@ -691,5 +746,25 @@ const styles = {
     padding: '4px 0',
     borderBottom: '1px solid rgba(255,255,255,0.04)',
     fontSize: '0.9rem',
+  },
+  standingPill: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+    padding: '12px 14px',
+    borderRadius: '10px',
+    background: 'rgba(255,255,255,0.03)',
+    border: '1px solid rgba(255,255,255,0.08)',
+  },
+  standingLabel: {
+    fontSize: '0.72rem',
+    color: 'var(--text-muted)',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+  },
+  standingValue: {
+    fontWeight: 700,
+    fontSize: '1rem',
+    color: 'var(--accent-secondary)',
   },
 };

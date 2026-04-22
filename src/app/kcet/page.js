@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { estimateKcetRank, kcetResearchSignals } from '@/lib/kcetPredictor';
 
 export default function KcetPage() {
   const [boardPhysics, setBoardPhysics] = useState(100);
@@ -13,6 +14,10 @@ export default function KcetPage() {
   const [kcetChemistry, setKcetChemistry] = useState(60);
   const [kcetMaths, setKcetMaths] = useState(60);
 
+  const [paperDifficulty, setPaperDifficulty] = useState('moderate');
+  const [candidateGrowthPct, setCandidateGrowthPct] = useState(kcetResearchSignals.defaults.candidateGrowthPct);
+  const [repeaterPct, setRepeaterPct] = useState(kcetResearchSignals.defaults.repeaterPct);
+
   const [prediction, setPrediction] = useState(null);
 
   const calculateRank = (e) => {
@@ -20,35 +25,25 @@ export default function KcetPage() {
     
     // KCET marks out of 180 (60 per subject)
     const totalKcet = Number(kcetPhysics) + Number(kcetChemistry) + Number(kcetMaths);
-    const kcetPercentage = (totalKcet / 180) * 100;
 
     // Board PCM marks out of 300 (100 per subject)
     const totalBoard = Number(boardPhysics) + Number(boardChemistry) + Number(boardMaths);
-    const boardPercentage = (totalBoard / 300) * 100;
 
-    // KCET rank is calculated based on 50% Board PCM and 50% KCET marks
-    const combinedPercentage = (kcetPercentage * 0.5) + (boardPercentage * 0.5);
-
-    // Apply Rank Inflation Factor
-    // Due to increasing competition, the same percentage yields a lower rank compared to past years.
-    // For 2026, we apply a simulated inflation penalty (-2.5% to shift thresholds).
-    const inflatedPercentage = combinedPercentage - 2.5;
-
-    let estimatedRank = '';
-    if (inflatedPercentage >= 95) estimatedRank = '1 - 600';
-    else if (inflatedPercentage >= 90) estimatedRank = '600 - 3,500';
-    else if (inflatedPercentage >= 85) estimatedRank = '3,500 - 12,000';
-    else if (inflatedPercentage >= 80) estimatedRank = '12,000 - 25,000';
-    else if (inflatedPercentage >= 70) estimatedRank = '25,000 - 55,000';
-    else if (inflatedPercentage >= 60) estimatedRank = '55,000 - 95,000';
-    else if (inflatedPercentage >= 50) estimatedRank = '95,000 - 1,40,000';
-    else estimatedRank = '1,40,000+';
+    const estimate = estimateKcetRank({
+      kcetMarks: totalKcet,
+      boardMarks: totalBoard,
+      paperDifficulty,
+      candidateGrowthPct,
+      repeaterPct,
+    });
 
     setPrediction({
       totalKcet,
       totalBoard,
-      combinedPercentage: combinedPercentage.toFixed(2),
-      estimatedRank
+      combinedPercentage: estimate.combined.toFixed(2),
+      estimatedRank: estimate.estimatedRankRange,
+      colleges: estimate.colleges,
+      adjustedIndex: estimate.adjustedIndex.toFixed(2),
     });
   };
 
@@ -85,7 +80,7 @@ export default function KcetPage() {
       <main style={styles.main}>
         <section style={styles.header}>
           <h1 style={styles.title}>KCET 2026 <span className="text-gradient">Predictor & Analysis</span></h1>
-          <p style={styles.subtitle}>Calculate your expected rank based on the KCET 50-50 weightage rule (50% Boards + 50% KCET) and practice highly probable questions analyzed from the last 5 years of papers.</p>
+          <p style={styles.subtitle}>Calculate your expected rank with 50:50 weighting and trend adjustments (paper difficulty + competition), plus question patterns analyzed from the last 10 years.</p>
         </section>
 
         <div style={styles.container}>
@@ -127,6 +122,26 @@ export default function KcetPage() {
                   </div>
                 </div>
 
+                <h3 style={{...styles.sectionHeading, marginTop: '20px'}}>Trend Factors (Web Analysis Inputs)</h3>
+                <div style={styles.inputGrid}>
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Paper Difficulty</label>
+                    <select value={paperDifficulty} onChange={(e) => setPaperDifficulty(e.target.value)} style={styles.input}>
+                      <option value="easy">Easy (rank inflation)</option>
+                      <option value="moderate">Moderate</option>
+                      <option value="hard">Hard</option>
+                    </select>
+                  </div>
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Candidate Growth %</label>
+                    <input type="number" min="0" max="20" step="0.1" value={candidateGrowthPct} onChange={(e) => setCandidateGrowthPct(e.target.value)} style={styles.input} />
+                  </div>
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Reappearing %</label>
+                    <input type="number" min="0" max="60" step="0.1" value={repeaterPct} onChange={(e) => setRepeaterPct(e.target.value)} style={styles.input} />
+                  </div>
+                </div>
+
                 <button type="submit" className="btn-primary" style={{marginTop: '24px', width: '100%'}}>
                   Calculate Expected Rank
                 </button>
@@ -148,10 +163,15 @@ export default function KcetPage() {
                       <span style={styles.resultLabel}>Combined Score</span>
                       <span style={styles.resultValue}>{prediction.combinedPercentage}%</span>
                     </div>
+                    <div style={styles.resultItem}>
+                      <span style={styles.resultLabel}>Adjusted Index</span>
+                      <span style={styles.resultValue}>{prediction.adjustedIndex}</span>
+                    </div>
                   </div>
                   <div style={{marginTop: '20px', padding: '16px', background: 'rgba(123, 44, 191, 0.1)', borderRadius: '12px', textAlign: 'center'}}>
                     <span style={styles.resultLabel}>Estimated KCET 2026 Rank</span>
                     <div style={{fontSize: '2.5rem', fontWeight: '800', color: 'var(--accent-primary)', marginTop: '8px'}}>{prediction.estimatedRank}</div>
+                    <p style={{fontSize: '0.88rem', color: 'var(--accent-secondary)', marginTop: '8px'}}>{prediction.colleges}</p>
                     <p style={{fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '8px'}}>*Rank is approximate and based on historical trends.</p>
                   </div>
                 </div>
@@ -163,7 +183,7 @@ export default function KcetPage() {
               <p style={{color: 'var(--text-muted)', lineHeight: '1.6', fontSize: '0.95rem'}}>
                 The Karnataka Examination Authority (KEA) determines KCET engineering ranks by taking <strong>50% weightage from the KCET marks</strong> (out of 180 in Physics, Chemistry, and Mathematics) and <strong>50% weightage from your 2nd PUC / 12th Board marks</strong> in the same three subjects. 
                 <br/><br/>
-                Our predictor calculates your combined aggregate percentage and compares it against historical rank vs. percentage data from 2021-2025 to give you a highly accurate estimate.
+                This predictor also adjusts for year-to-year movement by considering paper difficulty, candidate growth, and reappearing-candidate pressure reported in recent trend analysis.
               </p>
             </div>
           </div>
@@ -173,7 +193,7 @@ export default function KcetPage() {
             <div className="glass-panel" style={styles.card}>
               <h2 style={styles.cardTitle}>🎯 2026 Mock Questions (5-Year Analysis)</h2>
               <p style={{color: 'var(--text-muted)', marginBottom: '24px', fontSize: '0.95rem'}}>
-                We analyzed past KCET papers (2021 - 2025) to identify the most repeated patterns and concepts. Here are expected high-probability questions for 2026.
+                We analyzed past KCET papers (2016 - 2025) to identify the most repeated patterns and concepts. Here are expected high-probability questions for 2026.
               </p>
 
               <div style={styles.questionsList}>

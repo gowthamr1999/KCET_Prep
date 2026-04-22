@@ -18,7 +18,7 @@ export default function KcetTestsPage() {
         <div style={styles.header}>
           <div style={styles.badge}>KCET Mock Tests</div>
           <h1 style={styles.title}>
-            10 Full-Length <span className="text-gradient">KCET Mock Tests</span>
+            12 Full-Length <span className="text-gradient">KCET Mock Tests</span>
           </h1>
           <p style={styles.subtitle}>
             Physics · Chemistry · Mathematics &nbsp;|&nbsp; 180 Questions · 4 Hours · No Negative Marking
@@ -88,12 +88,12 @@ export default function KcetTestsPage() {
               </ul>
             </div>
             <div>
-              <h4 style={styles.tipHead}>5-Year Trend (2021–2025)</h4>
+              <h4 style={styles.tipHead}>10-Year Trend (2016–2025)</h4>
               <ul style={styles.tipList}>
                 <li>Physics: 30% Mechanics, 25% Modern Physics</li>
                 <li>Chemistry: 35% Organic, 30% Physical Chem</li>
                 <li>Math: 40% Calculus, 25% Coordinate Geometry</li>
-                <li>Difficulty: Moderate to hard</li>
+                <li>Difficulty: Moderate to hard, with easier-year rank inflation</li>
               </ul>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+import { kcetTenYearBlueprint } from '@/data/kcetQuestions';
 
 // ── 5-Year Data (2020–2024) from KCET official papers ────────
 const YEARS = ['2020', '2021', '2022', '2023', '2024'];
@@ -226,11 +227,11 @@ export default function KcetAnalysisPage() {
             </ol>
           </nav>
           <h1 style={styles.title}>
-            KCET <span className="text-gradient">5-Year Analysis</span>
+            KCET <span className="text-gradient">10-Year Analysis</span>
           </h1>
           <p style={styles.subtitle}>
-            Chapter-wise question weightage for Physics, Chemistry &amp; Mathematics (2020–2024)
-            — aligned to predict the <strong>2026 paper pattern</strong>.
+            Question preparation blueprint for Physics, Chemistry &amp; Mathematics (2016–2025),
+            with detailed visuals from the latest stable window (2020–2024).
           </p>
         </header>
 
@@ -252,9 +253,24 @@ export default function KcetAnalysisPage() {
           ))}
         </section>
 
+        <section className="glass-panel" style={styles.section}>
+          <h2 style={styles.sectionTitle}>10-Year Preparation Blueprint (2016-2025)</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '14px', lineHeight: 1.7 }}>
+            Paper generation now follows this long-horizon framework before creating each mock. This reduces easy-paper bias and keeps the pattern close to real KCET progression.
+          </p>
+          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            {kcetTenYearBlueprint.strategy.map((line) => (
+              <li key={line}>• {line}</li>
+            ))}
+          </ul>
+          <p style={{ marginTop: '14px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+            Difficulty mix target: Easy {Math.round(kcetTenYearBlueprint.difficultyMix.easy * 100)}% · Medium {Math.round(kcetTenYearBlueprint.difficultyMix.medium * 100)}% · Hard {Math.round(kcetTenYearBlueprint.difficultyMix.hard * 100)}%
+          </p>
+        </section>
+
         {/* Difficulty Timeline */}
         <section aria-labelledby="difficulty-heading" className="glass-panel" style={styles.section}>
-          <h2 id="difficulty-heading" style={styles.sectionTitle}>Difficulty Trend 2020–2024</h2>
+          <h2 id="difficulty-heading" style={styles.sectionTitle}>Recent Difficulty Window (2020–2024)</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '16px' }}>
             Scored 1 (Easy) → 5 (Hard) based on question complexity analysis.
           </p>
