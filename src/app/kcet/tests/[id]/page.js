@@ -148,6 +148,20 @@ export default function KcetTestPage() {
       timeTaken,
     });
 
+    // Fire-and-forget to server — does not block UI
+    fetch('/api/track-attempt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        paperId: paper.id,
+        paperName: paper.name,
+        score,
+        totalMarks: paper.totalMarks,
+        timeTaken,
+        examType: 'kcet',
+      }),
+    }).catch(() => { /* silently ignore if offline */ });
+
     setRankEstimate(estimate);
     setHistory(nextHistory);
     setStanding(getStanding(nextHistory, score));
