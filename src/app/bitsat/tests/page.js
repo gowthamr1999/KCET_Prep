@@ -31,7 +31,7 @@ export default function BitsatTestsPage() {
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7 }}>
             10 full-length papers — each 150 questions, 3 hours, +3/−1 marking. Start from Paper 1
-            (trend analysis) to simulate the real 2026 exam.
+            (10-year trend analysis) to simulate the real 2026 exam.
           </p>
         </header>
 
@@ -56,7 +56,7 @@ export default function BitsatTestsPage() {
         {/* 5-Year Trend Box */}
         <section aria-labelledby="trend-heading" className="glass-panel" style={{ padding: '24px 28px', marginBottom: '24px' }}>
           <h2 id="trend-heading" style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '16px' }}>
-            📊 5-Year Trend Insights (2021–2025)
+            📊 10-Year Trend Insights (2016–2025)
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
             {[

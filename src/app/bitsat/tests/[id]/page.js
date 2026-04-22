@@ -6,6 +6,10 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { getBitsatPaper, bitsatRankBands } from '@/data/bitsatQuestions';
 
+function safeNumber(value, fallback = 0) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
 // ── Helpers ─────────────────────────────────────────────────
 function formatTime(secs) {
   const h = Math.floor(secs / 3600);
@@ -46,6 +50,10 @@ export default function BitsatTestPage() {
   const [timeLeft,  setTimeLeft] = useState(TOTAL_SECS);
   const [timeTaken, setTimeTaken]= useState(0);
   const [activeSection, setActiveSection] = useState('Physics');
+  const [insight, setInsight] = useState(null);
+  const [isSyncingInsight, setIsSyncingInsight] = useState(false);
+  const [insightError, setInsightError] = useState('');
+  const [isSavedResult, setIsSavedResult] = useState(false);
 
   const timerRef = useRef(null);
 
@@ -69,6 +77,63 @@ export default function BitsatTestPage() {
     }, 1000);
     return () => clearInterval(timerRef.current);
   }, [phase, submitTest]);
+
+  useEffect(() => {
+    if (phase !== 'result' || isSavedResult) return;
+
+    let ignore = false;
+
+    async function syncInsight() {
+      try {
+        setIsSyncingInsight(true);
+        setInsightError('');
+
+        const response = await fetch('/api/bitsat-insights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paperId: paper.id,
+            paperName: paper.title,
+            score,
+            totalMarks,
+            timeTaken,
+            sectionStats,
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data?.error || 'Unable to fetch BITSAT standing right now.');
+        }
+
+        if (!ignore) {
+          setInsight(data);
+          setIsSavedResult(true);
+        }
+      } catch (err) {
+        if (!ignore) {
+          setInsightError(err.message || 'Unable to fetch BITSAT standing right now.');
+          setIsSavedResult(true);
+        }
+      } finally {
+        if (!ignore) setIsSyncingInsight(false);
+      }
+    }
+
+    syncInsight();
+    return () => {
+      ignore = true;
+    };
+  }, [
+    phase,
+    isSavedResult,
+    paper.id,
+    paper.title,
+    score,
+    totalMarks,
+    timeTaken,
+    sectionStats,
+  ]);
 
   // ── Scoring ────────────────────────────────────────────────
   const correct    = questions.filter(q => answers[q.id] === q.correct).length;
@@ -240,6 +305,61 @@ export default function BitsatTestPage() {
             </section>
           )}
 
+          {/* Benchmark + standing */}
+          <section aria-labelledby="standing-heading" className="glass-panel" style={{ padding: '28px', marginBottom: '20px' }}>
+            <h2 id="standing-heading" style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '18px' }}>🏁 Standing & Previous Best</h2>
+            {isSyncingInsight && <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem' }}>Syncing with leaderboard data...</p>}
+            {insightError && <p style={{ color: '#ff5a7e', fontSize: '0.86rem' }}>{insightError}</p>}
+            {insight && (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '12px', marginBottom: '16px' }}>
+                  <div style={styles.predBox}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>This Test Rank</div>
+                    <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#fee440' }}>
+                      #{safeNumber(insight?.testStanding?.rank, 1)} / {safeNumber(insight?.testStanding?.attempts, 1)}
+                    </div>
+                  </div>
+                  <div style={styles.predBox}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>This Test Percentile</div>
+                    <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#00f5d4' }}>
+                      {safeNumber(insight?.testStanding?.percentile, 100)}%
+                    </div>
+                  </div>
+                  <div style={styles.predBox}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Previous Best (Overall)</div>
+                    <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#c77dff' }}>
+                      {safeNumber(insight?.previousBestOverall, 0)} / {totalMarks}
+                    </div>
+                  </div>
+                  <div style={styles.predBox}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Global Percentile</div>
+                    <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#378ADD' }}>
+                      {safeNumber(insight?.globalStanding?.percentile, 100)}%
+                    </div>
+                  </div>
+                </div>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.76rem', marginBottom: '14px' }}>
+                  {insight.benchmarkNote}
+                </p>
+                {!!insight.previousBestBySubject?.length && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
+                    {insight.previousBestBySubject.map((subjectRow) => (
+                      <div key={subjectRow.subject} style={styles.statBox}>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{subjectRow.subject}</div>
+                        <div style={{ marginTop: '6px', fontWeight: 700, color: '#fff' }}>
+                          You: {safeNumber(subjectRow.currentSectionScore, 0)}
+                        </div>
+                        <div style={{ marginTop: '2px', color: '#fee440', fontWeight: 700, fontSize: '0.88rem' }}>
+                          Previous Best: {safeNumber(subjectRow.previousBestScore, 0)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </section>
+
           {/* Section-wise analysis */}
           <section aria-labelledby="section-analysis-heading" className="glass-panel" style={{ padding: '28px', marginBottom: '20px' }}>
             <h2 id="section-analysis-heading" style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '18px' }}>Section-wise Analysis</h2>
@@ -317,7 +437,7 @@ export default function BitsatTestPage() {
 
           {/* Actions */}
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '32px' }}>
-            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setPhase('intro'); }}>
+            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setInsight(null); setInsightError(''); setIsSyncingInsight(false); setIsSavedResult(false); setPhase('intro'); }}>
               Retake Test
             </button>
             <Link href="/bitsat/tests"><button className="btn-secondary">All BITSAT Tests</button></Link>

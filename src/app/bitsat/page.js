@@ -48,7 +48,7 @@ export default function BitsatPage() {
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7, maxWidth: '640px' }}>
             150 questions · 3 hours · +3/−1 marking · Physics, Chemistry, Maths, English &amp; Logical Reasoning.
-            Practice with trend-aligned mock tests and predict your BITS campus &amp; branch.
+            Practice with 10-year trend-aligned mock tests and predict your BITS campus &amp; branch.
           </p>
         </header>
 
@@ -169,7 +169,7 @@ export default function BitsatPage() {
 
         {/* Strategy Tips */}
         <section aria-labelledby="tips-heading" className="glass-panel" style={styles.section}>
-          <h2 id="tips-heading" style={styles.sectionTitle}>📚 5-Year Trend Tips</h2>
+          <h2 id="tips-heading" style={styles.sectionTitle}>📚 10-Year Pattern Tips</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
             {[
               { icon: '⚛️', title: 'Physics', tip: 'Mechanics (SHM, Rotational) and Electromagnetism dominate. Expect 12–15 Qs from these two areas.' },

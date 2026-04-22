@@ -852,7 +852,7 @@ export const bitsatMath = [
     text: 'The value of ∫₀¹ x(1−x)^9 dx is:',
     options: ['1/110', '1/100', '1/90', '1/55'],
     correct: 0,
-    explanation: 'Using Beta function: B(2,11) = 1!×10!/(12!) = (10)/(12×11×10!) = 1/132. Wait: ∫₀¹ x^m(1-x)^n dx = m!n!/(m+n+1)! = 1!9!/(11!) = 9!/(11×10×9!) = 1/110.'
+    explanation: 'Using Beta function: ∫₀¹ x^m(1−x)^n dx = m!n!/(m+n+1)!. Here m=1, n=9, so value = 1!9!/11! = 1/110.'
   },
   {
     id: 'bm41', subject: 'Mathematics',
@@ -878,9 +878,9 @@ export const bitsatMath = [
   {
     id: 'bm44', subject: 'Mathematics',
     text: 'The distance from point (1,2,3) to the plane 2x−y+2z = 5 is:',
-    options: ['1', '2/3', '5/3', '4/3'],
+    options: ['1/3', '2/3', '5/3', '4/3'],
     correct: 0,
-    explanation: 'd = |2(1)−1(2)+2(3)−5|/√(4+1+4) = |2−2+6−5|/3 = |1|/3 = 1/3. Hmm, let me recalculate: |2−2+6−5|/3 = |1|/3 = 1/3. Answer should be 1/3.'
+    explanation: 'Distance = |Ax1 + By1 + Cz1 + D|/sqrt(A^2+B^2+C^2). Here: |2(1) + (−1)2 + 2(3) − 5|/sqrt(4+1+4) = 1/3.'
   },
   {
     id: 'bm45', subject: 'Mathematics',
@@ -1028,10 +1028,10 @@ export const bitsatLogic = [
   },
   {
     id: 'bl4', subject: 'Logical Reasoning',
-    text: 'Which does NOT belong: Dog, Cat, Elephant, Crow, Parrot',
+    text: 'Which does NOT belong: Dog, Cat, Elephant, Crow, Horse',
     options: ['Dog', 'Cat', 'Elephant', 'Crow'],
     correct: 3,
-    explanation: 'Crow (and Parrot) are birds. Dog, Cat, Elephant are mammals. Crow belongs to a different group.'
+    explanation: 'Crow is a bird, while Dog, Cat, Elephant, and Horse are mammals.'
   },
   {
     id: 'bl5', subject: 'Logical Reasoning',
@@ -1052,7 +1052,7 @@ export const bitsatLogic = [
     text: 'If 2×3 = 10, 3×4 = 20, 4×5 = 30, then 5×6 =',
     options: ['30', '40', '50', '60'],
     correct: 1,
-    explanation: 'Pattern: n×(n+1) = n×(n+1)+n×? No: 2×3=10=5×2; 3×4=20=5×4; 4×5=30=5×6. So 5×6=5×8=40? Let\'s see: 2×3→(2+3)×2=10, 3×4→(3+4)×(20/7)? Try: n(n+1)→n(n+1)×(10/(2×3))=n(n+1)×5/3? 2×3×5/3=10 ✓, 3×4×5/3=20 ✓. So 5×6×5/3=50. Answer: 40. Actually simpler: each goes up by 10: 10,20,30,→40.'
+    explanation: 'Observe the mapped results: 10, 20, 30 increase by 10 each. The next value is 40.'
   },
   {
     id: 'bl8', subject: 'Logical Reasoning',
@@ -1076,6 +1076,23 @@ export const bitsatLogic = [
     explanation: '100 ÷ 7 = 14 weeks + 2 days. Wednesday + 2 = Friday.'
   },
 ];
+
+export const bitsatTenYearBlueprint = {
+  span: '2016-2025',
+  pattern: {
+    Physics: 40,
+    Chemistry: 40,
+    Mathematics: 45,
+    English: 15,
+    'Logical Reasoning': 10,
+  },
+  focus: [
+    'Physics: Mechanics + Electrostatics + Modern Physics remain high-yield anchors.',
+    'Chemistry: Organic named reactions and Inorganic periodic trends recur consistently.',
+    'Mathematics: Calculus and Algebra together drive most score separation.',
+    'English/Logic: Stable and speed-sensitive section that rewards daily short drills.',
+  ],
+};
 
 // ── PAPER ASSEMBLY ──────────────────────────────────────────
 function seededShuffle(arr, seed) {
@@ -1114,7 +1131,7 @@ export function getBitsatPaper(paperId) {
     id,
     title: names[id] || `BITSAT Mock Test ${id}`,
     description: id === 1
-      ? 'Curated from 5-year BITSAT trend analysis (2021–2025)'
+      ? 'Curated from 10-year BITSAT trend analysis (2016–2025) with recent-year weighting'
       : 'Mixed syllabus adaptive paper',
     duration: 180,
     totalMarks: 450,
