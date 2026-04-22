@@ -8,9 +8,9 @@ const EXAMS = [
     title: 'KCET',
     subtitle: 'Karnataka CET',
     desc: '10 full-length mock tests · 60 questions · Physics, Chemistry & Mathematics · 80 min per subject',
-    color: '#00f5d4',
-    bg: 'rgba(0,245,212,0.08)',
-    border: 'rgba(0,245,212,0.25)',
+    color: '#8c9a95',
+    bg: 'rgba(140,154,149,0.10)',
+    border: 'rgba(140,154,149,0.24)',
     links: [
       { label: 'Start Mock Test', href: '/kcet/tests', primary: true },
       { label: 'Rank Predictor', href: '/kcet', primary: false },
@@ -22,10 +22,10 @@ const EXAMS = [
     icon: '🚀',
     title: 'BITSAT',
     subtitle: 'BITS Aptitude Test',
-    desc: '10 full-length mock tests · 150 questions · Physics, Chemistry, Maths, English & Logical Reasoning · 3 hours',
-    color: '#c77dff',
-    bg: 'rgba(199,125,255,0.08)',
-    border: 'rgba(199,125,255,0.25)',
+    desc: '17 full-length mock tests (including year-wise memory-based papers) · 150 questions · Physics, Chemistry, Maths, English & Logical Reasoning · 3 hours',
+    color: '#9ca8a4',
+    bg: 'rgba(156,168,164,0.10)',
+    border: 'rgba(156,168,164,0.24)',
     links: [
       { label: 'Start Mock Test', href: '/bitsat/tests', primary: true },
       { label: 'Score Predictor', href: '/bitsat', primary: false },
@@ -36,31 +36,31 @@ const EXAMS = [
 const FEATURES = [
   {
     icon: '⏱️',
-    color: 'rgba(0,245,212,0.1)',
+    color: 'rgba(140,154,149,0.12)',
     title: 'Real Exam Timer',
     desc: 'Subject-wise countdowns matching the actual exam pattern. Auto-submits when time runs out — no surprises on exam day.',
   },
   {
     icon: '📊',
-    color: 'rgba(199,125,255,0.1)',
+    color: 'rgba(156,168,164,0.12)',
     title: 'Instant Results & Analysis',
     desc: 'Correct / wrong / skipped breakdown per subject. See exactly which questions you got wrong and why.',
   },
   {
     icon: '🎯',
-    color: 'rgba(254,228,64,0.1)',
+    color: 'rgba(183,189,185,0.12)',
     title: 'Rank Prediction',
     desc: 'Enter your mock score and get an estimated KCET rank or BITSAT score band based on historical cutoffs.',
   },
   {
     icon: '📈',
-    color: 'rgba(0,245,212,0.08)',
+    color: 'rgba(140,154,149,0.10)',
     title: '5-Year Trend Analysis',
     desc: 'Chapter-wise difficulty trends from 2021–2025 so you know exactly what to focus on before the real exam.',
   },
   {
     icon: '📤',
-    color: 'rgba(123,44,191,0.1)',
+    color: 'rgba(95,118,111,0.14)',
     title: 'Upload Your Own Paper',
     desc: 'Have a past paper PDF or JSON? Upload it and take it as a timed mock test — works with any exam.',
   },
@@ -87,7 +87,7 @@ export default function Home() {
           </h1>
           <p className="hero-subtitle">
             Practice with realistic timed tests, get instant results, predict your rank,
-            and study 5-year exam trends — all for free, right in your browser.
+            and study 5-year exam trends with year-wise memory-based BITSAT papers — all for free, right in your browser.
           </p>
           <div className="hero-cta-row">
             <Link href="/kcet/tests">
@@ -134,7 +134,7 @@ export default function Home() {
                   <div className="exam-links">
                     {exam.links.map(({ label, href, primary }) => (
                       <Link key={href} href={href} style={{ flex: primary ? '1 1 100%' : 1 }}>
-                        <button className={primary ? 'btn-primary exam-link-btn' : 'btn-secondary exam-link-btn'} style={primary ? { background: `linear-gradient(135deg, ${exam.color}33, ${exam.color}11)`, border: `1px solid ${exam.border}`, color: exam.color } : {}}>
+                        <button className={primary ? 'btn-primary exam-link-btn' : 'btn-secondary exam-link-btn'} style={primary ? { background: exam.color, border: `1px solid ${exam.border}`, color: '#ffffff' } : {}}>
                           {label}
                         </button>
                       </Link>

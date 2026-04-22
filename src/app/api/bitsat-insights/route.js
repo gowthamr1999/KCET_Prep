@@ -30,6 +30,7 @@ export async function POST(request) {
       score,
       totalMarks,
       timeTaken,
+      candidateName,
       sectionStats = [],
     } = body;
 
@@ -62,14 +63,33 @@ export async function POST(request) {
       ? seededPaperBest
       : Math.max(historicalPaperBest, seededPaperBest);
 
-    const { error: insertError } = await supabase.from('test_attempts').insert({
+    const baseInsertRow = {
       paper_id: paperId,
       paper_name: paperName ?? null,
       score,
       total_marks: totalMarks,
       time_taken_seconds: typeof timeTaken === 'number' ? timeTaken : null,
       exam_type: 'bitsat',
-    });
+    };
+
+    const cleanName = typeof candidateName === 'string' ? candidateName.trim().slice(0, 50) : '';
+    let insertError = null;
+
+    if (cleanName) {
+      const withName = await supabase.from('test_attempts').insert({
+        ...baseInsertRow,
+        candidate_name: cleanName,
+      });
+      insertError = withName.error;
+
+      if (insertError && /candidate_name|column/i.test(insertError.message || '')) {
+        const fallback = await supabase.from('test_attempts').insert(baseInsertRow);
+        insertError = fallback.error;
+      }
+    } else {
+      const withoutName = await supabase.from('test_attempts').insert(baseInsertRow);
+      insertError = withoutName.error;
+    }
 
     if (insertError) {
       console.error('bitsat-insights insert error:', insertError.message);

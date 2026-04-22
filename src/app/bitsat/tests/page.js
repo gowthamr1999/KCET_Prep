@@ -4,11 +4,25 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { allBitsatPapers } from '@/data/bitsatQuestions';
 
-const difficultyMap = [
-  '', 'Analysis Paper', 'Easy', 'Easy', 'Medium', 'Hard',
-  'Medium', 'Medium', 'Hard', 'Medium', 'Hard',
-];
-const diffColor = { 'Analysis Paper': '#c77dff', Easy: '#00f5d4', Medium: '#fee440', Hard: '#ff5a7e' };
+function getPaperTag(id) {
+  if (id === 1) return 'Analysis Paper';
+  if (id === 11) return 'Phase 2 Forecast';
+  if (id === 12) return 'Phase 1 Memory';
+  if (id >= 13 && id <= 17) return 'Yearly Memory';
+  if (id === 5 || id === 10) return 'Hard';
+  if (id === 2 || id === 3) return 'Easy';
+  return 'Medium';
+}
+
+const diffColor = {
+  'Analysis Paper': '#a5a0b2',
+  Easy: '#9cb4ab',
+  Medium: '#b5a98a',
+  Hard: '#a77f85',
+  'Phase 2 Forecast': '#96aba1',
+  'Phase 1 Memory': '#9aa7b3',
+  'Yearly Memory': '#8f9aa3',
+};
 
 export default function BitsatTestsPage() {
   return (
@@ -30,7 +44,7 @@ export default function BitsatTestsPage() {
             BITSAT <span className="text-gradient">Mock Tests</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7 }}>
-            10 full-length papers — each 150 questions, 3 hours, +3/−1 marking. Start from Paper 1
+            {allBitsatPapers.length} full-length papers — each 130 questions, 3 hours, +3/−1 marking. Start from Paper 1
             (10-year trend analysis) to simulate the real 2026 exam.
           </p>
         </header>
@@ -38,12 +52,12 @@ export default function BitsatTestsPage() {
         {/* Pattern info banner */}
         <section aria-label="BITSAT exam pattern summary" className="glass-panel" style={styles.banner}>
           {[
-            { label: '150 Questions', icon: '❓' },
-            { label: 'Physics: 40',   icon: '⚛️' },
-            { label: 'Chemistry: 40', icon: '🧪' },
-            { label: 'Maths: 45',     icon: '📐' },
-            { label: 'English: 15',   icon: '📖' },
-            { label: 'Logic: 10',     icon: '🧩' },
+            { label: '130 Questions', icon: '❓' },
+            { label: 'Physics: 30',   icon: '⚛️' },
+            { label: 'Chemistry: 30', icon: '🧪' },
+            { label: 'Maths: 40',     icon: '📐' },
+            { label: 'English: 10',   icon: '📖' },
+            { label: 'Logic: 20',     icon: '🧩' },
             { label: '+3 / −1',       icon: '⚡' },
             { label: '3 Hours',       icon: '⏱' },
           ].map(({ label, icon }) => (
@@ -78,7 +92,7 @@ export default function BitsatTestsPage() {
           <h2 className="sr-only">All BITSAT Mock Tests</h2>
           <div style={styles.grid} role="list">
             {allBitsatPapers.map((paper) => {
-              const diff = difficultyMap[paper.id] || 'Medium';
+              const diff = getPaperTag(paper.id);
               const col  = diffColor[diff] || '#fee440';
               return (
                 <article key={paper.id} role="listitem" className="glass-panel" style={styles.card}>
@@ -107,9 +121,9 @@ export default function BitsatTestsPage() {
                   </dl>
                   <Link href={`/bitsat/tests/${paper.id}`}
                     aria-label={`Start BITSAT ${paper.title}`}
-                    style={{ display: 'block', textAlign: 'center', padding: '10px', background: 'rgba(123,44,191,0.15)', color: '#c77dff', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem', border: '1px solid rgba(123,44,191,0.3)', transition: 'all 0.2s' }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'rgba(123,44,191,0.3)'; }}
-                    onMouseOut={e => { e.currentTarget.style.background = 'rgba(123,44,191,0.15)'; }}>
+                    style={{ display: 'block', textAlign: 'center', padding: '10px', background: 'rgba(95,118,111,0.16)', color: '#e7e8e6', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem', border: '1px solid rgba(95,118,111,0.35)', transition: 'all 0.2s' }}
+                    onMouseOver={e => { e.currentTarget.style.background = 'rgba(95,118,111,0.28)'; }}
+                    onMouseOut={e => { e.currentTarget.style.background = 'rgba(95,118,111,0.16)'; }}>
                     Start Test →
                   </Link>
                 </article>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import { bitsatRankBands } from '@/data/bitsatQuestions';
+import { allBitsatPapers, bitsatRankBands } from '@/data/bitsatQuestions';
 
 function predictRank(score) {
   if (score < 0) return null;
@@ -21,8 +21,8 @@ export default function BitsatPage() {
   function handlePredict(e) {
     e.preventDefault();
     const s = parseInt(score, 10);
-    if (isNaN(s) || s < -150 || s > 450) {
-      setError('Please enter a valid BITSAT score between −150 and 450.');
+    if (isNaN(s) || s < -130 || s > 390) {
+      setError('Please enter a valid BITSAT score between -130 and 390.');
       setPrediction(null);
       return;
     }
@@ -47,7 +47,7 @@ export default function BitsatPage() {
             <span className="text-gradient">BITSAT 2026</span> Prep Hub
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7, maxWidth: '640px' }}>
-            150 questions · 3 hours · +3/−1 marking · Physics, Chemistry, Maths, English &amp; Logical Reasoning.
+            130 questions · 3 hours · +3/−1 marking · Physics, Chemistry, Maths, English &amp; Logical Reasoning.
             Practice with 10-year trend-aligned mock tests and predict your BITS campus &amp; branch.
           </p>
         </header>
@@ -57,11 +57,11 @@ export default function BitsatPage() {
           <h2 id="pattern-heading" style={styles.sectionTitle}>Exam Pattern</h2>
           <div style={styles.patternGrid}>
             {[
-              { icon: '⚛️',  section: 'Physics',            qs: 40,  note: 'Mechanics, Electromagnetism, Optics, Modern Physics' },
-              { icon: '🧪',  section: 'Chemistry',           qs: 40,  note: 'Physical, Inorganic, Organic Chemistry' },
-              { icon: '📐',  section: 'Mathematics',         qs: 45,  note: 'Calculus, Algebra, Trigonometry, Probability' },
-              { icon: '📖',  section: 'English Proficiency', qs: 15,  note: 'Grammar, Vocabulary, Reading Comprehension' },
-              { icon: '🧩',  section: 'Logical Reasoning',   qs: 10,  note: 'Verbal & Non-verbal Reasoning, Series' },
+              { icon: '⚛️',  section: 'Physics',            qs: 30,  note: 'Mechanics, Electromagnetism, Optics, Modern Physics' },
+              { icon: '🧪',  section: 'Chemistry',           qs: 30,  note: 'Physical, Inorganic, Organic Chemistry' },
+              { icon: '📐',  section: 'Mathematics',         qs: 40,  note: 'Calculus, Algebra, Trigonometry, Probability' },
+              { icon: '📖',  section: 'English Proficiency', qs: 10,  note: 'Grammar, Vocabulary, Reading Comprehension' },
+              { icon: '🧩',  section: 'Logical Reasoning',   qs: 20,  note: 'Verbal & Non-verbal Reasoning, Series' },
             ].map(({ icon, section, qs, note }) => (
               <div key={section} style={styles.patternCard} className="glass-panel">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
@@ -79,10 +79,10 @@ export default function BitsatPage() {
             <div style={{ ...styles.patternCard, background: 'rgba(123,44,191,0.12)', border: '1px solid rgba(123,44,191,0.3)' }} className="glass-panel">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <h3 style={{ fontWeight: 700, fontSize: '0.95rem' }}>Total</h3>
-                <span style={{ fontWeight: 800, fontSize: '1.3rem', color: 'var(--accent-primary)' }}>150</span>
+                <span style={{ fontWeight: 800, fontSize: '1.3rem', color: 'var(--accent-primary)' }}>130</span>
               </div>
               <dl style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Max marks</dt><dd style={{ fontWeight: 700, color: '#fff' }}>450</dd></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Max marks</dt><dd style={{ fontWeight: 700, color: '#fff' }}>390</dd></div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Correct</dt><dd style={{ fontWeight: 700, color: '#00f5d4' }}>+3</dd></div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Wrong</dt><dd style={{ fontWeight: 700, color: '#ff5a7e' }}>−1</dd></div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Duration</dt><dd style={{ fontWeight: 700, color: '#fff' }}>3 Hours</dd></div>
@@ -95,15 +95,15 @@ export default function BitsatPage() {
         <section aria-labelledby="rank-predictor-heading" className="glass-panel" style={styles.section}>
           <h2 id="rank-predictor-heading" style={styles.sectionTitle}>Score → Rank Predictor</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '20px' }}>
-            Enter your expected BITSAT score (range: −150 to 450) to estimate your rank and likely campus.
+            Enter your expected BITSAT score (range: -130 to 390) to estimate your rank and likely campus.
           </p>
 
           <form onSubmit={handlePredict} aria-label="BITSAT rank predictor form" style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', flexWrap: 'wrap', marginBottom: '24px' }}>
             <div style={{ flex: 1, minWidth: '200px' }}>
               <label htmlFor="bitsat-score" style={{ display: 'block', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: 600 }}>
-                BITSAT Score (out of 450)
+                BITSAT Score (out of 390)
               </label>
-              <input id="bitsat-score" type="number" min="-150" max="450"
+              <input id="bitsat-score" type="number" min="-130" max="390"
                 value={score} onChange={e => setScore(e.target.value)}
                 placeholder="e.g. 340"
                 aria-describedby={error ? 'score-error' : undefined}
@@ -196,7 +196,7 @@ export default function BitsatPage() {
             Start Practising Now
           </h2>
           <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>
-            10 full-length BITSAT mock tests — trend-aligned, free, instant scoring.
+            {allBitsatPapers.length} full-length BITSAT mock tests (including Phase 1 memory-based, last 5 years memory-based, and Phase 2 forecast papers) — trend-aligned, free, instant scoring.
           </p>
           <Link href="/bitsat/tests">
             <button className="btn-primary" style={{ fontSize: '1.05rem', padding: '15px 36px' }}>

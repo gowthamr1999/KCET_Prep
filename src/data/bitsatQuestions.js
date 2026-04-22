@@ -1,10 +1,10 @@
 // ============================================================
 // BITSAT QUESTION BANK
-// Pattern: 40 Physics + 40 Chemistry + 45 Math + 15 English
-//          + 10 Logical Reasoning = 150 questions
-// Each full mock: 150 questions
+// Pattern: 30 Physics + 30 Chemistry + 40 Math + 10 English
+//          + 20 Logical Reasoning = 130 questions
+// Each full mock: 130 questions
 // Scoring: +3 correct, −1 wrong (no omission penalty)
-// Duration: 180 minutes | Max marks: 450
+// Duration: 180 minutes | Max marks: 390
 // ============================================================
 
 export const bitsatPhysics = [
@@ -1075,16 +1075,86 @@ export const bitsatLogic = [
     correct: 1,
     explanation: '100 ÷ 7 = 14 weeks + 2 days. Wednesday + 2 = Friday.'
   },
+  {
+    id: 'bl11', subject: 'Logical Reasoning',
+    text: 'Choose the odd one out: Square, Rectangle, Triangle, Circle',
+    options: ['Square', 'Rectangle', 'Triangle', 'Circle'],
+    correct: 3,
+    explanation: 'Circle has no sides or vertices; the others are polygons.'
+  },
+  {
+    id: 'bl12', subject: 'Logical Reasoning',
+    text: 'If BOOK is coded as 2121511 (A=1, B=2, ...), then CODE is coded as:',
+    options: ['31545', '34155', '31545', '34154'],
+    correct: 0,
+    explanation: 'C=3, O=15, D=4, E=5 → 31545.'
+  },
+  {
+    id: 'bl13', subject: 'Logical Reasoning',
+    text: 'A clock shows 6:00. The angle between the hands is:',
+    options: ['0°', '90°', '180°', '270°'],
+    correct: 2,
+    explanation: 'At 6:00 the minute hand is at 12 and hour hand at 6, so the angle is 180°.'
+  },
+  {
+    id: 'bl14', subject: 'Logical Reasoning',
+    text: 'Find the next term: AZ, BY, CX, ?',
+    options: ['DW', 'DX', 'EV', 'CV'],
+    correct: 0,
+    explanation: 'First letter moves forward A,B,C,D and second moves backward Z,Y,X,W.'
+  },
+  {
+    id: 'bl15', subject: 'Logical Reasoning',
+    text: 'If all roses are flowers and some flowers are red, then:',
+    options: ['All roses are red', 'Some roses are red', 'No rose is red', 'Cannot be concluded'],
+    correct: 3,
+    explanation: 'No direct overlap between roses and red flowers is guaranteed.'
+  },
+  {
+    id: 'bl16', subject: 'Logical Reasoning',
+    text: 'In a queue, P is 8th from the front and 17th from the back. Total people =',
+    options: ['24', '25', '26', '27'],
+    correct: 0,
+    explanation: 'Total = 8 + 17 − 1 = 24.'
+  },
+  {
+    id: 'bl17', subject: 'Logical Reasoning',
+    text: 'Choose the correct mirror image relation for the word TEAM (vertical mirror):',
+    options: ['MAET', 'TEMA', 'AEMT', 'MEAT'],
+    correct: 0,
+    explanation: 'For mirror reflection, the sequence reverses to MAET (ignoring glyph-level flips).' 
+  },
+  {
+    id: 'bl18', subject: 'Logical Reasoning',
+    text: 'If 5 pens cost ₹60, what is the cost of 8 pens at the same rate?',
+    options: ['₹88', '₹90', '₹96', '₹100'],
+    correct: 2,
+    explanation: 'Unit cost = 60/5 = 12. Cost of 8 pens = 8 × 12 = 96.'
+  },
+  {
+    id: 'bl19', subject: 'Logical Reasoning',
+    text: 'Find the missing number: 2, 6, 18, 54, ?',
+    options: ['108', '144', '162', '216'],
+    correct: 2,
+    explanation: 'Each term is multiplied by 3. 54 × 3 = 162.'
+  },
+  {
+    id: 'bl20', subject: 'Logical Reasoning',
+    text: 'Pointing to a girl, Arun said: "She is the daughter of my grandfather\'s only son." The girl is Arun\'s:',
+    options: ['Sister', 'Cousin', 'Niece', 'Daughter'],
+    correct: 0,
+    explanation: 'Grandfather\'s only son is Arun\'s father. So the girl is father\'s daughter, i.e., Arun\'s sister.'
+  },
 ];
 
 export const bitsatTenYearBlueprint = {
   span: '2016-2025',
   pattern: {
-    Physics: 40,
-    Chemistry: 40,
-    Mathematics: 45,
-    English: 15,
-    'Logical Reasoning': 10,
+    Physics: 30,
+    Chemistry: 30,
+    Mathematics: 40,
+    English: 10,
+    'Logical Reasoning': 20,
   },
   focus: [
     'Physics: Mechanics + Electrostatics + Modern Physics remain high-yield anchors.',
@@ -1106,6 +1176,16 @@ function seededShuffle(arr, seed) {
   return a;
 }
 
+function prioritizeByKeywords(questions, keywords, count) {
+  const lowered = keywords.map((k) => k.toLowerCase());
+  const prioritized = questions.filter((q) => {
+    const hay = `${q.text} ${q.explanation}`.toLowerCase();
+    return lowered.some((k) => hay.includes(k));
+  });
+  const remaining = questions.filter((q) => !prioritized.includes(q));
+  return [...prioritized, ...remaining].slice(0, count);
+}
+
 export function getBitsatPaper(paperId) {
   const id = parseInt(paperId, 10);
   const shuffledPh = seededShuffle(bitsatPhysics, id * 7331);
@@ -1125,24 +1205,148 @@ export function getBitsatPaper(paperId) {
     'BITSAT Mock Test 8 – Math Heavy',
     'BITSAT Mock Test 9 – English Focus',
     'BITSAT Mock Test 10 – Final Simulation',
+    'BITSAT Mock Test 11 – Phase 2 Forecast',
+    'BITSAT Mock Test 12 – Phase 1 Memory-Based',
+    'BITSAT Mock Test 13 – 2025 Memory-Based',
+    'BITSAT Mock Test 14 – 2024 Memory-Based',
+    'BITSAT Mock Test 15 – 2023 Memory-Based',
+    'BITSAT Mock Test 16 – 2022 Memory-Based',
+    'BITSAT Mock Test 17 – 2021 Memory-Based',
   ];
+
+  const isPhase2Forecast = id === 11;
+  const isPhase1Memory = id === 12;
+  const isYearlyMemory = id >= 13 && id <= 17;
+
+  const yearlyKeywordMap = {
+    13: {
+      physics: ['mechanics', 'electromagnetism', 'current electricity', 'modern physics', 'optics'],
+      chemistry: ['organic', 'coordination', 'equilibrium', 'electrochemistry', 'chemical bonding'],
+      math: ['calculus', 'algebra', 'probability', 'coordinate', 'vector'],
+      english: ['synonym', 'antonym', 'grammar', 'comprehension'],
+      logic: ['series', 'coding', 'syllogism', 'venn', 'arrangement'],
+    },
+    14: {
+      physics: ['electrostatics', 'magnetism', 'semiconductor', 'wave optics', 'kinematics'],
+      chemistry: ['thermodynamics', 'organic', 'periodic', 'chemical bonding', 'inorganic'],
+      math: ['integration', 'differential', 'matrices', '3d', 'sequence'],
+      english: ['grammar', 'error spotting', 'synonym', 'comprehension'],
+      logic: ['analogy', 'series', 'blood relation', 'direction', 'coding'],
+    },
+    15: {
+      physics: ['mechanics', 'rotation', 'thermodynamics', 'electromagnetism', 'modern physics'],
+      chemistry: ['goc', 'isomerism', 'named reaction', 'equilibrium', 'coordination'],
+      math: ['calculus', 'algebra', 'coordinate', 'vector', 'probability'],
+      english: ['antonym', 'synonym', 'grammar', 'comprehension'],
+      logic: ['syllogism', 'venn', 'series', 'coding', 'clock'],
+    },
+    16: {
+      physics: ['electrostatics', 'current electricity', 'optics', 'wave', 'modern physics'],
+      chemistry: ['chemical bonding', 'periodicity', 'thermodynamics', 'organic', 'electrochemistry'],
+      math: ['differential', 'integration', 'algebra', '3d', 'statistics'],
+      english: ['grammar', 'homophone', 'synonym', 'comprehension'],
+      logic: ['series', 'arrangement', 'venn', 'analogy', 'syllogism'],
+    },
+    17: {
+      physics: ['mechanics', 'kinematics', 'laws of motion', 'electromagnetism', 'optics'],
+      chemistry: ['organic', 'inorganic', 'coordination', 'equilibrium', 'thermodynamics'],
+      math: ['calculus', 'coordinate', 'vector', 'probability', 'algebra'],
+      english: ['synonym', 'antonym', 'grammar', 'comprehension'],
+      logic: ['coding', 'series', 'syllogism', 'direction', 'venn'],
+    },
+  };
+
+  const yearlyKeywords = yearlyKeywordMap[id] || yearlyKeywordMap[13];
+
+  const physicsQuestions = isPhase2Forecast
+    ? prioritizeByKeywords(shuffledPh, [
+      'kinematics', 'electrostatics', 'current electricity', 'thermodynamics',
+      'rotation', 'optics', 'laws of motion', 'electromagnetism',
+    ], 30)
+    : isPhase1Memory
+      ? prioritizeByKeywords(shuffledPh, [
+        'mechanics', 'electrostatics', 'current electricity', 'magnetism',
+        'optics', 'modern physics', 'wave optics', 'semiconductor',
+      ], 30)
+    : isYearlyMemory
+      ? prioritizeByKeywords(shuffledPh, yearlyKeywords.physics, 30)
+    : shuffledPh.slice(0, 30);
+
+  const chemistryQuestions = isPhase2Forecast
+    ? prioritizeByKeywords(shuffledCh, [
+      'organic', 'electrochemistry', 'chemical bonding', 'periodicity',
+      'surface chemistry', 'thermodynamics', 'isomerism', 'coordination', 'goc',
+    ], 30)
+    : isPhase1Memory
+      ? prioritizeByKeywords(shuffledCh, [
+        'organic', 'named reaction', 'thermodynamics', 'equilibrium',
+        'chemical bonding', 'periodic', 'coordination', 'biomolecule',
+      ], 30)
+    : isYearlyMemory
+      ? prioritizeByKeywords(shuffledCh, yearlyKeywords.chemistry, 30)
+    : shuffledCh.slice(0, 30);
+
+  const mathQuestions = isPhase2Forecast
+    ? prioritizeByKeywords(shuffledMa, [
+      'calculus', 'differential', 'integration', 'probability', 'vector',
+      '3d', 'coordinate', 'statistics', 'linear programming', 'algebra',
+    ], 40)
+    : isPhase1Memory
+      ? prioritizeByKeywords(shuffledMa, [
+        'calculus', 'integration', 'differential', 'algebra', 'coordinate',
+        'vector', '3d', 'probability', 'sequence', 'matrices',
+      ], 40)
+    : isYearlyMemory
+      ? prioritizeByKeywords(shuffledMa, yearlyKeywords.math, 40)
+    : shuffledMa.slice(0, 40);
+
+  const englishQuestions = isPhase2Forecast
+    ? prioritizeByKeywords(shuffledEn, [
+      'synonym', 'antonym', 'homophone', 'grammar', 'comprehension',
+    ], 10)
+    : isPhase1Memory
+      ? prioritizeByKeywords(shuffledEn, [
+        'synonym', 'antonym', 'grammar', 'error spotting', 'comprehension',
+      ], 10)
+    : isYearlyMemory
+      ? prioritizeByKeywords(shuffledEn, yearlyKeywords.english, 10)
+    : shuffledEn.slice(0, 10);
+
+  const logicQuestions = isPhase2Forecast
+    ? prioritizeByKeywords(shuffledLo, [
+      'series', 'venn', 'coding', 'queue', 'clock', 'syllogism', 'mirror',
+    ], 20)
+    : isPhase1Memory
+      ? prioritizeByKeywords(shuffledLo, [
+        'series', 'coding', 'syllogism', 'arrangement', 'blood relation',
+        'direction', 'venn', 'analogy',
+      ], 20)
+    : isYearlyMemory
+      ? prioritizeByKeywords(shuffledLo, yearlyKeywords.logic, 20)
+    : shuffledLo.slice(0, 20);
 
   return {
     id,
     title: names[id] || `BITSAT Mock Test ${id}`,
     description: id === 1
       ? 'Curated from 10-year BITSAT trend analysis (2016–2025) with recent-year weighting'
+      : id === 11
+        ? 'Predicted from BITSAT 2026 Phase-1 shift patterns: lengthy maths, selective chemistry spikes, moderate physics, scoring English/LR'
+        : id === 12
+          ? 'Memory-based reconstruction from publicly discussed BITSAT 2026 Session-1 shift analyses (not an official released paper)'
+          : id >= 13 && id <= 17
+            ? `Memory-based reconstruction modeled on public ${2026 - (id - 12)} trend discussions (not an official released paper)`
       : 'Mixed syllabus adaptive paper',
     duration: 180,
-    totalMarks: 450,
+    totalMarks: 390,
     correctMarks: 3,
     wrongMarks: -1,
     questions: [
-      ...shuffledPh.slice(0, 40),
-      ...shuffledCh.slice(0, 40),
-      ...shuffledMa.slice(0, 45),
-      ...shuffledEn.slice(0, 15),
-      ...shuffledLo.slice(0, 10),
+      ...physicsQuestions,
+      ...chemistryQuestions,
+      ...mathQuestions,
+      ...englishQuestions,
+      ...logicQuestions,
     ]
   };
 }
@@ -1150,21 +1354,21 @@ export function getBitsatPaper(paperId) {
 // ── BITSAT RANK PREDICTOR ────────────────────────────────────
 // Based on BITSAT 2021-2025 published cutoffs (PCM cutoffs for various campuses)
 export const bitsatRankBands = [
-  { minScore: 400, maxScore: 450, rankRange: '< 100',       admission: 'BITS Pilani – CS/ECE confirmed' },
-  { minScore: 370, maxScore: 399, rankRange: '100 – 500',   admission: 'BITS Pilani – Most branches' },
-  { minScore: 340, maxScore: 369, rankRange: '500 – 2,000', admission: 'BITS Goa – CS/ECE, BITS Pilani – Mech/Chem' },
-  { minScore: 310, maxScore: 339, rankRange: '2,000 – 5,000', admission: 'BITS Goa – most branches, BITS Hyderabad – CS' },
-  { minScore: 280, maxScore: 309, rankRange: '5,000 – 10,000', admission: 'BITS Hyderabad – most branches' },
-  { minScore: 250, maxScore: 279, rankRange: '10,000 – 20,000', admission: 'BITS Hyderabad – some branches (competitive)' },
-  { minScore: 0,   maxScore: 249, rankRange: '20,000+',       admission: 'Waitlist or not shortlisted' },
+  { minScore: 360, maxScore: 390, rankRange: '< 100', admission: 'BITS Pilani – CS/ECE very strong' },
+  { minScore: 330, maxScore: 359, rankRange: '100 – 500', admission: 'BITS Pilani/Goa – top branches' },
+  { minScore: 300, maxScore: 329, rankRange: '500 – 2,000', admission: 'BITS Goa/Hyderabad – CS/ECE likely' },
+  { minScore: 270, maxScore: 299, rankRange: '2,000 – 5,000', admission: 'BITS campuses – core branches competitive' },
+  { minScore: 240, maxScore: 269, rankRange: '5,000 – 10,000', admission: 'BITS Hyderabad/Goa – selective options' },
+  { minScore: 210, maxScore: 239, rankRange: '10,000 – 20,000', admission: 'Dual degree and lower-demand options' },
+  { minScore: 0, maxScore: 209, rankRange: '20,000+', admission: 'Lower chance in top rounds' },
 ];
 
-export const allBitsatPapers = Array.from({ length: 10 }, (_, i) => {
+export const allBitsatPapers = Array.from({ length: 17 }, (_, i) => {
   const id = i + 1;
   const topics = [
     'Trend Analysis 2021-2026 | Complete Pattern',
     'Mixed Syllabus | Standard Difficulty',
-    'Speed Focus | 150 Qs / 180 min',
+    'Speed Focus | 130 Qs / 180 min',
     'Concept Based | Reasoning Heavy',
     'High Difficulty | Previous Year Pattern',
     'Chemistry Intensive | Organic Focus',
@@ -1172,14 +1376,38 @@ export const allBitsatPapers = Array.from({ length: 10 }, (_, i) => {
     'Mathematics Intensive | Calculus',
     'English & Logic | Speed Scoring',
     'Full Simulation | Final Practice',
+    'Phase 2 Forecast | 2026 Session-1 Trend Mirror',
+    'Phase 1 Memory-Based | Public Session-1 Trend Reconstruction',
+    '2025 Memory-Based | Public Trend Reconstruction',
+    '2024 Memory-Based | Public Trend Reconstruction',
+    '2023 Memory-Based | Public Trend Reconstruction',
+    '2022 Memory-Based | Public Trend Reconstruction',
+    '2021 Memory-Based | Public Trend Reconstruction',
   ];
   return {
     id,
-    title: id === 1 ? 'BITSAT 2026 Analysis Paper' : `Mock Test ${id}`,
+    title:
+      id === 1
+        ? 'BITSAT 2026 Analysis Paper'
+        : id === 11
+          ? 'BITSAT Phase 2 Forecast Paper'
+          : id === 12
+            ? 'BITSAT Phase 1 Memory-Based Paper'
+            : id === 13
+              ? 'BITSAT 2025 Memory-Based Paper'
+              : id === 14
+                ? 'BITSAT 2024 Memory-Based Paper'
+                : id === 15
+                  ? 'BITSAT 2023 Memory-Based Paper'
+                  : id === 16
+                    ? 'BITSAT 2022 Memory-Based Paper'
+                    : id === 17
+                      ? 'BITSAT 2021 Memory-Based Paper'
+            : `Mock Test ${id}`,
     topics: topics[i],
-    questions: 150,
+    questions: 130,
     duration: '3 Hours',
-    maxMarks: 450,
+    maxMarks: 390,
     scoring: '+3 / −1',
   };
 });

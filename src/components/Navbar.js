@@ -102,7 +102,7 @@ export default function Navbar() {
           {NAV_DIRECT.map(({ href, label }) => (
             <li key={href} role="none">
               <Link href={href}
-                style={{ ...styles.link, color: isActive(href) ? 'var(--accent-secondary)' : 'var(--text-main)', padding: '6px 14px', background: isActive(href) ? 'rgba(0,245,212,0.08)' : 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '20px' }}
+                style={{ ...styles.link, color: isActive(href) ? 'var(--text-main)' : 'var(--text-main)', padding: '6px 14px', background: isActive(href) ? 'rgba(140,154,149,0.16)' : 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
                 aria-current={isActive(href) ? 'page' : undefined}>
                 {label}
               </Link>
@@ -174,7 +174,7 @@ const styles = {
     width: '24px',
     height: '24px',
     borderRadius: '8px',
-    background: 'linear-gradient(135deg, var(--accent-secondary), var(--accent-primary))',
+    background: 'var(--accent-primary)',
     display: 'inline-block',
     flexShrink: 0,
   },
