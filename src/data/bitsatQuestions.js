@@ -1147,6 +1147,287 @@ export const bitsatLogic = [
   },
 ];
 
+const bitsatPhysicsHard = [
+  {
+    id: 'bph1', subject: 'Physics',
+    text: 'A disc rolls without slipping down an incline of angle theta. For a solid disc, acceleration of center of mass is:',
+    options: ['g sin(theta)', '(2/3) g sin(theta)', '(1/2) g sin(theta)', '(3/4) g sin(theta)'],
+    correct: 1,
+    explanation: 'a = g sin(theta) / (1 + I/mR^2). For solid disc I = (1/2)mR^2, so a = g sin(theta)/(1+1/2) = (2/3)g sin(theta).'
+  },
+  {
+    id: 'bph2', subject: 'Physics',
+    text: 'In Young\'s double-slit experiment, if wavelength is doubled and slit separation is halved, fringe width becomes:',
+    options: ['Unchanged', '2 times', '4 times', '1/2 times'],
+    correct: 2,
+    explanation: 'Beta = lambda D / d. New beta = (2lambda)D/(d/2) = 4(lambda D/d).'
+  },
+  {
+    id: 'bph3', subject: 'Physics',
+    text: 'A capacitor C is charged to V and connected in parallel with an identical uncharged capacitor. Final energy stored is:',
+    options: ['CV^2/2', 'CV^2/4', 'CV^2/8', 'CV^2'],
+    correct: 1,
+    explanation: 'Total charge Q = CV. Final voltage V/2 on equivalent 2C. Energy = (1/2)(2C)(V/2)^2 = CV^2/4.'
+  },
+  {
+    id: 'bph4', subject: 'Physics',
+    text: 'For a transistor in common-emitter mode, relation between current gains alpha and beta is:',
+    options: ['beta = alpha/(1-alpha)', 'beta = (1-alpha)/alpha', 'alpha = beta/(1-beta)', 'alpha = beta+1'],
+    correct: 0,
+    explanation: 'beta = Ic/Ib and alpha = Ic/Ie with Ie = Ic + Ib, giving beta = alpha/(1-alpha).'
+  },
+  {
+    id: 'bph5', subject: 'Physics',
+    text: 'A body is projected with speed u at angle theta. Radius of curvature at highest point is:',
+    options: ['u^2/g', 'u^2 cos^2(theta)/g', 'u^2 sin^2(theta)/g', 'u^2 sin(2theta)/g'],
+    correct: 1,
+    explanation: 'At top, speed = u cos(theta) and normal acceleration = g, so R = v^2/g = u^2 cos^2(theta)/g.'
+  },
+  {
+    id: 'bph6', subject: 'Physics',
+    text: 'Two resistors 3 ohm and 6 ohm are connected in parallel across 18 V. Heat ratio H3:H6 in same time is:',
+    options: ['1:2', '2:1', '4:1', '1:4'],
+    correct: 1,
+    explanation: 'H = V^2 t / R for each branch in parallel. Ratio = (1/3):(1/6) = 2:1.'
+  },
+  {
+    id: 'bph7', subject: 'Physics',
+    text: 'For an ideal gas in adiabatic process, PV^gamma = constant. Work done from (P1,V1) to (P2,V2) is:',
+    options: ['(P2V2-P1V1)/(gamma-1)', '(P1V1-P2V2)/(gamma-1)', 'gamma(P1V1-P2V2)', '(P1V1+P2V2)/2'],
+    correct: 1,
+    explanation: 'Standard result for adiabatic work by gas: W = (P1V1 - P2V2)/(gamma - 1).'
+  },
+  {
+    id: 'bph8', subject: 'Physics',
+    text: 'A charged particle enters perpendicular to uniform B with speed v. If speed doubles, cyclotron frequency becomes:',
+    options: ['2 times', '1/2 times', 'Unchanged', '4 times'],
+    correct: 2,
+    explanation: 'Cyclotron frequency f = qB/(2pi m), independent of speed.'
+  },
+];
+
+const bitsatChemistryHard = [
+  {
+    id: 'bch1', subject: 'Chemistry',
+    text: 'For first-order reaction, half-life t1/2 is related to rate constant k as:',
+    options: ['t1/2 = 0.693/k', 't1/2 = 1/k', 't1/2 = k/0.693', 't1/2 = 2.303/k'],
+    correct: 0,
+    explanation: 'For first-order kinetics, t1/2 = ln2/k = 0.693/k.'
+  },
+  {
+    id: 'bch2', subject: 'Chemistry',
+    text: 'In SN1 reactions, rate depends on:',
+    options: ['[substrate][nucleophile]', '[substrate]^2', '[substrate]', '[nucleophile]'],
+    correct: 2,
+    explanation: 'Rate-determining step is carbocation formation, so rate = k[substrate].'
+  },
+  {
+    id: 'bch3', subject: 'Chemistry',
+    text: 'Among the following, strongest reducing agent in aqueous medium is:',
+    options: ['Zn', 'Al', 'Li', 'Na'],
+    correct: 2,
+    explanation: 'Lithium has most negative E degree value considering hydration effects, making it strongest reducing agent in water.'
+  },
+  {
+    id: 'bch4', subject: 'Chemistry',
+    text: 'Magnetic moment (spin-only) of [FeF6]3- (high spin) is closest to:',
+    options: ['1.73 BM', '3.87 BM', '5.92 BM', '4.90 BM'],
+    correct: 2,
+    explanation: 'Fe3+ is d5 high spin with 5 unpaired electrons. mu = sqrt(n(n+2)) = sqrt(35) approx 5.92 BM.'
+  },
+  {
+    id: 'bch5', subject: 'Chemistry',
+    text: 'pH of 10^-8 M HCl at 25 degree C is approximately:',
+    options: ['8.00', '7.00', '6.98', '6.00'],
+    correct: 2,
+    explanation: 'Need to include water autoionization, giving [H+] slightly above 10^-7; pH is slightly below 7, about 6.98.'
+  },
+  {
+    id: 'bch6', subject: 'Chemistry',
+    text: 'Which is aromatic?',
+    options: ['Cyclobutadiene', 'Cyclooctatetraene', 'Pyridine', 'Cyclopentadiene'],
+    correct: 2,
+    explanation: 'Pyridine has 6 pi electrons satisfying Huckel rule and is aromatic.'
+  },
+  {
+    id: 'bch7', subject: 'Chemistry',
+    text: 'Order of acidic strength is:',
+    options: ['HF > HCl > HBr > HI', 'HI > HBr > HCl > HF', 'HCl > HBr > HI > HF', 'HBr > HI > HCl > HF'],
+    correct: 1,
+    explanation: 'In aqueous medium for HX, acidity increases down group due to weaker H-X bond: HI > HBr > HCl > HF.'
+  },
+  {
+    id: 'bch8', subject: 'Chemistry',
+    text: 'Equivalent conductivity at infinite dilution is maximum for:',
+    options: ['CH3COOH', 'HCl', 'NaCl', 'NH4OH'],
+    correct: 1,
+    explanation: 'H+ has exceptionally high ionic mobility, so HCl has very high limiting conductivity.'
+  },
+];
+
+const bitsatMathHard = [
+  {
+    id: 'bmh1', subject: 'Mathematics',
+    text: 'If roots of 2x^2 - 5x + k = 0 differ by 1, then k equals:',
+    options: ['2', '21/8', '5/2', '3'],
+    correct: 1,
+    explanation: 'For ax^2+bx+c=0, (r1-r2)^2 = (b^2-4ac)/a^2. Here (25-8k)/4 = 1 => 25-8k = 4 => k = 21/8.'
+  },
+  {
+    id: 'bmh2', subject: 'Mathematics',
+    text: 'If roots of x^2 - px + q = 0 are in ratio 2:3 and their sum is 20, then q is:',
+    options: ['60', '64', '96', '100'],
+    correct: 2,
+    explanation: 'Roots are 8 and 12 (2k,3k with 5k=20). Product q = 8 x 12 = 96.'
+  },
+  {
+    id: 'bmh3', subject: 'Mathematics',
+    text: 'Number of ways to arrange letters of MISSISSIPPI is:',
+    options: ['34650', '27720', '25200', '13860'],
+    correct: 0,
+    explanation: '11!/(4!4!2!) = 34650.'
+  },
+  {
+    id: 'bmh4', subject: 'Mathematics',
+    text: 'If determinant |x 1 1; 1 x 1; 1 1 x| = 0, then x can be:',
+    options: ['-2 only', '1 only', '-2 or 1', '0 or 1'],
+    correct: 2,
+    explanation: 'Determinant equals (x-1)^2(x+2), hence roots are x=1 and x=-2.'
+  },
+  {
+    id: 'bmh5', subject: 'Mathematics',
+    text: 'If sin(theta)+cos(theta)=sqrt(2)cos(alpha), then alpha equals:',
+    options: ['theta-45 degree', 'theta+45 degree', '45 degree-theta', '90 degree-theta'],
+    correct: 0,
+    explanation: 'sin(theta)+cos(theta) = sqrt(2)cos(theta-45 degree).'
+  },
+  {
+    id: 'bmh6', subject: 'Mathematics',
+    text: 'The tangent to y=x^2 at point (1,1) meets y-axis at:',
+    options: ['(0,1)', '(0,-1)', '(0,2)', '(0,-2)'],
+    correct: 1,
+    explanation: 'Slope = 2x at x=1 is 2. Equation y-1 = 2(x-1) => y = 2x-1, y-intercept -1.'
+  },
+  {
+    id: 'bmh7', subject: 'Mathematics',
+    text: 'If A and B are independent with P(A)=0.4 and P(B)=0.5, then P(A U B) is:',
+    options: ['0.2', '0.7', '0.9', '0.6'],
+    correct: 1,
+    explanation: 'P(A U B) = P(A)+P(B)-P(A)P(B) = 0.4+0.5-0.2 = 0.7.'
+  },
+  {
+    id: 'bmh8', subject: 'Mathematics',
+    text: 'Solution set of |2x-3| < 5 is:',
+    options: ['-1 < x < 4', '-4 < x < 1', 'x < 4', 'x > -1'],
+    correct: 0,
+    explanation: '-5 < 2x-3 < 5 => -2 < 2x < 8 => -1 < x < 4.'
+  },
+  {
+    id: 'bmh9', subject: 'Mathematics',
+    text: 'If z = 3 - 4i, then |z| is:',
+    options: ['5', '7', '1', '25'],
+    correct: 0,
+    explanation: '|z| = sqrt(3^2 + (-4)^2) = 5.'
+  },
+  {
+    id: 'bmh10', subject: 'Mathematics',
+    text: 'The angle between vectors i+2j+2k and 2i+j+2k is:',
+    options: ['cos^-1(8/9)', '30 degree', '45 degree', '60 degree'],
+    correct: 0,
+    explanation: 'Dot product is 8 and each magnitude is 3, so cos(theta)=8/9 and theta=cos^-1(8/9).'
+  },
+  {
+    id: 'bmh11', subject: 'Mathematics',
+    text: 'If sum to infinity of a GP is 12 and first term is 3, common ratio is:',
+    options: ['1/4', '3/4', '1/2', '2/3'],
+    correct: 1,
+    explanation: 'S = a/(1-r) => 12 = 3/(1-r) => 1-r = 1/4 => r = 3/4.'
+  },
+  {
+    id: 'bmh12', subject: 'Mathematics',
+    text: 'If f(x)=x^3-3x, local minima value is:',
+    options: ['-2', '2', '0', '-1'],
+    correct: 0,
+    explanation: 'f\'(x)=3x^2-3=0 => x=+-1. f\"(1)>0 so minima at x=1 with value -2.'
+  },
+];
+
+const bitsatEnglishHard = [
+  {
+    id: 'beh1', subject: 'English',
+    text: 'Choose the correctly spelt word:',
+    options: ['Accomodate', 'Acommodate', 'Accommodate', 'Acomodate'],
+    correct: 2,
+    explanation: 'Correct spelling is accommodate.'
+  },
+  {
+    id: 'beh2', subject: 'English',
+    text: 'Select the sentence with correct subject-verb agreement:',
+    options: ['Neither the boys nor the girl are ready.', 'Neither the boys nor the girl is ready.', 'Neither the boys nor the girl were ready.', 'Neither boys nor girl are ready.'],
+    correct: 1,
+    explanation: 'With neither...nor, verb agrees with nearest subject girl, so is is correct.'
+  },
+  {
+    id: 'beh3', subject: 'English',
+    text: 'Antonym of "obscure" is:',
+    options: ['Vague', 'Clear', 'Hidden', 'Uncertain'],
+    correct: 1,
+    explanation: 'Obscure means unclear/hidden; antonym is clear.'
+  },
+  {
+    id: 'beh4', subject: 'English',
+    text: 'Choose the correct indirect speech: He said, "I have finished my work."',
+    options: ['He said that he has finished his work.', 'He said that he had finished his work.', 'He said he finished my work.', 'He says that he had finished his work.'],
+    correct: 1,
+    explanation: 'In past reporting, present perfect usually backshifts to past perfect.'
+  },
+];
+
+const bitsatLogicHard = [
+  {
+    id: 'blh1', subject: 'Logical Reasoning',
+    text: 'If in a code language, DELHI is coded as EFMIJ, how is MUMBAI coded?',
+    options: ['NVNCBJ', 'NVNABJ', 'NVMBAJ', 'NUNCBJ'],
+    correct: 0,
+    explanation: 'Each letter is shifted by +1 alphabetically: M->N, U->V, M->N, B->C, A->B, I->J.'
+  },
+  {
+    id: 'blh2', subject: 'Logical Reasoning',
+    text: 'Statement: All engineers are logical. Some logical people are artists. Conclusion: Some engineers are artists.',
+    options: ['Definitely true', 'Definitely false', 'Cannot be determined', 'Only if all artists are engineers'],
+    correct: 2,
+    explanation: 'No direct overlap between engineers and artists is guaranteed.'
+  },
+  {
+    id: 'blh3', subject: 'Logical Reasoning',
+    text: 'A is north of B. C is east of B. D is south of C. D is in which direction from A?',
+    options: ['South-East', 'East', 'South', 'South-West'],
+    correct: 0,
+    explanation: 'Take B as origin: A(0,1), C(1,0), D(1,-1). From A to D direction is south-east.'
+  },
+  {
+    id: 'blh4', subject: 'Logical Reasoning',
+    text: 'Find next term: 3, 8, 15, 24, 35, ?',
+    options: ['46', '48', '49', '50'],
+    correct: 1,
+    explanation: 'Differences are 5, 7, 9, 11; next is 13. So 35+13 = 48.'
+  },
+  {
+    id: 'blh5', subject: 'Logical Reasoning',
+    text: 'In a row of 40 students, Ravi is 12th from left. What is his position from right?',
+    options: ['27th', '28th', '29th', '30th'],
+    correct: 2,
+    explanation: 'Position from right = 40 - 12 + 1 = 29.'
+  },
+  {
+    id: 'blh6', subject: 'Logical Reasoning',
+    text: 'If today is Wednesday, what day will it be after 100 days?',
+    options: ['Thursday', 'Friday', 'Saturday', 'Sunday'],
+    correct: 1,
+    explanation: '100 mod 7 = 2, so two days after Wednesday is Friday.'
+  },
+];
+
 export const bitsatTenYearBlueprint = {
   span: '2016-2025',
   pattern: {
@@ -1238,11 +1519,17 @@ const BITSAT_HIGH_DIFFICULTY_HARD_RATIO = {
 
 export function getBitsatPaper(paperId) {
   const id = parseInt(paperId, 10);
-  const shuffledPh = seededShuffle(bitsatPhysics, id * 7331);
-  const shuffledCh = seededShuffle(bitsatChemistry, id * 7331 + 1);
-  const shuffledMa = seededShuffle(bitsatMath, id * 7331 + 2);
-  const shuffledEn = seededShuffle(bitsatEnglish, id * 7331 + 3);
-  const shuffledLo = seededShuffle(bitsatLogic, id * 7331 + 4);
+  const physicsPool = [...bitsatPhysics, ...bitsatPhysicsHard];
+  const chemistryPool = [...bitsatChemistry, ...bitsatChemistryHard];
+  const mathPool = [...bitsatMath, ...bitsatMathHard];
+  const englishPool = [...bitsatEnglish, ...bitsatEnglishHard];
+  const logicPool = [...bitsatLogic, ...bitsatLogicHard];
+
+  const shuffledPh = seededShuffle(physicsPool, id * 7331);
+  const shuffledCh = seededShuffle(chemistryPool, id * 7331 + 1);
+  const shuffledMa = seededShuffle(mathPool, id * 7331 + 2);
+  const shuffledEn = seededShuffle(englishPool, id * 7331 + 3);
+  const shuffledLo = seededShuffle(logicPool, id * 7331 + 4);
 
   const names = [
     '', 'BITSAT 2026 Analysis Paper',
