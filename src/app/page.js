@@ -1,5 +1,20 @@
+"use client";
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+
+function formatTime(seconds) {
+  if (typeof seconds !== 'number' || !Number.isFinite(seconds)) return '--:--';
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  if (mins >= 60) {
+    const hours = Math.floor(mins / 60);
+    const remMins = mins % 60;
+    return `${hours}:${String(remMins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
 
 const EXAMS = [
   {
@@ -72,7 +87,74 @@ const FEATURES = [
   },
 ];
 
+const HOME_LEADERBOARDS = [
+  {
+    id: 'kcet',
+    title: 'KCET Top Scores',
+    subtitle: 'Latest overall attempts across KCET mocks',
+    href: '/kcet/tests',
+    accent: '#8c9a95',
+  },
+  {
+    id: 'bitsat',
+    title: 'BITSAT Top Scores',
+    subtitle: 'Latest overall attempts across BITSAT mocks',
+    href: '/bitsat/tests',
+    accent: '#9ca8a4',
+  },
+];
+
 export default function Home() {
+  const [leaderboards, setLeaderboards] = useState({
+    kcet: { rows: [], error: '', loading: true },
+    bitsat: { rows: [], error: '', loading: true },
+  });
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadLeaderboards() {
+      const results = await Promise.all(
+        HOME_LEADERBOARDS.map(async (board) => {
+          try {
+            const response = await fetch(`/api/leaderboard?examType=${board.id}`, { cache: 'no-store' });
+            const contentType = response.headers.get('content-type') || '';
+            const data = contentType.includes('application/json')
+              ? await response.json()
+              : { error: 'Leaderboard unavailable right now.' };
+
+            return [
+              board.id,
+              {
+                rows: response.ok && Array.isArray(data?.leaderboard) ? data.leaderboard.slice(0, 5) : [],
+                error: response.ok ? '' : (data?.error || 'Leaderboard unavailable right now.'),
+                loading: false,
+              },
+            ];
+          } catch {
+            return [
+              board.id,
+              {
+                rows: [],
+                error: 'Leaderboard unavailable right now.',
+                loading: false,
+              },
+            ];
+          }
+        })
+      );
+
+      if (!ignore) {
+        setLeaderboards(Object.fromEntries(results));
+      }
+    }
+
+    loadLeaderboards();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -143,6 +225,50 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="section" aria-labelledby="leaderboards-heading">
+          <div className="section-header">
+            <h2 id="leaderboards-heading" className="section-title">Live Leaderboards</h2>
+            <p className="section-subtitle">See who is setting the pace in KCET and BITSAT right now.</p>
+          </div>
+          <div className="leaderboard-grid">
+            {HOME_LEADERBOARDS.map((board) => {
+              const state = leaderboards[board.id] || { rows: [], error: '', loading: true };
+              return (
+                <section key={board.id} className="leaderboard-card glass-panel" aria-labelledby={`${board.id}-leaderboard-title`}>
+                  <div className="leaderboard-card-header">
+                    <div>
+                      <h3 id={`${board.id}-leaderboard-title`} className="leaderboard-card-title" style={{ color: board.accent }}>{board.title}</h3>
+                      <p className="leaderboard-card-subtitle">{board.subtitle}</p>
+                    </div>
+                    <Link href={board.href} className="leaderboard-view-link">View tests</Link>
+                  </div>
+
+                  {state.loading && <p className="leaderboard-state">Loading leaderboard...</p>}
+                  {!state.loading && state.error && <p className="leaderboard-state leaderboard-error">{state.error}</p>}
+                  {!state.loading && !state.error && !state.rows.length && (
+                    <p className="leaderboard-state">No attempts yet. Be the first one on the board.</p>
+                  )}
+
+                  {!!state.rows.length && (
+                    <div className="leaderboard-list" role="list" aria-label={`${board.title} leaderboard`}>
+                      {state.rows.map((row) => (
+                        <div key={`${board.id}-${row.rank}-${row.name}-${row.score}`} className="leaderboard-row" role="listitem">
+                          <span className="leaderboard-rank">#{row.rank}</span>
+                          <div className="leaderboard-user">
+                            <span className="leaderboard-name">{row.name}</span>
+                            <span className="leaderboard-time">{formatTime(row.timeTaken)}</span>
+                          </div>
+                          <span className="leaderboard-score">{row.score}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </section>
+              );
+            })}
           </div>
         </section>
 

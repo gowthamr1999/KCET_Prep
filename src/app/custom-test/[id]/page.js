@@ -534,7 +534,7 @@ const styles = {
   breadLink:  { color: 'var(--accent-secondary)', textDecoration: 'none' },
   statBox:    { padding: '12px 14px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)', textAlign: 'center' },
   miniHeading:{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: '6px' },
-  stickyBar:  { position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', gap: '16px', padding: '12px 24px', background: 'rgba(5,5,15,0.92)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(255,255,255,0.08)' },
+  stickyBar:  { position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', gap: '16px', padding: '12px 24px', background: 'rgba(14,18,20,0.96)', borderBottom: '1px solid rgba(255,255,255,0.08)' },
   sectionTabs:{ display: 'flex', gap: 0, overflowX: 'auto', padding: '0 24px', borderBottom: '1px solid rgba(255,255,255,0.07)', background: 'rgba(5,5,15,0.7)', scrollbarWidth: 'none' },
   sectionTab: { display: 'flex', alignItems: 'center', gap: '6px', padding: '12px 14px', background: 'none', border: 'none', borderBottom: '2px solid transparent', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600, fontFamily: 'inherit', whiteSpace: 'nowrap', transition: 'color 0.15s' },
   testLayout: { display: 'flex', gap: '20px', alignItems: 'flex-start', padding: '20px 24px', maxWidth: '1200px', margin: '0 auto' },
