@@ -1186,6 +1186,56 @@ function prioritizeByKeywords(questions, keywords, count) {
   return [...prioritized, ...remaining].slice(0, count);
 }
 
+function buildSectionWithHardRatio(questions, keywords, count, hardRatio = 0.65) {
+  const lowered = keywords.map((k) => k.toLowerCase());
+  const hardPool = questions.filter((q) => {
+    const hay = `${q.text} ${q.explanation}`.toLowerCase();
+    return lowered.some((k) => hay.includes(k));
+  });
+  const remainingPool = questions.filter((q) => !hardPool.includes(q));
+
+  const hardTarget = Math.min(count, Math.max(1, Math.round(count * hardRatio)));
+  const hardChosen = hardPool.slice(0, hardTarget);
+  const fillCount = Math.max(0, count - hardChosen.length);
+
+  return [...hardChosen, ...remainingPool.slice(0, fillCount)];
+}
+
+const HARD_TOPIC_KEYWORDS = {
+  physics: ['rotation', 'electromagnetism', 'current electricity', 'wave optics', 'modern physics', 'thermodynamics', 'semiconductor', 'gravitation', 'center of mass', 'collision'],
+  chemistry: ['electrochemistry', 'chemical bonding', 'coordination', 'thermodynamics', 'equilibrium', 'named reaction', 'isomerism', 'goc', 'chemical kinetics', 'd and f block', 'p-block', 'redox'],
+  math: ['integration', 'differential', 'vector', '3d', 'probability', 'linear programming', 'matrices', 'statistics', 'calculus', 'differential equation', 'determinants', 'conic', 'coordinate'],
+  english: ['grammar', 'error spotting', 'comprehension', 'homophone', 'antonym', 'synonym'],
+  logic: ['syllogism', 'arrangement', 'coding', 'venn', 'clock', 'series', 'direction', 'blood relation'],
+};
+
+const VERY_HARD_TOPIC_KEYWORDS = {
+  physics: ['rotation', 'electromagnetism', 'current electricity', 'wave optics', 'modern physics', 'semiconductor', 'thermodynamics', 'laws of motion', 'gravitation', 'center of mass'],
+  chemistry: ['electrochemistry', 'coordination', 'thermodynamics', 'equilibrium', 'named reaction', 'isomerism', 'surface chemistry', 'chemical bonding', 'chemical kinetics', 'd and f block', 'p-block'],
+  math: ['integration', 'differential', 'vector', '3d', 'probability', 'linear programming', 'matrices', 'statistics', 'calculus', 'sequence', 'differential equation', 'determinants', 'conic'],
+  english: ['grammar', 'error spotting', 'comprehension', 'homophone', 'antonym'],
+  logic: ['syllogism', 'arrangement', 'coding', 'venn', 'clock', 'series', 'direction'],
+};
+
+// Derived from recent shift analyses: maths is usually the toughest/lengthiest,
+// physics is moderate-to-tough, chemistry is moderate with tricky pockets,
+// and English/LR remain mostly easy-scoring.
+const BITSAT_STYLE_HARD_RATIO = {
+  physics: 0.64,
+  chemistry: 0.58,
+  math: 0.84,
+  english: 0.38,
+  logic: 0.45,
+};
+
+const BITSAT_HIGH_DIFFICULTY_HARD_RATIO = {
+  physics: 0.78,
+  chemistry: 0.72,
+  math: 0.9,
+  english: 0.5,
+  logic: 0.6,
+};
+
 export function getBitsatPaper(paperId) {
   const id = parseInt(paperId, 10);
   const shuffledPh = seededShuffle(bitsatPhysics, id * 7331);
@@ -1217,6 +1267,8 @@ export function getBitsatPaper(paperId) {
   const isPhase2Forecast = id === 11;
   const isPhase1Memory = id === 12;
   const isYearlyMemory = id >= 13 && id <= 17;
+  const isHighDifficultyPaper = id === 5;
+  const isGeneralMockPaper = !isPhase2Forecast && !isPhase1Memory && !isYearlyMemory;
 
   const yearlyKeywordMap = {
     13: {
@@ -1270,7 +1322,11 @@ export function getBitsatPaper(paperId) {
       ], 30)
     : isYearlyMemory
       ? prioritizeByKeywords(shuffledPh, yearlyKeywords.physics, 30)
-    : shuffledPh.slice(0, 30);
+      : isHighDifficultyPaper
+        ? buildSectionWithHardRatio(shuffledPh, VERY_HARD_TOPIC_KEYWORDS.physics, 30, BITSAT_HIGH_DIFFICULTY_HARD_RATIO.physics)
+        : isGeneralMockPaper
+          ? buildSectionWithHardRatio(shuffledPh, HARD_TOPIC_KEYWORDS.physics, 30, BITSAT_STYLE_HARD_RATIO.physics)
+          : prioritizeByKeywords(shuffledPh, HARD_TOPIC_KEYWORDS.physics, 30);
 
   const chemistryQuestions = isPhase2Forecast
     ? prioritizeByKeywords(shuffledCh, [
@@ -1284,7 +1340,11 @@ export function getBitsatPaper(paperId) {
       ], 30)
     : isYearlyMemory
       ? prioritizeByKeywords(shuffledCh, yearlyKeywords.chemistry, 30)
-    : shuffledCh.slice(0, 30);
+      : isHighDifficultyPaper
+        ? buildSectionWithHardRatio(shuffledCh, VERY_HARD_TOPIC_KEYWORDS.chemistry, 30, BITSAT_HIGH_DIFFICULTY_HARD_RATIO.chemistry)
+        : isGeneralMockPaper
+          ? buildSectionWithHardRatio(shuffledCh, HARD_TOPIC_KEYWORDS.chemistry, 30, BITSAT_STYLE_HARD_RATIO.chemistry)
+          : prioritizeByKeywords(shuffledCh, HARD_TOPIC_KEYWORDS.chemistry, 30);
 
   const mathQuestions = isPhase2Forecast
     ? prioritizeByKeywords(shuffledMa, [
@@ -1298,7 +1358,11 @@ export function getBitsatPaper(paperId) {
       ], 40)
     : isYearlyMemory
       ? prioritizeByKeywords(shuffledMa, yearlyKeywords.math, 40)
-    : shuffledMa.slice(0, 40);
+      : isHighDifficultyPaper
+        ? buildSectionWithHardRatio(shuffledMa, VERY_HARD_TOPIC_KEYWORDS.math, 40, BITSAT_HIGH_DIFFICULTY_HARD_RATIO.math)
+        : isGeneralMockPaper
+          ? buildSectionWithHardRatio(shuffledMa, HARD_TOPIC_KEYWORDS.math, 40, BITSAT_STYLE_HARD_RATIO.math)
+          : prioritizeByKeywords(shuffledMa, HARD_TOPIC_KEYWORDS.math, 40);
 
   const englishQuestions = isPhase2Forecast
     ? prioritizeByKeywords(shuffledEn, [
@@ -1310,7 +1374,11 @@ export function getBitsatPaper(paperId) {
       ], 10)
     : isYearlyMemory
       ? prioritizeByKeywords(shuffledEn, yearlyKeywords.english, 10)
-    : shuffledEn.slice(0, 10);
+      : isHighDifficultyPaper
+        ? buildSectionWithHardRatio(shuffledEn, VERY_HARD_TOPIC_KEYWORDS.english, 10, BITSAT_HIGH_DIFFICULTY_HARD_RATIO.english)
+        : isGeneralMockPaper
+          ? buildSectionWithHardRatio(shuffledEn, HARD_TOPIC_KEYWORDS.english, 10, BITSAT_STYLE_HARD_RATIO.english)
+          : prioritizeByKeywords(shuffledEn, HARD_TOPIC_KEYWORDS.english, 10);
 
   const logicQuestions = isPhase2Forecast
     ? prioritizeByKeywords(shuffledLo, [
@@ -1323,7 +1391,11 @@ export function getBitsatPaper(paperId) {
       ], 20)
     : isYearlyMemory
       ? prioritizeByKeywords(shuffledLo, yearlyKeywords.logic, 20)
-    : shuffledLo.slice(0, 20);
+      : isHighDifficultyPaper
+        ? buildSectionWithHardRatio(shuffledLo, VERY_HARD_TOPIC_KEYWORDS.logic, 20, BITSAT_HIGH_DIFFICULTY_HARD_RATIO.logic)
+        : isGeneralMockPaper
+          ? buildSectionWithHardRatio(shuffledLo, HARD_TOPIC_KEYWORDS.logic, 20, BITSAT_STYLE_HARD_RATIO.logic)
+          : prioritizeByKeywords(shuffledLo, HARD_TOPIC_KEYWORDS.logic, 20);
 
   return {
     id,

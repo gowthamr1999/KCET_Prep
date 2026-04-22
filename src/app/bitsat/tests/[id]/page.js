@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
@@ -81,9 +81,10 @@ export default function BitsatTestPage() {
   const [displayScore, setDisplayScore] = useState(0);
 
   const timerRef = useRef(null);
+  const hasSyncedResultRef = useRef(false);
 
   // Unique sections in order
-  const sections = [...new Set(questions.map(q => q.subject))];
+  const sections = useMemo(() => [...new Set(questions.map(q => q.subject))], [questions]);
 
   const submitTest = useCallback(() => {
     clearInterval(timerRef.current);
@@ -105,12 +106,8 @@ export default function BitsatTestPage() {
   }, [phase, isPaused, submitTest]);
 
   useEffect(() => {
-    if (phase !== 'test') setIsPaused(false);
-  }, [phase]);
-
-  useEffect(() => {
     if (phase !== 'result') {
-      setDisplayScore(0);
+      hasSyncedResultRef.current = false;
       return;
     }
 
@@ -142,7 +139,9 @@ export default function BitsatTestPage() {
   }, [phase, answers, correctMarks, wrongMarks, questions]);
 
   useEffect(() => {
-    if (phase !== 'result' || isSavedResult) return;
+    if (phase !== 'result' || isSavedResult || hasSyncedResultRef.current) return;
+
+    hasSyncedResultRef.current = true;
 
     let ignore = false;
 
@@ -368,8 +367,11 @@ export default function BitsatTestPage() {
               }
               setUserName(cleanName.slice(0, 50));
               setNameError('');
+              setIsPaused(false);
+              setDisplayScore(0);
               setLeaderboard([]);
               setLeaderboardError('');
+              hasSyncedResultRef.current = false;
               setPhase('test');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}>
@@ -595,7 +597,7 @@ export default function BitsatTestPage() {
 
           {/* Actions */}
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '32px' }}>
-            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setIsPaused(false); setInsight(null); setLeaderboard([]); setLeaderboardError(''); setInsightError(''); setIsSyncingInsight(false); setIsSavedResult(false); setPhase('intro'); }}>
+            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setIsPaused(false); setDisplayScore(0); setInsight(null); setLeaderboard([]); setLeaderboardError(''); setInsightError(''); setIsSyncingInsight(false); setIsSavedResult(false); hasSyncedResultRef.current = false; setPhase('intro'); }}>
               Retake Test
             </button>
             <Link href="/bitsat/tests"><button className="btn-secondary">All BITSAT Tests</button></Link>
