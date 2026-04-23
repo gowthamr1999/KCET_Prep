@@ -10,38 +10,38 @@
 export const bitsatPhysics = [
   {
     id: 'bp1', subject: 'Physics',
-    text: 'A particle executes SHM with amplitude A and angular frequency ω. Maximum velocity is:',
-    options: ['Aω/2', 'Aω', 'A²ω', 'A/ω'],
+    text: 'A block slides down an incline of angle 37° with coefficient of friction 0.25. Take g = 10 m/s², sin37° = 0.6, cos37° = 0.8. Its acceleration is:',
+    options: ['2 m/s²', '4 m/s²', '6 m/s²', '8 m/s²'],
     correct: 1,
-    explanation: 'v_max = Aω (at mean position where displacement = 0).'
+    explanation: 'Acceleration down incline = g(sinθ − μcosθ) = 10(0.6 − 0.25×0.8) = 10(0.4) = 4 m/s².'
   },
   {
     id: 'bp2', subject: 'Physics',
-    text: 'Two balls are projected from the same point: one vertically and one at 45°. Which lands farther?',
-    options: ['Vertical', '45°', 'Same range', 'Depends on speed'],
-    correct: 1,
-    explanation: 'Range R = u²sin2θ/g. At 45°, sin90° = 1 (max). Vertical throw returns to start (range=0).'
+    text: 'A convex lens of focal length 20 cm is placed in contact with a concave lens of focal length 30 cm. The power of the combination is:',
+    options: ['1.67 D', '-1.67 D', '3.33 D', '8.33 D'],
+    correct: 0,
+    explanation: 'P = P1 + P2 = 1/0.20 + 1/(−0.30) = 5 − 3.33 = 1.67 D.'
   },
   {
     id: 'bp3', subject: 'Physics',
-    text: 'A body of mass m moves in a circle of radius r with angular velocity ω. Centripetal force is:',
-    options: ['mωr', 'mω²r', 'mω²/r', 'm/ω²r'],
-    correct: 1,
-    explanation: 'F_c = mω²r = mv²/r (centripetal force).'
+    text: 'A 3 Ω resistor and a 6 Ω resistor are connected in series across an 18 V battery. The heat produced in the 3 Ω resistor in 2 s is:',
+    options: ['12 J', '18 J', '24 J', '36 J'],
+    correct: 2,
+    explanation: 'Series resistance = 9 Ω, so current I = 18/9 = 2 A. Heat in 3 Ω resistor: H = I²Rt = 4 × 3 × 2 = 24 J.'
   },
   {
     id: 'bp4', subject: 'Physics',
-    text: 'Young\'s modulus is defined as:',
-    options: ['Stress × Strain', 'Stress / Strain', 'Strain / Stress', 'Stress + Strain'],
-    correct: 1,
-    explanation: 'Young\'s modulus Y = Stress/Strain = (F/A)/(ΔL/L).'
+    text: 'A radioactive sample has a half-life of 10 days. The fraction of the sample left undecayed after 30 days is:',
+    options: ['1/2', '1/4', '1/8', '1/16'],
+    correct: 2,
+    explanation: '30 days = 3 half-lives. Remaining fraction = (1/2)^3 = 1/8.'
   },
   {
     id: 'bp5', subject: 'Physics',
-    text: 'Two wires of same material, one twice as long and twice the radius. Ratio of their resistances:',
-    options: ['1:2', '2:1', '1:1', '4:1'],
-    correct: 0,
-    explanation: 'R = ρL/A. R₁/R₂ = (2L/4A)/(L/A) = 2L×A/(L×4A) = 1/2. Ratio = 1:2.'
+    text: 'The current through an inductor varies as i = kt. The potential difference across the inductor is:',
+    options: ['Zero', 'L/k', 'Lk', 'kt/L'],
+    correct: 2,
+    explanation: 'V = L(di/dt). Since i = kt, di/dt = k, so V = Lk, a constant.'
   },
   {
     id: 'bp6', subject: 'Physics',
@@ -288,43 +288,148 @@ export const bitsatPhysics = [
     correct: 2,
     explanation: 'Rayleigh scattering: I ∝ 1/λ⁴. Blue light (shorter λ) scatters more → blue sky.'
   },
+  {
+    id: 'bp41', subject: 'Physics',
+    text: 'The moment of inertia of a solid sphere of mass M and radius R about a tangential axis is:',
+    options: ['(2/5)MR²', '(7/5)MR²', '(3/2)MR²', '(5/4)MR²'],
+    correct: 1,
+    explanation: 'I_cm (through center) = (2/5)MR². By parallel axis theorem, I_tangential = (2/5)MR² + MR² = (7/5)MR².'
+  },
+  {
+    id: 'bp42', subject: 'Physics',
+    text: 'A train moving at 72 km/h blows a whistle of 500 Hz. Speed of sound = 340 m/s. Frequency heard by a stationary observer ahead is:',
+    options: ['500 Hz', '531 Hz', '470 Hz', '545 Hz'],
+    correct: 1,
+    explanation: 'v_train = 20 m/s. Doppler: f′ = f × v/(v − v_s) = 500 × 340/320 ≈ 531 Hz.'
+  },
+  {
+    id: 'bp43', subject: 'Physics',
+    text: 'An electron is accelerated through 100 V. Its de Broglie wavelength (h = 6.63×10⁻³⁴ J·s, m_e = 9.11×10⁻³¹ kg) is approximately:',
+    options: ['0.123 nm', '0.023 nm', '1.23 nm', '0.012 nm'],
+    correct: 0,
+    explanation: 'λ = h/√(2m_eKE) = h/√(2m_eeV). Substituting gives λ ≈ 1.23×10⁻¹⁰ m = 0.123 nm.'
+  },
+  {
+    id: 'bp44', subject: 'Physics',
+    text: 'A Carnot engine operates between 600 K and 300 K. Its efficiency and work output for 1000 J of heat input are:',
+    options: ['33% and 330 J', '50% and 500 J', '40% and 400 J', '60% and 600 J'],
+    correct: 1,
+    explanation: 'η = 1 − T_L/T_H = 1 − 300/600 = 50%. W = 0.5 × 1000 = 500 J.'
+  },
+  {
+    id: 'bp45', subject: 'Physics',
+    text: 'Two convex lenses with focal lengths 20 cm and 30 cm are placed in contact. The combined focal length is:',
+    options: ['10 cm', '12 cm', '15 cm', '50 cm'],
+    correct: 1,
+    explanation: '1/f = 1/20 + 1/30 = 3/60 + 2/60 = 5/60 → f = 12 cm.'
+  },
+  {
+    id: 'bp46', subject: 'Physics',
+    text: 'In the photoelectric effect, stopping potential V₀ is related to maximum kinetic energy by:',
+    options: ['KE_max = eV₀/2', 'KE_max = eV₀', 'KE_max = 2eV₀', 'KE_max = eV₀²'],
+    correct: 1,
+    explanation: 'Work done by retarding field equals kinetic energy: KE_max = eV₀.'
+  },
+  {
+    id: 'bp47', subject: 'Physics',
+    text: 'The ratio of electric field intensities at distances r and 2r from an infinite line charge (linear charge density λ) is:',
+    options: ['1:1', '2:1', '4:1', '1:2'],
+    correct: 1,
+    explanation: 'E = λ/(2πε₀r), so E₁/E₂ = (1/r)/(1/2r) = 2:1.'
+  },
+  {
+    id: 'bp48', subject: 'Physics',
+    text: 'In a resonance column, first and second resonances occur at tube lengths 24 cm and 74 cm. The end correction is:',
+    options: ['0 cm', '0.5 cm', '1.0 cm', '2.0 cm'],
+    correct: 2,
+    explanation: '3(L₁+e) = L₂+e → 72+3e = 74+e → 2e = 2 → e = 1.0 cm. Also λ = 2(L₂−L₁) = 100 cm.'
+  },
+  {
+    id: 'bp49', subject: 'Physics',
+    text: 'Three resistors 2 Ω, 3 Ω, and 6 Ω are connected in parallel. The equivalent resistance is:',
+    options: ['1 Ω', '2 Ω', '3 Ω', '11 Ω'],
+    correct: 0,
+    explanation: '1/R = 1/2 + 1/3 + 1/6 = 3/6 + 2/6 + 1/6 = 6/6 = 1 → R = 1 Ω.'
+  },
+  {
+    id: 'bp50', subject: 'Physics',
+    text: 'The radius of a charged particle\'s circular path in a magnetic field B depends on:',
+    options: ['B and charge only', 'Mass and velocity only', 'Mass, velocity, charge, and B', 'Mass and B only'],
+    correct: 2,
+    explanation: 'r = mv/(qB). It depends on mass m, velocity v, charge q, and magnetic field B.'
+  },
+  {
+    id: 'bp51', subject: 'Physics',
+    text: 'In Young\'s double-slit experiment, if wavelength is halved and slit separation is doubled, fringe width:',
+    options: ['Increases 4 times', 'Remains same', 'Decreases 4 times', 'Doubles'],
+    correct: 2,
+    explanation: 'β = λD/d. New β = (λ/2)D/(2d) = λD/(4d) = β/4. Fringe width decreases 4 times.'
+  },
+  {
+    id: 'bp52', subject: 'Physics',
+    text: 'In the van der Waals equation (P + a/V²)(V − b) = nRT, the constant \'a\' accounts for:',
+    options: ['Volume of gas molecules', 'Intermolecular attractive forces', 'Both attractions and volume', 'Temperature correction'],
+    correct: 1,
+    explanation: '\'a\' corrects for intermolecular attractions (pressure term); \'b\' corrects for finite molecular volume.'
+  },
+  {
+    id: 'bp53', subject: 'Physics',
+    text: 'A wire of resistance R is stretched uniformly to twice its original length. Its new resistance is:',
+    options: ['2R', 'R/2', '4R', 'R/4'],
+    correct: 2,
+    explanation: 'Volume is conserved: length doubles → area halves. R = ρL/A → R′ = ρ(2L)/(A/2) = 4R.'
+  },
+  {
+    id: 'bp54', subject: 'Physics',
+    text: 'The time constant of an RL circuit with R = 5 Ω and L = 0.1 H is:',
+    options: ['0.5 s', '2 s', '0.02 s', '50 s'],
+    correct: 2,
+    explanation: 'Time constant τ = L/R = 0.1/5 = 0.02 s.'
+  },
+  {
+    id: 'bp55', subject: 'Physics',
+    text: 'A projectile is fired at 30° to horizontal with speed 40 m/s. Its range on level ground (g = 10 m/s²) is:',
+    options: ['40√3 m', '80√3 m', '120 m', '160 m'],
+    correct: 1,
+    explanation: 'R = u²sin2θ/g = (1600 × sin60°)/10 = 1600 × (√3/2)/10 = 80√3 m.'
+  },
 ];
 
 export const bitsatChemistry = [
   {
     id: 'bc1', subject: 'Chemistry',
-    text: 'The shape of the SF₆ molecule is:',
-    options: ['Trigonal bipyramidal', 'Octahedral', 'Square planar', 'Pentagonal'],
+    text: 'The hybridization and shape of IF₅ are respectively:',
+    options: ['sp³d, trigonal bipyramidal', 'sp³d², square pyramidal', 'sp³d², octahedral', 'sp³, tetrahedral'],
     correct: 1,
-    explanation: 'SF₆: 6 bonding pairs, 0 lone pairs (sp³d² hybridization) → octahedral.'
+    explanation: 'I in IF₅ has 6 electron pairs (5 bond pairs + 1 lone pair), so hybridization is sp³d² and molecular shape is square pyramidal.'
   },
   {
     id: 'bc2', subject: 'Chemistry',
-    text: 'The first ionization energy of nitrogen is greater than oxygen because:',
-    options: ['N has higher Z', 'N has a half-filled p subshell (extra stability)', 'O has more electrons', 'N is smaller'],
+    text: 'The pH of a 0.01 M acetic acid solution (Ka = 1.8 × 10⁻⁵) is approximately:',
+    options: ['2.37', '3.37', '4.37', '5.37'],
     correct: 1,
-    explanation: 'N (2p³) has a half-filled, stable configuration; removing an electron from it requires more energy.'
+    explanation: 'For weak acid, [H⁺] ≈ √(KaC) = √(1.8×10⁻⁷) ≈ 4.24×10⁻⁴ M. So pH ≈ 3.37.'
   },
   {
     id: 'bc3', subject: 'Chemistry',
-    text: 'Van\'t Hoff factor (i) for Na₂SO₄ in dilute solution is:',
-    options: ['1', '2', '3', '4'],
-    correct: 2,
-    explanation: 'Na₂SO₄ → 2Na⁺ + SO₄²⁻ → i = 3 particles.'
+    text: 'The unit of the rate constant for a zero-order reaction is:',
+    options: ['s⁻¹', 'mol L⁻¹ s⁻¹', 'L mol⁻¹ s⁻¹', 'mol² L⁻² s⁻¹'],
+    correct: 1,
+    explanation: 'For a zero-order reaction, rate = k. Since rate has units of concentration/time, k has units mol L⁻¹ s⁻¹.'
   },
   {
     id: 'bc4', subject: 'Chemistry',
-    text: 'Osmotic pressure of a solution is π = CRT. If concentration doubles, π:',
-    options: ['Halves', 'Stays same', 'Doubles', 'Quadruples'],
-    correct: 2,
-    explanation: 'π ∝ C (at constant T). Doubling C → π doubles.'
+    text: 'On ozonolysis, propene gives:',
+    options: ['Methanal and ethanal', 'Ethanal and ethanone', 'Methanal and propanone', 'Only ethanal'],
+    correct: 0,
+    explanation: 'CH₃CH=CH₂ on ozonolysis cleaves to CH₃CHO (ethanal) and HCHO (methanal).'
   },
   {
     id: 'bc5', subject: 'Chemistry',
-    text: 'The IUPAC name of CH₃-O-C₂H₅ is:',
-    options: ['Dimethyl ether', 'Methyl ethyl ether', 'Methoxyethane', 'Ethoxyethane'],
-    correct: 2,
-    explanation: 'CH₃-O-C₂H₅: methoxy (CH₃O-) group on ethane → methoxyethane (or ethoxymethane).'
+    text: 'The complex [Ni(CN)₄]²⁻ is:',
+    options: ['Tetrahedral and paramagnetic', 'Square planar and diamagnetic', 'Octahedral and paramagnetic', 'Square planar and paramagnetic'],
+    correct: 1,
+    explanation: 'CN⁻ is a strong-field ligand. Ni²⁺ (d⁸) undergoes pairing and forms a dsp² square planar complex that is diamagnetic.'
   },
   {
     id: 'bc6', subject: 'Chemistry',
@@ -571,43 +676,148 @@ export const bitsatChemistry = [
     correct: 2,
     explanation: 'O: [He]2s²2p⁴. The four 2p electrons fill as: 2p↑↓, 2p↑, 2p↑ → 2 unpaired electrons.'
   },
+  {
+    id: 'bc41', subject: 'Chemistry',
+    text: 'In an SN2 reaction, the rate equation is:',
+    options: ['Rate = k[substrate]', 'Rate = k[nucleophile]', 'Rate = k[substrate][nucleophile]', 'Rate = k[substrate]²'],
+    correct: 2,
+    explanation: 'SN2 is bimolecular: both substrate and nucleophile are involved in the rate-determining step. Rate = k[S][Nu].'
+  },
+  {
+    id: 'bc42', subject: 'Chemistry',
+    text: 'The Nernst equation for an electrode M^n+ + ne⁻ → M at 25°C is:',
+    options: ['E = E° − (0.0591/n)log[M^n+]', 'E = E° + (0.0591/n)log[M^n+]', 'E = E° − 0.0591 log[M^n+]', 'E = E° × (0.0591/n)'],
+    correct: 1,
+    explanation: 'Nernst: E = E° − (0.0591/n)log(Q). For reduction Q = 1/[M^n+] → E = E° + (0.0591/n)log[M^n+].'
+  },
+  {
+    id: 'bc43', subject: 'Chemistry',
+    text: 'Crystal field stabilization energy (CFSE) for a d⁶ metal ion in a strong octahedral field is:',
+    options: ['−0.4Δ₀', '−2.0Δ₀', '−2.4Δ₀', '−4.0Δ₀'],
+    correct: 2,
+    explanation: 'Strong field d⁶ → t₂g⁶ eg⁰. CFSE = 6×(−0.4Δ₀) + 0×(+0.6Δ₀) = −2.4Δ₀.'
+  },
+  {
+    id: 'bc44', subject: 'Chemistry',
+    text: 'The major product of addition of HBr to propene (CH₃CH=CH₂) by Markovnikov\'s rule is:',
+    options: ['1-bromopropane', '2-bromopropane', '1,2-dibromopropane', 'propan-2-ol'],
+    correct: 1,
+    explanation: 'H adds to CH₂ (less substituted), Br adds to CH (more substituted) → CH₃CHBrCH₃ = 2-bromopropane.'
+  },
+  {
+    id: 'bc45', subject: 'Chemistry',
+    text: 'For N₂ + 3H₂ ⇌ 2NH₃, the relationship between Kp and Kc is:',
+    options: ['Kp = Kc', 'Kp = Kc(RT)²', 'Kp = Kc(RT)⁻²', 'Kp = Kc(RT)³'],
+    correct: 2,
+    explanation: 'Δn = 2 − (1+3) = −2. Kp = Kc(RT)^Δn = Kc(RT)⁻².'
+  },
+  {
+    id: 'bc46', subject: 'Chemistry',
+    text: 'Which compound is most reactive toward electrophilic aromatic substitution (EAS)?',
+    options: ['Nitrobenzene', 'Chlorobenzene', 'Anisole (methoxybenzene)', 'Benzene'],
+    correct: 2,
+    explanation: '−OCH₃ is a strong +M electron-donating group, greatly activating the ring toward EAS.'
+  },
+  {
+    id: 'bc47', subject: 'Chemistry',
+    text: 'The number of geometrical isomers of [Co(en)₂Cl₂]⁺ (en = ethylenediamine) is:',
+    options: ['1', '2', '3', '4'],
+    correct: 1,
+    explanation: '[Co(en)₂Cl₂]⁺ has cis and trans isomers (Cl ligands either adjacent or opposite) = 2 geometrical isomers.'
+  },
+  {
+    id: 'bc48', subject: 'Chemistry',
+    text: 'Cyclooctatetraene (COT) with 8 π electrons is:',
+    options: ['Aromatic', 'Antiaromatic', 'Non-aromatic', 'Superaromatic'],
+    correct: 2,
+    explanation: 'COT has 8 π electrons (4n, n=2), but adopts a non-planar tub shape → not cyclic planar conjugated → non-aromatic.'
+  },
+  {
+    id: 'bc49', subject: 'Chemistry',
+    text: 'The pH of a 10⁻⁸ M HCl solution is approximately:',
+    options: ['8.0', '6.98', '7.02', '1.0'],
+    correct: 1,
+    explanation: 'At very low [HCl], water\'s H⁺ contribution matters. [H⁺]total ≈ 10⁻⁷ + 10⁻⁸ = 1.1×10⁻⁷ M → pH ≈ 6.96 ≈ 6.98.'
+  },
+  {
+    id: 'bc50', subject: 'Chemistry',
+    text: 'Mutarotation of glucose occurs due to:',
+    options: ['Presence of aldehyde group only', 'Equilibrium between α and β anomers via open-chain form', 'Optical activity', 'Reaction with Benedict\'s solution'],
+    correct: 1,
+    explanation: 'Mutarotation: α-D-glucose ⇌ open chain ⇌ β-D-glucose in equilibrium, changing optical rotation over time.'
+  },
+  {
+    id: 'bc51', subject: 'Chemistry',
+    text: 'The Beckmann rearrangement converts:',
+    options: ['Ketone to amine', 'Oxime to amide', 'Aldehyde to ketone', 'Nitrile to amide'],
+    correct: 1,
+    explanation: 'Beckmann rearrangement: ketoxime (R₂C=NOH) + H₂SO₄ → amide (RCONHR) via 1,2-shift of the anti group.'
+  },
+  {
+    id: 'bc52', subject: 'Chemistry',
+    text: 'The spin-only magnetic moment of Cr³⁺ (d³, electronic configuration [Ar]3d³) is:',
+    options: ['1.73 BM', '2.83 BM', '3.87 BM', '4.90 BM'],
+    correct: 2,
+    explanation: 'Cr³⁺ has 3 unpaired electrons. μ = √(n(n+2)) = √(3×5) = √15 ≈ 3.87 BM.'
+  },
+  {
+    id: 'bc53', subject: 'Chemistry',
+    text: 'Which of the following shows ionization isomerism?',
+    options: ['[Co(NH₃)₆]Cl₃ and [Co(NH₃)₆]Cl₃', '[Co(NH₃)₅Cl]SO₄ and [Co(NH₃)₅SO₄]Cl', 'cis-[Pt(NH₃)₂Cl₂] and trans-[Pt(NH₃)₂Cl₂]', '[Co(en)₃]Cl₃ and [Cr(en)₃]Cl₃'],
+    correct: 1,
+    explanation: 'Ionization isomers give different ions in solution. [Co(NH₃)₅Cl]SO₄ vs [Co(NH₃)₅SO₄]Cl differ by which ion is coordinated vs free.'
+  },
+  {
+    id: 'bc54', subject: 'Chemistry',
+    text: 'The degree of unsaturation (index of hydrogen deficiency) of C₆H₅NO₂ is:',
+    options: ['3', '4', '5', '6'],
+    correct: 2,
+    explanation: 'DBE = (2C + 2 + N − H)/2 = (12 + 2 + 1 − 5)/2 = 10/2 = 5, so the index of hydrogen deficiency is 5.'
+  },
+  {
+    id: 'bc55', subject: 'Chemistry',
+    text: 'Which of the following is a step-growth (condensation) polymer?',
+    options: ['Polythene', 'Polystyrene', 'Nylon-6,6', 'Teflon'],
+    correct: 2,
+    explanation: 'Nylon-6,6 is formed by condensation polymerization of hexamethylene diamine + adipic acid (step-growth, releases H₂O).'
+  },
 ];
 
 export const bitsatMath = [
   {
     id: 'bm1', subject: 'Mathematics',
-    text: 'The sum of the series 1² + 2² + 3² + ... + n² is:',
-    options: ['n(n+1)/2', 'n(n+1)(2n+1)/6', 'n²(n+1)²/4', 'n(n+1)(n+2)/6'],
-    correct: 1,
-    explanation: '∑k² = n(n+1)(2n+1)/6.'
+    text: 'If |2 1; k 3| = 5, then k equals:',
+    options: ['1', '2', '3', '4'],
+    correct: 0,
+    explanation: 'Determinant = 2×3 − 1×k = 6 − k = 5, so k = 1.'
   },
   {
     id: 'bm2', subject: 'Mathematics',
-    text: 'lim(x→0) (e^x − 1)/x equals:',
-    options: ['0', 'e', '1', '∞'],
+    text: 'For f(x) = x³ − 3x, the local maximum value is:',
+    options: ['−2', '0', '2', '4'],
     correct: 2,
-    explanation: 'Standard limit: lim(x→0) (eˣ−1)/x = 1.'
+    explanation: 'f′(x) = 3x² − 3 = 0 gives x = ±1. f″(−1) = −6 < 0, so local maximum at x = −1. f(−1) = 2.'
   },
   {
     id: 'bm3', subject: 'Mathematics',
-    text: 'The number of ways to choose 3 items from 8 distinct items is:',
-    options: ['24', '56', '168', '512'],
-    correct: 1,
-    explanation: '⁸C₃ = 8!/(3!5!) = 56.'
+    text: 'The tangent to the circle x² + y² = 25 at the point (3, 4) is:',
+    options: ['3x + 4y = 25', '4x + 3y = 25', '3x − 4y = 25', 'x + y = 7'],
+    correct: 0,
+    explanation: 'For x² + y² = a², tangent at (x₁, y₁) is xx₁ + yy₁ = a². Hence 3x + 4y = 25.'
   },
   {
     id: 'bm4', subject: 'Mathematics',
-    text: 'If z = cos θ + i sin θ, then z + 1/z =',
-    options: ['2cosθ', '2i sinθ', 'cosθ', '2'],
-    correct: 0,
-    explanation: '1/z = cosθ − isinθ (conjugate). z + 1/z = 2cosθ (De Moivre).'
+    text: 'If nPr = 60 and nCr = 10 for the same r, then r is:',
+    options: ['2', '3', '4', '5'],
+    correct: 1,
+    explanation: 'nPr = nCr × r! so 60 = 10 × r! → r! = 6 → r = 3.'
   },
   {
     id: 'bm5', subject: 'Mathematics',
-    text: 'The derivative of log₁₀(x) is:',
-    options: ['1/x', '1/(x ln 10)', 'ln x', '10/x'],
+    text: 'The angle between vectors 2i + j − k and i − j + 2k is given by cosθ =',
+    options: ['1/6', '−1/6', '1/3', '−1/3'],
     correct: 1,
-    explanation: 'd/dx[log₁₀x] = 1/(x ln 10) [change of base formula].'
+    explanation: 'Dot product = 2(1) + 1(−1) + (−1)(2) = −1. Magnitudes are √6 and √6. So cosθ = −1/(√6·√6) = −1/6.'
   },
   {
     id: 'bm6', subject: 'Mathematics',
@@ -889,43 +1099,148 @@ export const bitsatMath = [
     correct: 2,
     explanation: 'For a symmetric normal distribution, mean = median = mode.'
   },
+  {
+    id: 'bm46', subject: 'Mathematics',
+    text: 'The number of real roots of x⁴ − 5x² + 4 = 0 is:',
+    options: ['0', '2', '4', '1'],
+    correct: 2,
+    explanation: 'Let t = x²: t² − 5t + 4 = 0 → t = 1 or t = 4 → x = ±1 or ±2. Four real roots.'
+  },
+  {
+    id: 'bm47', subject: 'Mathematics',
+    text: 'If α and β are roots of x² − px + q = 0, then α² + β² equals:',
+    options: ['p² − 2q', 'p² + 2q', 'p² − q', 'p² + q'],
+    correct: 0,
+    explanation: 'α² + β² = (α+β)² − 2αβ = p² − 2q.'
+  },
+  {
+    id: 'bm48', subject: 'Mathematics',
+    text: 'The value of lim(x→∞) (1 + 1/x)^x is:',
+    options: ['1', '0', 'e', '∞'],
+    correct: 2,
+    explanation: 'Standard limit: lim(x→∞)(1 + 1/x)^x = e (Euler\'s number).'
+  },
+  {
+    id: 'bm49', subject: 'Mathematics',
+    text: 'The area bounded by the curves y = x² and y = x is:',
+    options: ['1/4', '1/6', '1/3', '1/2'],
+    correct: 1,
+    explanation: 'They intersect at x = 0 and x = 1. Area = ∫₀¹(x − x²)dx = [x²/2 − x³/3]₀¹ = 1/2 − 1/3 = 1/6.'
+  },
+  {
+    id: 'bm50', subject: 'Mathematics',
+    text: 'The eccentricity of a parabola is:',
+    options: ['0', 'Between 0 and 1', '1', 'Greater than 1'],
+    correct: 2,
+    explanation: 'Eccentricity: circle e=0, ellipse 0<e<1, parabola e=1, hyperbola e>1.'
+  },
+  {
+    id: 'bm51', subject: 'Mathematics',
+    text: 'The center of the circle x² + y² + 6x − 4y − 3 = 0 is:',
+    options: ['(6, −4)', '(−3, 2)', '(3, −2)', '(−6, 4)'],
+    correct: 1,
+    explanation: 'Complete the square: (x+3)² + (y−2)² = 16. Center = (−3, 2).'
+  },
+  {
+    id: 'bm52', subject: 'Mathematics',
+    text: 'If |a⃗| = 3, |b⃗| = 4 and the angle between them is 90°, then |a⃗ × b⃗| is:',
+    options: ['0', '12', '7', '5'],
+    correct: 1,
+    explanation: '|a⃗ × b⃗| = |a||b|sinθ = 3 × 4 × sin90° = 12.'
+  },
+  {
+    id: 'bm53', subject: 'Mathematics',
+    text: 'The number of ways to arrange letters of "MISSISSIPPI" is:',
+    options: ['34650', '11!', '3465', '69300'],
+    correct: 0,
+    explanation: '11 letters: M×1, I×4, S×4, P×2. Arrangements = 11!/(1!4!4!2!) = 34650.'
+  },
+  {
+    id: 'bm54', subject: 'Mathematics',
+    text: 'If tan A = 1/2 and tan B = 1/3, then tan(A + B) is:',
+    options: ['5/6', '1/2', '1', '√3'],
+    correct: 2,
+    explanation: 'tan(A+B) = (1/2 + 1/3)/(1 − 1/2 × 1/3) = (5/6)/(5/6) = 1.'
+  },
+  {
+    id: 'bm55', subject: 'Mathematics',
+    text: 'The general solution of dy/dx = y/x is:',
+    options: ['y = Ax', 'y = x + C', 'y = Ax²', 'y = Ce^x'],
+    correct: 0,
+    explanation: 'dy/y = dx/x → ln|y| = ln|x| + ln|A| → y = Ax (family of lines through origin).'
+  },
+  {
+    id: 'bm56', subject: 'Mathematics',
+    text: 'The number of terms in the expansion of (x + y + z)⁵ is:',
+    options: ['15', '18', '21', '25'],
+    correct: 2,
+    explanation: 'Number of terms = ⁽ⁿ⁺ʳ⁻¹⁾C₍ᵣ₋₁₎ = ⁷C₂ = 21 (n=5, r=3 variables).'
+  },
+  {
+    id: 'bm57', subject: 'Mathematics',
+    text: 'If P(A) = 0.6, P(B) = 0.5, and P(A∪B) = 0.8, then P(A∩B) is:',
+    options: ['0.2', '0.3', '0.4', '0.1'],
+    correct: 1,
+    explanation: 'P(A∩B) = P(A) + P(B) − P(A∪B) = 0.6 + 0.5 − 0.8 = 0.3.'
+  },
+  {
+    id: 'bm58', subject: 'Mathematics',
+    text: 'The standard deviation of the set {1, 3, 5, 7, 9} is:',
+    options: ['√2', '2', '2√2', '4'],
+    correct: 2,
+    explanation: 'Mean = 5. Variance = [(4²+2²+0²+2²+4²)/5] = 40/5 = 8. SD = √8 = 2√2.'
+  },
+  {
+    id: 'bm59', subject: 'Mathematics',
+    text: '∫ x·eˣ dx equals:',
+    options: ['xeˣ + C', '(x+1)eˣ + C', '(x−1)eˣ + C', 'eˣ + C'],
+    correct: 2,
+    explanation: 'Integration by parts: u = x, dv = eˣ dx → ∫xeˣ dx = xeˣ − ∫eˣ dx = xeˣ − eˣ = (x−1)eˣ + C.'
+  },
+  {
+    id: 'bm60', subject: 'Mathematics',
+    text: 'The distance from the point (1, 2, 3) to the plane 2x − y + 2z = 5 is:',
+    options: ['1/3', '2/3', '5/3', '1'],
+    correct: 0,
+    explanation: 'Distance = |2(1) − 2 + 2(3) − 5|/√(4+1+4) = |2 − 2 + 6 − 5|/3 = 1/3.'
+  },
 ];
 
 export const bitsatEnglish = [
   {
     id: 'be1', subject: 'English',
-    text: 'Choose the word closest in meaning to AMELIORATE:',
-    options: ['Worsen', 'Improve', 'Maintain', 'Ignore'],
+    text: 'Choose the word closest in meaning to OBDURATE:',
+    options: ['Flexible', 'Stubborn', 'Generous', 'Rapid'],
     correct: 1,
-    explanation: 'Ameliorate means to make something bad better/improve it.'
+    explanation: 'Obdurate means stubborn or resistant to persuasion.'
   },
   {
     id: 'be2', subject: 'English',
-    text: 'The antonym of EPHEMERAL is:',
-    options: ['Short-lived', 'Momentary', 'Permanent', 'Transient'],
-    correct: 2,
-    explanation: 'Ephemeral = lasting a very short time. Antonym = permanent.'
+    text: 'Choose the correct sentence:',
+    options: ['Scarcely had the match begun when it started raining.', 'Scarcely the match had begun when it started raining.', 'Scarcely had begun the match when it started raining.', 'Scarcely the match begun had when it started raining.'],
+    correct: 0,
+    explanation: 'With "scarcely...when", the correct inversion is "Scarcely had...when..."'
   },
   {
     id: 'be3', subject: 'English',
-    text: 'She _____ the answer before the teacher could explain. (fill in)',
-    options: ['Has guessed', 'Had guessed', 'Will guess', 'Guesses'],
+    text: 'Choose the correctly spelled word:',
+    options: ['Questionaire', 'Questionnaire', 'Quesionnaire', 'Questionnair'],
     correct: 1,
-    explanation: 'Past perfect "had guessed" shows the action was completed before another past action.'
+    explanation: 'The correct spelling is questionnaire.'
   },
   {
     id: 'be4', subject: 'English',
-    text: 'Identify the error: "Each of the students are responsible for their work."',
-    options: ['students are', '"Each... are" — should be "is"', 'their work', 'No error'],
-    correct: 1,
-    explanation: '"Each" is singular → verb must be singular: "Each of the students IS responsible."'
+    text: 'The idiom "once in a blue moon" means:',
+    options: ['Very often', 'At night', 'Rarely', 'Suddenly'],
+    correct: 2,
+    explanation: '"Once in a blue moon" means very rarely.'
   },
   {
     id: 'be5', subject: 'English',
-    text: 'The phrase "to burn the midnight oil" means:',
-    options: ['To destroy lamps', 'To work late into the night', 'To waste resources', 'To cook food at night'],
+    text: 'Identify the error: "Neither of the two proposals are acceptable."',
+    options: ['Neither of the two', 'are acceptable', 'proposals', 'No error'],
     correct: 1,
-    explanation: 'To burn the midnight oil = to work or study until very late at night.'
+    explanation: 'Neither is singular, so the sentence should read: "Neither of the two proposals is acceptable."'
   },
   {
     id: 'be6', subject: 'English',
@@ -1002,43 +1317,78 @@ export const bitsatEnglish = [
     correct: 1,
     explanation: '"It\'s" = contraction of "it is". "Isn\'t" = "is not". Question mark required.'
   },
+  {
+    id: 'be16', subject: 'English',
+    text: 'Choose the word closest in meaning to LACONIC:',
+    options: ['Verbose', 'Brief and concise', 'Lengthy', 'Confused'],
+    correct: 1,
+    explanation: 'Laconic = using very few words; characterized by brevity and terseness.'
+  },
+  {
+    id: 'be17', subject: 'English',
+    text: 'Fill in: "Neither the students nor the teacher ___ present."',
+    options: ['were', 'are', 'is', 'have been'],
+    correct: 2,
+    explanation: 'With "neither...nor", the verb agrees with the nearer subject. "Teacher" is singular → "is".'
+  },
+  {
+    id: 'be18', subject: 'English',
+    text: 'Identify the error: "He is one of those persons who has succeeded in life."',
+    options: ['"one of those persons"', '"who has" — should be "who have"', '"in life"', 'No error'],
+    correct: 1,
+    explanation: '"One of those persons who" — the relative clause refers to "persons" (plural) → "who have succeeded".'
+  },
+  {
+    id: 'be19', subject: 'English',
+    text: 'The antonym of VERBOSE is:',
+    options: ['Loquacious', 'Prolix', 'Terse', 'Garrulous'],
+    correct: 2,
+    explanation: 'Verbose = using more words than needed. Antonym = terse/concise/brief.'
+  },
+  {
+    id: 'be20', subject: 'English',
+    text: 'Choose the correct form: "I wish I ___ a millionaire."',
+    options: ['am', 'was', 'were', 'will be'],
+    correct: 2,
+    explanation: 'Subjunctive mood with "wish" for unreal/hypothetical situations → "I wish I were..." (even for singular subjects).'
+  },
 ];
 
 export const bitsatLogic = [
   {
     id: 'bl1', subject: 'Logical Reasoning',
-    text: 'If all A are B, and all B are C, then:',
-    options: ['All C are A', 'All A are C', 'Some C are not A', 'No A are C'],
+    text: 'Five persons A, B, C, D and E are sitting in a row. A is to the left of B, B is to the left of C, and D is to the right of C. Who must be in the middle if they are arranged in that order with E at one end?',
+    options: ['B', 'C', 'D', 'E'],
     correct: 1,
-    explanation: 'Syllogism: All A→B, all B→C ∴ All A→C.'
+    explanation: 'The enforced order is A, B, C, D with E at one end. The middle fixed position among these is C.'
   },
   {
     id: 'bl2', subject: 'Logical Reasoning',
-    text: 'Number series: 2, 6, 12, 20, 30, ___',
-    options: ['40', '42', '44', '36'],
-    correct: 1,
-    explanation: 'Differences: 4, 6, 8, 10, 12. Next = 30 + 12 = 42.'
+    text: 'Find the next term in the series: 3, 7, 15, 31, 63, ?',
+    options: ['95', '111', '127', '129'],
+    correct: 2,
+    explanation: 'Pattern is multiply by 2 and add 1: 3→7→15→31→63→127.'
   },
   {
     id: 'bl3', subject: 'Logical Reasoning',
-    text: 'If PENCIL is coded as RGPEKN, how is ERASER coded?',
-    options: ['GTCUGT', 'GSCUGT', 'GTCUGU', 'HUCVGT'],
+    text: 'If SOUTH is coded as TPVUI, then NORTH is coded as:',
+    options: ['OPSUI', 'OPSUII', 'OPSUI', 'OPSUI'],
     correct: 0,
-    explanation: 'Each letter shifted by +2 (P→R, E→G, N→P, C→E, I→K, L→N). ERASER: E→G, R→T, A→C, S→U, E→G, R→T = GTCUGT.'
+    explanation: 'Each letter is shifted by +1: N→O, O→P, R→S, T→U, H→I. So NORTH → OPSUI.'
   },
   {
     id: 'bl4', subject: 'Logical Reasoning',
-    text: 'Which does NOT belong: Dog, Cat, Elephant, Crow, Horse',
-    options: ['Dog', 'Cat', 'Elephant', 'Crow'],
-    correct: 3,
-    explanation: 'Crow is a bird, while Dog, Cat, Elephant, and Horse are mammals.'
+    text: 'Pointing to a man, Ravi said, "He is the son of my mother\'s sister." The man is Ravi\'s:',
+    options: ['Brother', 'Nephew', 'Cousin', 'Uncle'],
+    correct: 2,
+    explanation: 'Mother\'s sister is Ravi\'s aunt. Her son is Ravi\'s cousin.'
   },
   {
     id: 'bl5', subject: 'Logical Reasoning',
-    text: 'A is taller than B, B is taller than C, C is taller than D. Who is shortest?',
-    options: ['A', 'B', 'C', 'D'],
-    correct: 3,
-    explanation: 'A > B > C > D. D is the shortest.'
+    text: 'If 1st January of a leap year is a Monday, what day will 1st January of the next year be?',
+    options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+    correct: 2,
+    explanation: 'A leap year has 366 days = 52 weeks + 2 days. So the same date shifts forward by 2 days: Monday → Wednesday.'
   },
   {
     id: 'bl6', subject: 'Logical Reasoning',
@@ -1084,7 +1434,7 @@ export const bitsatLogic = [
   },
   {
     id: 'bl12', subject: 'Logical Reasoning',
-    text: 'If BOOK is coded as 2121511 (A=1, B=2, ...), then CODE is coded as:',
+    text: 'If BOOK is coded as 2151511 (A=1, B=2, ...), then CODE is coded as:',
     options: ['31545', '34155', '31545', '34154'],
     correct: 0,
     explanation: 'C=3, O=15, D=4, E=5 → 31545.'
@@ -1144,6 +1494,41 @@ export const bitsatLogic = [
     options: ['Sister', 'Cousin', 'Niece', 'Daughter'],
     correct: 0,
     explanation: 'Grandfather\'s only son is Arun\'s father. So the girl is father\'s daughter, i.e., Arun\'s sister.'
+  },
+  {
+    id: 'bl21', subject: 'Logical Reasoning',
+    text: 'In a group of 40 students, 25 play chess and 20 play carrom. 10 play both. How many play neither?',
+    options: ['3', '5', '10', '15'],
+    correct: 1,
+    explanation: 'n(Chess ∪ Carrom) = 25 + 20 − 10 = 35. Neither = 40 − 35 = 5.'
+  },
+  {
+    id: 'bl22', subject: 'Logical Reasoning',
+    text: 'Complete: 1, 4, 9, 16, 25, ?',
+    options: ['30', '36', '32', '49'],
+    correct: 1,
+    explanation: 'These are perfect squares: 1², 2², 3², 4², 5², 6² = 36.'
+  },
+  {
+    id: 'bl23', subject: 'Logical Reasoning',
+    text: 'In a code where A=Z, B=Y, C=X (reverse alphabet), BIRD is coded as:',
+    options: ['ZIQW', 'YRIW', 'XRJV', 'YQJW'],
+    correct: 1,
+    explanation: 'B→Y, I→R, R→I, D→W. Code = YRIW.'
+  },
+  {
+    id: 'bl24', subject: 'Logical Reasoning',
+    text: 'Statement: All birds can fly. Conclusion I: Some birds can fly. Conclusion II: No bird can fly.',
+    options: ['Only I follows', 'Only II follows', 'Both follow', 'Neither follows'],
+    correct: 0,
+    explanation: '"All birds can fly" → "Some birds can fly" is valid (particular follows from universal). Conclusion II contradicts the statement.'
+  },
+  {
+    id: 'bl25', subject: 'Logical Reasoning',
+    text: 'A can finish work in 12 days, B in 18 days. Working together they finish in:',
+    options: ['7 days', '7.2 days', '8 days', '6 days'],
+    correct: 1,
+    explanation: 'Combined rate = 1/12 + 1/18 = 3/36 + 2/36 = 5/36 per day. Days = 36/5 = 7.2 days.'
   },
 ];
 
@@ -1445,6 +1830,69 @@ export const bitsatTenYearBlueprint = {
   ],
 };
 
+export const bitsatSubjectWisePapers = [
+  {
+    id: 101,
+    slug: 'subject-physics',
+    title: 'BITSAT Physics Subject Test',
+    topics: '30 Physics questions | Mechanics, Electricity, Optics, Modern Physics',
+    questions: 30,
+    duration: '45 Min',
+    durationMinutes: 45,
+    maxMarks: 90,
+    scoring: '+3 / -1',
+    description: 'Subject-wise BITSAT Physics practice set built from the live mock bank.',
+  },
+  {
+    id: 102,
+    slug: 'subject-chemistry',
+    title: 'BITSAT Chemistry Subject Test',
+    topics: '30 Chemistry questions | Physical, Organic, Inorganic, Coordination',
+    questions: 30,
+    duration: '45 Min',
+    durationMinutes: 45,
+    maxMarks: 90,
+    scoring: '+3 / -1',
+    description: 'Subject-wise BITSAT Chemistry practice set built from the live mock bank.',
+  },
+  {
+    id: 103,
+    slug: 'subject-mathematics',
+    title: 'BITSAT Mathematics Subject Test',
+    topics: '40 Mathematics questions | Calculus, Algebra, Coordinate, Probability',
+    questions: 40,
+    duration: '60 Min',
+    durationMinutes: 60,
+    maxMarks: 120,
+    scoring: '+3 / -1',
+    description: 'Subject-wise BITSAT Mathematics practice set built from the live mock bank.',
+  },
+  {
+    id: 104,
+    slug: 'subject-english',
+    title: 'BITSAT English Subject Test',
+    topics: '10 English questions | Grammar, Vocabulary, Usage, Comprehension',
+    questions: 10,
+    duration: '15 Min',
+    durationMinutes: 15,
+    maxMarks: 30,
+    scoring: '+3 / -1',
+    description: 'Subject-wise BITSAT English practice set built from the live mock bank.',
+  },
+  {
+    id: 105,
+    slug: 'subject-logical-reasoning',
+    title: 'BITSAT Logical Reasoning Subject Test',
+    topics: '20 Logical Reasoning questions | Series, Coding, Syllogism, Arrangement',
+    questions: 20,
+    duration: '30 Min',
+    durationMinutes: 30,
+    maxMarks: 60,
+    scoring: '+3 / -1',
+    description: 'Subject-wise BITSAT Logical Reasoning practice set built from the live mock bank.',
+  },
+];
+
 // ── PAPER ASSEMBLY ──────────────────────────────────────────
 function seededShuffle(arr, seed) {
   const a = [...arr];
@@ -1518,18 +1966,42 @@ const BITSAT_HIGH_DIFFICULTY_HARD_RATIO = {
 };
 
 export function getBitsatPaper(paperId) {
-  const id = parseInt(paperId, 10);
-  const physicsPool = [...bitsatPhysics, ...bitsatPhysicsHard];
-  const chemistryPool = [...bitsatChemistry, ...bitsatChemistryHard];
-  const mathPool = [...bitsatMath, ...bitsatMathHard];
-  const englishPool = [...bitsatEnglish, ...bitsatEnglishHard];
-  const logicPool = [...bitsatLogic, ...bitsatLogicHard];
+  const subjectPaper = bitsatSubjectWisePapers.find((paper) => paper.slug === paperId);
+  const id = subjectPaper ? subjectPaper.id : parseInt(paperId, 10);
+  const shuffledPh = seededShuffle(bitsatPhysics, id * 7331);
+  const shuffledCh = seededShuffle(bitsatChemistry, id * 7331 + 1);
+  const shuffledMa = seededShuffle(bitsatMath, id * 7331 + 2);
+  const shuffledEn = seededShuffle(bitsatEnglish, id * 7331 + 3);
+  const shuffledLo = seededShuffle(bitsatLogic, id * 7331 + 4);
 
-  const shuffledPh = seededShuffle(physicsPool, id * 7331);
-  const shuffledCh = seededShuffle(chemistryPool, id * 7331 + 1);
-  const shuffledMa = seededShuffle(mathPool, id * 7331 + 2);
-  const shuffledEn = seededShuffle(englishPool, id * 7331 + 3);
-  const shuffledLo = seededShuffle(logicPool, id * 7331 + 4);
+  if (subjectPaper) {
+    const subjectKeywordMap = {
+      'subject-physics': ['mechanics', 'electrostatics', 'current electricity', 'optics', 'modern physics', 'rotation', 'thermodynamics'],
+      'subject-chemistry': ['organic', 'chemical bonding', 'coordination', 'equilibrium', 'electrochemistry', 'thermodynamics', 'named reaction', 'goc'],
+      'subject-mathematics': ['calculus', 'integration', 'differential', 'algebra', 'coordinate', 'vector', 'probability', 'matrices', '3d'],
+      'subject-english': ['synonym', 'antonym', 'grammar', 'comprehension', 'spelled', 'sentence', 'idiom'],
+      'subject-logical-reasoning': ['series', 'coding', 'syllogism', 'venn', 'arrangement', 'direction', 'clock', 'queue'],
+    };
+    const questionMap = {
+      'subject-physics': prioritizeByKeywords(shuffledPh, subjectKeywordMap['subject-physics'], 30),
+      'subject-chemistry': prioritizeByKeywords(shuffledCh, subjectKeywordMap['subject-chemistry'], 30),
+      'subject-mathematics': prioritizeByKeywords(shuffledMa, subjectKeywordMap['subject-mathematics'], 40),
+      'subject-english': prioritizeByKeywords(shuffledEn, subjectKeywordMap['subject-english'], 10),
+      'subject-logical-reasoning': prioritizeByKeywords(shuffledLo, subjectKeywordMap['subject-logical-reasoning'], 20),
+    };
+
+    return {
+      id: subjectPaper.id,
+      slug: subjectPaper.slug,
+      title: subjectPaper.title,
+      description: subjectPaper.description,
+      duration: subjectPaper.durationMinutes,
+      totalMarks: subjectPaper.maxMarks,
+      correctMarks: 3,
+      wrongMarks: -1,
+      questions: questionMap[subjectPaper.slug] || [],
+    };
+  }
 
   const names = [
     '', 'BITSAT 2026 Analysis Paper',

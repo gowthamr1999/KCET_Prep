@@ -48,7 +48,7 @@ export default function BitsatPage() {
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7, maxWidth: '640px' }}>
             130 questions · 3 hours · +3/−1 marking · Physics, Chemistry, Maths, English &amp; Logical Reasoning.
-            Practice with 10-year trend-aligned mock tests and predict your BITS campus &amp; branch.
+            Practice with 10-year trend-aligned full mocks, subject-wise tests, and predict your BITS campus &amp; branch.
           </p>
         </header>
 
@@ -196,7 +196,7 @@ export default function BitsatPage() {
             Start Practising Now
           </h2>
           <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>
-            {allBitsatPapers.length} full-length BITSAT mock tests (including Phase 1 memory-based, last 5 years memory-based, and Phase 2 forecast papers) — trend-aligned, free, instant scoring.
+            {allBitsatPapers.length} full-length BITSAT mock tests plus subject-wise practice tests — trend-aligned, free, instant scoring.
           </p>
           <Link href="/bitsat/tests">
             <button className="btn-primary" style={{ fontSize: '1.05rem', padding: '15px 36px' }}>
