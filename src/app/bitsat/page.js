@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import { allBitsatPapers, bitsatRankBands } from '@/data/bitsatQuestions';
+import { allBitsatPapers, bitsatQuestionsLastUpdated, bitsatRankBands } from '@/data/bitsatQuestions';
 
 function predictRank(score) {
   if (score < 0) return null;
@@ -17,6 +17,11 @@ export default function BitsatPage() {
   const [score, setScore] = useState('');
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState('');
+  const formattedLastUpdated = new Intl.DateTimeFormat('en-IN', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'Asia/Kolkata',
+  }).format(new Date(bitsatQuestionsLastUpdated));
 
   function handlePredict(e) {
     e.preventDefault();
@@ -48,7 +53,10 @@ export default function BitsatPage() {
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7, maxWidth: '640px' }}>
             130 questions · 3 hours · +3/−1 marking · Physics, Chemistry, Maths, English &amp; Logical Reasoning.
-            Practice with 10-year trend-aligned full mocks, subject-wise tests, and predict your BITS campus &amp; branch.
+            Practice with full mocks, subject-wise tests, and rank-estimate tools built around common BITSAT patterns and revision needs.
+          </p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '10px' }}>
+            Question bank last updated: <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{formattedLastUpdated} IST</span>
           </p>
         </header>
 
@@ -76,16 +84,16 @@ export default function BitsatPage() {
             ))}
 
             {/* Total summary card */}
-            <div style={{ ...styles.patternCard, background: 'rgba(123,44,191,0.12)', border: '1px solid rgba(123,44,191,0.3)' }} className="glass-panel">
+            <div style={styles.totalCard} className="glass-panel">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <h3 style={{ fontWeight: 700, fontSize: '0.95rem' }}>Total</h3>
                 <span style={{ fontWeight: 800, fontSize: '1.3rem', color: 'var(--accent-primary)' }}>130</span>
               </div>
               <dl style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Max marks</dt><dd style={{ fontWeight: 700, color: '#fff' }}>390</dd></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Correct</dt><dd style={{ fontWeight: 700, color: '#00f5d4' }}>+3</dd></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Wrong</dt><dd style={{ fontWeight: 700, color: '#ff5a7e' }}>−1</dd></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Duration</dt><dd style={{ fontWeight: 700, color: '#fff' }}>3 Hours</dd></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Max marks</dt><dd style={{ fontWeight: 700, color: 'var(--text-main)' }}>390</dd></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Correct</dt><dd style={{ fontWeight: 700, color: 'var(--accent-secondary)' }}>+3</dd></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Wrong</dt><dd style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>−1</dd></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt>Duration</dt><dd style={{ fontWeight: 700, color: 'var(--text-main)' }}>3 Hours</dd></div>
               </dl>
             </div>
           </div>
@@ -109,7 +117,7 @@ export default function BitsatPage() {
                 aria-describedby={error ? 'score-error' : undefined}
                 aria-invalid={!!error}
                 style={styles.input} />
-              {error && <p id="score-error" role="alert" style={{ color: '#ff5a7e', fontSize: '0.78rem', marginTop: '4px' }}>{error}</p>}
+              {error && <p id="score-error" role="alert" style={{ color: 'var(--accent-primary)', fontSize: '0.78rem', marginTop: '4px' }}>{error}</p>}
             </div>
             <button type="submit" className="btn-primary" style={{ padding: '12px 28px', fontSize: '0.95rem' }}>
               Predict Rank
@@ -127,11 +135,11 @@ export default function BitsatPage() {
                 </div>
                 <div style={styles.resultCard}>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Estimated Rank</div>
-                  <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#c77dff' }}>{prediction.rankRange}</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--accent-primary)' }}>{prediction.rankRange}</div>
                 </div>
                 <div style={{ ...styles.resultCard, gridColumn: '1 / -1' }}>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>Likely Admission</div>
-                  <div style={{ fontWeight: 700, color: '#fff', fontSize: '1rem' }}>{prediction.admission}</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1rem' }}>{prediction.admission}</div>
                 </div>
               </div>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '16px' }}>
@@ -156,7 +164,7 @@ export default function BitsatPage() {
               </thead>
               <tbody>
                 {bitsatRankBands.map((band, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                  <tr key={i} style={{ borderBottom: '1px solid var(--surface-border)' }}>
                     <td style={styles.td}>{band.minScore === 0 ? `< 250` : `${band.minScore} – ${band.maxScore}`}</td>
                     <td style={{ ...styles.td, color: 'var(--accent-secondary)', fontWeight: 700 }}>{band.rankRange}</td>
                     <td style={{ ...styles.td, color: 'var(--text-muted)', fontSize: '0.83rem' }}>{band.admission}</td>
@@ -196,7 +204,7 @@ export default function BitsatPage() {
             Start Practising Now
           </h2>
           <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>
-            {allBitsatPapers.length} full-length BITSAT mock tests plus subject-wise practice tests — trend-aligned, free, instant scoring.
+            {allBitsatPapers.length} full-length BITSAT-style practice papers plus subject-wise tests — free and scored instantly in your browser.
           </p>
           <Link href="/bitsat/tests">
             <button className="btn-primary" style={{ fontSize: '1.05rem', padding: '15px 36px' }}>
@@ -220,24 +228,29 @@ const styles = {
   sectionTitle: { fontSize: '1.3rem', fontWeight: 700, marginBottom: '20px' },
   patternGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' },
   patternCard: { padding: '16px 18px' },
+  totalCard: {
+    padding: '16px 18px',
+    background: 'var(--surface-highlight)',
+    border: '1px solid var(--surface-border-strong)',
+  },
   input: {
-    width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)',
-    borderRadius: '10px', padding: '12px 16px', color: '#fff', fontSize: '1rem', fontFamily: 'inherit',
+    width: '100%', background: 'var(--surface-soft)', border: '1px solid var(--surface-border-strong)',
+    borderRadius: '12px', padding: '12px 16px', color: 'var(--text-main)', fontSize: '1rem', fontFamily: 'inherit',
     outline: 'none', boxSizing: 'border-box',
   },
   resultBox: {
-    background: 'rgba(0,245,212,0.05)', border: '1px solid rgba(0,245,212,0.2)',
-    borderRadius: '12px', padding: '24px',
+    background: 'var(--surface-highlight)', border: '1px solid var(--surface-border-strong)',
+    borderRadius: '18px', padding: '24px',
   },
   resultCard: {
-    background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '14px 18px',
-    border: '1px solid rgba(255,255,255,0.07)',
+    background: 'var(--surface-soft)', borderRadius: '14px', padding: '14px 18px',
+    border: '1px solid var(--surface-border)',
   },
   tipCard: { padding: '16px 18px' },
   th: {
     textAlign: 'left', fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700,
     textTransform: 'uppercase', letterSpacing: '0.06em', padding: '10px 12px',
-    borderBottom: '1px solid rgba(255,255,255,0.08)',
+    borderBottom: '1px solid var(--surface-border)',
   },
   td: { padding: '10px 12px', verticalAlign: 'middle' },
 };

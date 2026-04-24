@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { kcetTenYearBlueprint } from '@/data/kcetQuestions';
 
-// ── 5-Year Data (2020–2024) from KCET official papers ────────
+// 5-Year data (2020-2024) from KCET official papers
 const YEARS = ['2020', '2021', '2022', '2023', '2024'];
 
 const analysisData = {
@@ -85,7 +85,7 @@ const analysisData = {
 const weightColor = { High: '#00f5d4', Medium: '#fee440', Low: '#8e8e9f' };
 const weightBg    = { High: 'rgba(0,245,212,0.1)', Medium: 'rgba(254,228,64,0.1)', Low: 'rgba(142,142,159,0.1)' };
 
-// ── Reusable sub-components ──────────────────────────────────
+// Reusable sub-components
 function WeightBadge({ weight }) {
   return (
     <span style={{
@@ -206,7 +206,7 @@ function DifficultyTimeline() {
   );
 }
 
-// ── Main Page ─────────────────────────────────────────────────
+// Main page
 export default function KcetAnalysisPage() {
   const [activeTab, setActiveTab] = useState('physics');
   const data = analysisData[activeTab] || analysisData.physics;

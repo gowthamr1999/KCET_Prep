@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { getCustomPaperById } from '@/lib/paperParser';
 
-// ── Helpers ──────────────────────────────────────────────────
+// Helpers
 function formatTime(secs) {
   const h = Math.floor(secs / 3600);
   const m = Math.floor((secs % 3600) / 60);
@@ -39,7 +39,7 @@ function sectionMeta(subject, idx) {
   return { ...p, icon: '📋' };
 }
 
-// ── Not found ────────────────────────────────────────────────
+// Not found
 function NotFound() {
   return (
     <>
@@ -57,7 +57,7 @@ function NotFound() {
   );
 }
 
-// ── Main Component ───────────────────────────────────────────
+// Main Component
 export default function CustomTestPage() {
   const params = useParams();
   const [paper,       setPaper]      = useState(null);
@@ -73,14 +73,19 @@ export default function CustomTestPage() {
 
   // Load from localStorage (client-only)
   useEffect(() => {
-    const p = getCustomPaperById(params.id);
-    setPaper(p);
-    if (p) {
-      setTimeLeft(p.duration * 60);
-      const firstSection = p.questions[0]?.subject || '';
-      setActiveSection(firstSection);
+    async function loadPaper() {
+      await Promise.resolve();
+      const p = getCustomPaperById(params.id);
+      setPaper(p);
+      if (p) {
+        setTimeLeft(p.duration * 60);
+        const firstSection = p.questions[0]?.subject || '';
+        setActiveSection(firstSection);
+      }
+      setLoaded(true);
     }
-    setLoaded(true);
+
+    loadPaper();
   }, [params.id]);
 
   const submitTest = useCallback(() => {
@@ -143,7 +148,7 @@ export default function CustomTestPage() {
   const timerColor = timerPct > 33 ? '#00f5d4' : timerPct > 10 ? '#fee440' : '#ff5a7e';
   const progressPct = (Object.keys(answers).length / questions.length) * 100;
 
-  // ── INTRO ────────────────────────────────────────────────
+  // Intro
   if (phase === 'intro') return (
     <>
       <Navbar />
@@ -224,7 +229,7 @@ export default function CustomTestPage() {
     </>
   );
 
-  // ── RESULT ───────────────────────────────────────────────
+  // Result
   if (phase === 'result') {
     const penalty = wrong * Math.abs(wrongMarks);
     const accuracy = correct + wrong > 0 ? Math.round(correct / (correct + wrong) * 100) : 0;
@@ -344,7 +349,7 @@ export default function CustomTestPage() {
     );
   }
 
-  // ── TEST ──────────────────────────────────────────────────
+  // Test
   return (
     <>
       <Navbar />

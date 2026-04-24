@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
@@ -8,7 +8,7 @@ import { getKcetPaper } from '@/data/kcetQuestions';
 import { estimateKcetRank, kcetResearchSignals } from '@/lib/kcetPredictor';
 import { getScoreHistory, getStanding, saveAttempt } from '@/lib/kcetScoreHistory';
 
-// ── Helpers ─────────────────────────────────────────────────
+// Helpers
 function formatTime(seconds) {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
@@ -27,13 +27,13 @@ function subjectColor(subject) {
 // 80 minutes per subject — matches real KCET paper structure
 const SUBJECT_DURATION = 80 * 60;
 
-// ── Main Component ──────────────────────────────────────────
+// Main Component
 export default function KcetTestPage() {
   const params = useParams();
   const paper = getKcetPaper(params.id);
 
   const questions = paper.questions;
-  const subjects  = [...new Set(questions.map(q => q.subject))];
+  const subjects  = useMemo(() => [...new Set(questions.map(q => q.subject))], [questions]);
 
   const [phase, setPhase]       = useState('intro'); // intro | test | result
   const [current, setCurrent]   = useState(0);
@@ -41,7 +41,7 @@ export default function KcetTestPage() {
   const [flagged, setFlagged]   = useState({});       // { questionId: bool }
   const [timeTaken, setTimeTaken] = useState(0);
   const [rankEstimate, setRankEstimate] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState(() => getScoreHistory());
   const [standing, setStanding] = useState(null);
   const [isSavedResult, setIsSavedResult] = useState(false);
   const [activeSubjectIndex, setActiveSubjectIndex] = useState(0);
@@ -58,39 +58,12 @@ export default function KcetTestPage() {
   const [lockedSubjects, setLockedSubjects] = useState(new Set());
   const activeSubject = subjects[activeSubjectIndex] || subjects[0];
 
-  // Tick only the active subject timer (sequential subject-wise mode)
-  useEffect(() => {
-    if (phase !== 'test') return;
-    const id = setInterval(() => {
-      setSubjectTimers(prev => {
-        const currentTime = prev[activeSubject] ?? SUBJECT_DURATION;
-        return {
-          ...prev,
-          [activeSubject]: Math.max(0, currentTime - 1),
-        };
-      });
-      setTimeTaken(t => t + 1);
-    }, 1000);
-    return () => clearInterval(id);
-  }, [phase, activeSubject]);
-
-  useEffect(() => {
-    setHistory(getScoreHistory());
-  }, []);
-
   useEffect(() => {
     if (phase !== 'test') return;
 
     // Ensure the question panel is visible immediately after starting the test.
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [phase]);
-
-  // Lock current subject on timeout, then move to next subject
-  useEffect(() => {
-    if (phase !== 'test') return;
-    if ((subjectTimers[activeSubject] ?? SUBJECT_DURATION) > 0) return;
-    completeCurrentSubject();
-  }, [phase, subjectTimers, activeSubject, completeCurrentSubject]);
 
   const handleSelect = (qId, optIdx) => {
     if (phase !== 'test') return;
@@ -104,7 +77,12 @@ export default function KcetTestPage() {
     setFlagged(prev => ({ ...prev, [qId]: !prev[qId] }));
   };
 
-  function completeCurrentSubject() {
+  function handleSubmit() {
+    setIsSavedResult(false);
+    setPhase('result');
+  }
+
+  const completeCurrentSubject = useCallback(() => {
     if (phase !== 'test') return;
 
     setLockedSubjects(prev => {
@@ -124,14 +102,32 @@ export default function KcetTestPage() {
     const nextIdx = questions.findIndex(q => q.subject === nextSubject);
     setActiveSubjectIndex(nextSubjectIndex);
     if (nextIdx !== -1) setCurrent(nextIdx);
-  }
+  }, [phase, activeSubject, activeSubjectIndex, subjects, questions]);
 
-  const handleSubmit = useCallback(() => {
-    setIsSavedResult(false);
-    setPhase('result');
-  }, []);
+  // Tick only the active subject timer (sequential subject-wise mode)
+  useEffect(() => {
+    if (phase !== 'test') return;
+    const id = setInterval(() => {
+      setSubjectTimers(prev => {
+        const currentTime = prev[activeSubject] ?? SUBJECT_DURATION;
+        const nextTime = Math.max(0, currentTime - 1);
 
-  // ── Results Calculation ───────────────────────────────────
+        if (currentTime <= 1) {
+          clearInterval(id);
+          setTimeout(() => completeCurrentSubject(), 0);
+        }
+
+        return {
+          ...prev,
+          [activeSubject]: nextTime,
+        };
+      });
+      setTimeTaken(t => t + 1);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [phase, activeSubject, completeCurrentSubject]);
+
+  // Results calculation
   const calcResults = () => {
     let correct = 0, wrong = 0, unattempted = 0;
     const perSubject = {};
@@ -152,7 +148,10 @@ export default function KcetTestPage() {
     let ignore = false;
 
     async function finalizeResult() {
-      const { correct } = calcResults();
+      let correct = 0;
+      questions.forEach(q => {
+        if (answers[q.id] === q.correct) correct++;
+      });
       const score = correct;
       const kcetEquivalent = (score / paper.totalMarks) * 180;
       const difficulty = paper.id >= 10 ? 'hard' : 'moderate';
@@ -211,9 +210,9 @@ export default function KcetTestPage() {
     return () => {
       ignore = true;
     };
-  }, [phase, isSavedResult, paper.id, paper.totalMarks, timeTaken, userName]);
+  }, [phase, isSavedResult, paper.id, paper.totalMarks, paper.name, timeTaken, userName, questions, answers]);
 
-  // ── INTRO SCREEN ──────────────────────────────────────────
+  // Intro screen
   if (phase === 'intro') {
     return (
       <>
@@ -323,7 +322,7 @@ export default function KcetTestPage() {
     );
   }
 
-  // ── RESULT SCREEN ─────────────────────────────────────────
+  // Result screen
   if (phase === 'result') {
     const { correct, wrong, unattempted, perSubject } = calcResults();
     const score = correct;
@@ -504,7 +503,7 @@ export default function KcetTestPage() {
     );
   }
 
-  // ── TEST SCREEN ───────────────────────────────────────────
+  // Test screen
   const activeQuestionIndices = questions
     .map((item, idx) => (item.subject === activeSubject ? idx : -1))
     .filter(idx => idx !== -1);

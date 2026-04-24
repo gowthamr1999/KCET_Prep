@@ -20,6 +20,8 @@ export default function AdminPage() {
   function handleLogin(e) {
     e.preventDefault();
     if (pw === ADMIN_PASSWORD) {
+      setLoading(true);
+      setError('');
       setAuthed(true);
     } else {
       setPwError('Incorrect password.');
@@ -28,7 +30,6 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!authed) return;
-    setLoading(true);
 
     async function fetchData() {
       try {

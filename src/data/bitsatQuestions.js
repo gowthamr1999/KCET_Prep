@@ -7,6 +7,8 @@
 // Duration: 180 minutes | Max marks: 390
 // ============================================================
 
+export const bitsatQuestionsLastUpdated = '2026-04-24T00:00:00+09:00';
+
 export const bitsatPhysics = [
   {
     id: 'bp1', subject: 'Physics',
@@ -392,6 +394,111 @@ export const bitsatPhysics = [
     options: ['40√3 m', '80√3 m', '120 m', '160 m'],
     correct: 1,
     explanation: 'R = u²sin2θ/g = (1600 × sin60°)/10 = 1600 × (√3/2)/10 = 80√3 m.'
+  },
+  {
+    id: 'bp56', subject: 'Physics',
+    text: 'A particle executes SHM with amplitude 5 cm and frequency 2 Hz. Its maximum acceleration is:',
+    options: ['0.4π² m/s²', '0.8π² m/s²', '1.6π² m/s²', '4π² m/s²'],
+    correct: 1,
+    explanation: 'a_max = ω²A = (2πf)²A = (4π)² × 0.05 = 16π² × 0.05 = 0.8π² m/s².'
+  },
+  {
+    id: 'bp57', subject: 'Physics',
+    text: 'A potentiometer wire of length 10 m has a potential difference of 2 V across it. The balancing length for a cell of emf 1.5 V is:',
+    options: ['7.5 m', '6.0 m', '5.0 m', '3.0 m'],
+    correct: 0,
+    explanation: 'Potential gradient = 2/10 = 0.2 V m⁻¹. Balancing length l = 1.5/0.2 = 7.5 m.'
+  },
+  {
+    id: 'bp58', subject: 'Physics',
+    text: 'Two identical cells each of emf E and internal resistance r are connected in parallel. Their equivalent emf and internal resistance are respectively:',
+    options: ['2E and 2r', 'E and r/2', 'E/2 and r', '2E and r/2'],
+    correct: 1,
+    explanation: 'For identical cells in parallel, effective emf remains E while internal resistance becomes r/n = r/2.'
+  },
+  {
+    id: 'bp59', subject: 'Physics',
+    text: 'A plano-convex lens has refractive index 1.5 and radius of curvature 20 cm. Its focal length in air is:',
+    options: ['10 cm', '20 cm', '40 cm', '60 cm'],
+    correct: 2,
+    explanation: 'Lens maker formula for plano-convex lens: 1/f = (μ − 1)(1/R) = 0.5/20 = 1/40, so f = 40 cm.'
+  },
+  {
+    id: 'bp60', subject: 'Physics',
+    text: 'A gas is taken from state (P, V) to (2P, V/2). Assuming ideal behavior, the temperature:',
+    options: ['doubles', 'halves', 'remains unchanged', 'becomes four times'],
+    correct: 2,
+    explanation: 'For an ideal gas, T ∝ PV. Here (2P)(V/2) = PV, so temperature stays the same.'
+  },
+  {
+    id: 'bp61', subject: 'Physics',
+    text: 'An object is placed 15 cm in front of a concave mirror of focal length 10 cm. The image formed is:',
+    options: ['real, inverted, magnified', 'real, inverted, diminished', 'virtual, erect, magnified', 'virtual, erect, diminished'],
+    correct: 0,
+    explanation: 'The object is between F and C. A concave mirror then forms a real, inverted, magnified image beyond C.'
+  },
+  {
+    id: 'bp62', subject: 'Physics',
+    text: 'A disc rolls without slipping on a horizontal surface. The ratio of translational kinetic energy to rotational kinetic energy is:',
+    options: ['1 : 1', '2 : 1', '1 : 2', '3 : 2'],
+    correct: 1,
+    explanation: 'For a solid disc, I = (1/2)MR². Rotational KE = 1/2 Iω² = 1/4 Mv², translational KE = 1/2 Mv², so ratio = 2 : 1.'
+  },
+  {
+    id: 'bp63', subject: 'Physics',
+    text: 'The stopping potential in a photoelectric experiment depends on:',
+    options: ['intensity of incident light only', 'frequency of incident light only', 'both intensity and frequency', 'distance between source and metal'],
+    correct: 1,
+    explanation: 'Stopping potential is determined by maximum kinetic energy, KE_max = hν − φ, so it depends on frequency, not intensity.'
+  },
+  {
+    id: 'bp64', subject: 'Physics',
+    text: 'If the radius of the circular orbit of an electron in a magnetic field is doubled while the field remains unchanged, its kinetic energy becomes:',
+    options: ['half', 'double', 'four times', 'unchanged'],
+    correct: 2,
+    explanation: 'r = mv/(qB), so doubling r doubles v. Since KE ∝ v², kinetic energy becomes four times.'
+  },
+  {
+    id: 'bp65', subject: 'Physics',
+    text: 'A slab of glass of refractive index 1.5 is placed in one path of Young’s double-slit experiment. To shift the central fringe to the previous position, the slab thickness should introduce an extra optical path of:',
+    options: ['λ', 'λ/2', '2λ', 'zero'],
+    correct: 1,
+    explanation: 'To move a bright fringe to the adjacent dark position, the required additional path difference is λ/2.'
+  },
+  {
+    id: 'bp66', subject: 'Physics',
+    text: 'The ratio of speeds of light in glass and water is 3 : 4. If refractive index of water is 4/3, the refractive index of glass is:',
+    options: ['1.0', '9/4', '16/9', '3/4'],
+    correct: 2,
+    explanation: 'n = c/v. If v_glass : v_water = 3 : 4, then n_glass : n_water = 4 : 3. So n_glass = (4/3) × (4/3) = 16/9.'
+  },
+  {
+    id: 'bp67', subject: 'Physics',
+    text: 'A source of sound moves toward a stationary observer with speed 20 m/s. If the emitted frequency is 510 Hz and speed of sound is 340 m/s, the apparent frequency heard is:',
+    options: ['480 Hz', '510 Hz', '540 Hz', '570 Hz'],
+    correct: 2,
+    explanation: 'f′ = f × v/(v − v_s) = 510 × 340/320 ≈ 541.9 Hz, so the nearest option is 540 Hz.'
+  },
+  {
+    id: 'bp68', subject: 'Physics',
+    text: 'When a dielectric slab is completely inserted between the plates of an isolated charged capacitor, the energy stored in it:',
+    options: ['increases', 'decreases', 'remains the same', 'first increases then decreases'],
+    correct: 1,
+    explanation: 'For an isolated capacitor charge remains constant. Since C increases, U = Q²/(2C) decreases.'
+  },
+  {
+    id: 'bp69', subject: 'Physics',
+    text: 'A satellite just above Earth’s surface has orbital speed v. The escape speed from the same point is:',
+    options: ['v/2', 'v', '√2 v', '2v'],
+    correct: 2,
+    explanation: 'Orbital speed = √(GM/R) and escape speed = √(2GM/R), so escape speed = √2 times orbital speed.'
+  },
+  {
+    id: 'bp70', subject: 'Physics',
+    text: 'For a transistor used in common-emitter mode, the current gain β is related to α by:',
+    options: ['β = α/(1 + α)', 'β = α/(1 − α)', 'β = 1 − α', 'β = 1/α'],
+    correct: 1,
+    explanation: 'Using α = β/(1 + β), we get β = α/(1 − α).'
   },
 ];
 
@@ -780,6 +887,111 @@ export const bitsatChemistry = [
     options: ['Polythene', 'Polystyrene', 'Nylon-6,6', 'Teflon'],
     correct: 2,
     explanation: 'Nylon-6,6 is formed by condensation polymerization of hexamethylene diamine + adipic acid (step-growth, releases H₂O).'
+  },
+  {
+    id: 'bc56', subject: 'Chemistry',
+    text: 'The number of stereoisomers possible for 2,3-dichlorobutane is:',
+    options: ['2', '3', '4', '5'],
+    correct: 1,
+    explanation: 'There are two optically active enantiomers and one meso form, so total stereoisomers = 3.'
+  },
+  {
+    id: 'bc57', subject: 'Chemistry',
+    text: 'Which of the following has the highest boiling point?',
+    options: ['n-Butane', 'Isobutane', 'Propane', 'Neopentane'],
+    correct: 0,
+    explanation: 'For comparable alkanes, less branching gives stronger van der Waals forces and a higher boiling point. n-Butane > isobutane.'
+  },
+  {
+    id: 'bc58', subject: 'Chemistry',
+    text: 'The geometry of XeF₄ is:',
+    options: ['tetrahedral', 'see-saw', 'square planar', 'trigonal bipyramidal'],
+    correct: 2,
+    explanation: 'XeF₄ has 6 electron pairs around Xe (4 bond pairs + 2 lone pairs), giving octahedral arrangement and square planar molecular shape.'
+  },
+  {
+    id: 'bc59', subject: 'Chemistry',
+    text: 'The incorrect statement about catalysts is:',
+    options: ['They change activation energy', 'They increase the rate of forward and backward reactions equally', 'They change the equilibrium constant', 'They provide an alternative pathway'],
+    correct: 2,
+    explanation: 'Catalysts do not alter the equilibrium constant; they only help the system reach equilibrium faster.'
+  },
+  {
+    id: 'bc60', subject: 'Chemistry',
+    text: 'The major product formed when propene reacts with HBr in the presence of peroxide is:',
+    options: ['1-bromopropane', '2-bromopropane', '1,2-dibromopropane', 'propan-2-ol'],
+    correct: 0,
+    explanation: 'Peroxide effect causes anti-Markovnikov addition of HBr to alkenes, giving 1-bromopropane.'
+  },
+  {
+    id: 'bc61', subject: 'Chemistry',
+    text: 'Which quantum number determines the shape of an orbital?',
+    options: ['principal quantum number', 'azimuthal quantum number', 'magnetic quantum number', 'spin quantum number'],
+    correct: 1,
+    explanation: 'The azimuthal quantum number l determines the subshell and hence the shape of the orbital.'
+  },
+  {
+    id: 'bc62', subject: 'Chemistry',
+    text: 'The emf of a Daniell cell increases when:',
+    options: ['Zn²⁺ concentration is increased', 'Cu²⁺ concentration is decreased', 'Cu²⁺ concentration is increased', 'temperature is ignored and both concentrations are made equal'],
+    correct: 2,
+    explanation: 'For Zn | Zn²⁺ || Cu²⁺ | Cu, E = E° − (0.0591/2) log([Zn²⁺]/[Cu²⁺]). Increasing Cu²⁺ lowers Q and increases E.'
+  },
+  {
+    id: 'bc63', subject: 'Chemistry',
+    text: 'Which oxide is amphoteric?',
+    options: ['Na₂O', 'MgO', 'Al₂O₃', 'SO₂'],
+    correct: 2,
+    explanation: 'Al₂O₃ reacts with both acids and bases, so it is amphoteric.'
+  },
+  {
+    id: 'bc64', subject: 'Chemistry',
+    text: 'The IUPAC name of CH₃CH(OH)CH₂CHO is:',
+    options: ['3-hydroxybutanal', '2-hydroxybutanal', 'butan-1-al-3-ol', '4-hydroxybutanal'],
+    correct: 0,
+    explanation: 'The aldehyde carbon gets priority and is numbered 1. The OH group lies on carbon 3, so the name is 3-hydroxybutanal.'
+  },
+  {
+    id: 'bc65', subject: 'Chemistry',
+    text: 'For the reaction 2A → products, the half-life is independent of initial concentration when the reaction is:',
+    options: ['zero order', 'first order', 'second order', 'third order'],
+    correct: 1,
+    explanation: 'For first-order reactions, t₁/₂ = 0.693/k and does not depend on the starting concentration.'
+  },
+  {
+    id: 'bc66', subject: 'Chemistry',
+    text: 'Which of the following compounds will show geometrical isomerism?',
+    options: ['CH₂=CHCl', 'CH₃CH=CHCH₃', 'CH₃CH₂CH=CH₂', 'CH₂=C(CH₃)₂'],
+    correct: 1,
+    explanation: 'Geometrical isomerism requires both carbons of the double bond to have two different substituents. This is true for but-2-ene.'
+  },
+  {
+    id: 'bc67', subject: 'Chemistry',
+    text: 'The freezing point of a 1 molal aqueous solution of a non-electrolyte (Kf for water = 1.86 K kg mol⁻¹) is:',
+    options: ['−1.86°C', '1.86°C', '−0.93°C', '0°C'],
+    correct: 0,
+    explanation: 'Depression in freezing point ΔTf = iKfm = 1 × 1.86 × 1 = 1.86 K, so the new freezing point is −1.86°C.'
+  },
+  {
+    id: 'bc68', subject: 'Chemistry',
+    text: 'Among the following, the strongest acid is:',
+    options: ['CH₃COOH', 'ClCH₂COOH', 'Cl₂CHCOOH', 'Cl₃CCOOH'],
+    correct: 3,
+    explanation: 'Electron-withdrawing Cl atoms increase acidity by stabilizing the conjugate base. More Cl atoms means stronger acid.'
+  },
+  {
+    id: 'bc69', subject: 'Chemistry',
+    text: 'The hybridization of carbon atoms in benzene is:',
+    options: ['sp', 'sp²', 'sp³', 'sp³d'],
+    correct: 1,
+    explanation: 'Each carbon in benzene forms three sigma bonds in a trigonal planar arrangement, so each is sp² hybridized.'
+  },
+  {
+    id: 'bc70', subject: 'Chemistry',
+    text: 'Which of the following does NOT give a silver mirror with Tollens’ reagent?',
+    options: ['ethanal', 'benzaldehyde', 'formic acid', 'acetone'],
+    correct: 3,
+    explanation: 'Aldehydes and formic acid reduce Tollens’ reagent, but acetone is a ketone and does not respond.'
   },
 ];
 
@@ -1204,6 +1416,76 @@ export const bitsatMath = [
     correct: 0,
     explanation: 'Distance = |2(1) − 2 + 2(3) − 5|/√(4+1+4) = |2 − 2 + 6 − 5|/3 = 1/3.'
   },
+  {
+    id: 'bm61', subject: 'Mathematics',
+    text: 'If z = 1 + i, then z⁴ equals:',
+    options: ['−4', '4', '−4i', '4i'],
+    correct: 0,
+    explanation: '(1+i)² = 2i, so z⁴ = (2i)² = −4.'
+  },
+  {
+    id: 'bm62', subject: 'Mathematics',
+    text: 'The coefficient of x⁵ in the expansion of (1 + x)⁷ is:',
+    options: ['7', '21', '35', '42'],
+    correct: 1,
+    explanation: 'The coefficient of x⁵ is ⁷C₅ = 21.'
+  },
+  {
+    id: 'bm63', subject: 'Mathematics',
+    text: 'If tan θ = 3/4 and θ lies in the first quadrant, then sec θ is:',
+    options: ['3/5', '4/5', '5/4', '5/3'],
+    correct: 2,
+    explanation: 'Using a 3-4-5 triangle, cos θ = 4/5, so sec θ = 5/4.'
+  },
+  {
+    id: 'bm64', subject: 'Mathematics',
+    text: 'The derivative of ln(sin x) with respect to x is:',
+    options: ['tan x', 'cot x', 'sec x', 'cosec x'],
+    correct: 1,
+    explanation: 'd/dx[ln(sin x)] = (1/sin x)·cos x = cot x.'
+  },
+  {
+    id: 'bm65', subject: 'Mathematics',
+    text: 'If A and B are independent events with P(A) = 1/2 and P(B) = 1/3, then P(A ∪ B) is:',
+    options: ['1/6', '2/3', '5/6', '1/3'],
+    correct: 1,
+    explanation: 'P(A ∪ B) = P(A) + P(B) − P(A)P(B) = 1/2 + 1/3 − 1/6 = 2/3.'
+  },
+  {
+    id: 'bm66', subject: 'Mathematics',
+    text: 'The general solution of the differential equation dy/dx = 3x² is:',
+    options: ['y = x³ + C', 'y = 3x³ + C', 'y = x² + C', 'y = 3x + C'],
+    correct: 0,
+    explanation: 'Integrating both sides gives y = ∫3x² dx = x³ + C.'
+  },
+  {
+    id: 'bm67', subject: 'Mathematics',
+    text: 'If the matrix A = [[2, 0], [0, 3]], then A⁻¹ is:',
+    options: ['[[1/2, 0], [0, 1/3]]', '[[2, 0], [0, 3]]', '[[3, 0], [0, 2]]', '[[1/3, 0], [0, 1/2]]'],
+    correct: 0,
+    explanation: 'For a diagonal matrix, the inverse is found by taking reciprocals of the diagonal entries.'
+  },
+  {
+    id: 'bm68', subject: 'Mathematics',
+    text: 'The locus of a point equidistant from the points (2, 0) and (−2, 0) is:',
+    options: ['x = 0', 'y = 0', 'x = 2', 'y = 2'],
+    correct: 0,
+    explanation: 'The locus is the perpendicular bisector of the segment joining the two points, which is x = 0.'
+  },
+  {
+    id: 'bm69', subject: 'Mathematics',
+    text: 'The value of ∫₀^π sin x dx is:',
+    options: ['0', '1', '2', 'π'],
+    correct: 2,
+    explanation: '∫₀^π sin x dx = [−cos x]₀^π = 1 + 1 = 2.'
+  },
+  {
+    id: 'bm70', subject: 'Mathematics',
+    text: 'If α and β are the roots of x² − 7x + 10 = 0, then αβ is:',
+    options: ['7', '10', '17', '−10'],
+    correct: 1,
+    explanation: 'For x² − sx + p = 0, the product of roots is p. Hence αβ = 10.'
+  },
 ];
 
 export const bitsatEnglish = [
@@ -1251,10 +1533,10 @@ export const bitsatEnglish = [
   },
   {
     id: 'be7', subject: 'English',
-    text: '"The committee have decided to postpone the meeting." The error is:',
-    options: ['"committee" should be "committees"', '"have" should be "has" (committee is singular)', '"postpone" should be "postponed"', 'No error'],
-    correct: 1,
-    explanation: 'In British English, collective nouns can take plural verbs; in standard formal usage, "committee has" is preferred.'
+    text: 'Select the sentence with correct subject-verb agreement:',
+    options: ['The quality of the apples were excellent.', 'Neither of the answers is correct.', 'A bouquet of roses were lying on the table.', 'One of the players have been injured.'],
+    correct: 2,
+    explanation: '"Neither" takes a singular verb in standard usage, so "Neither of the answers is correct" is the only sentence with correct subject-verb agreement.'
   },
   {
     id: 'be8', subject: 'English',
@@ -1352,6 +1634,76 @@ export const bitsatEnglish = [
     correct: 2,
     explanation: 'Subjunctive mood with "wish" for unreal/hypothetical situations → "I wish I were..." (even for singular subjects).'
   },
+  {
+    id: 'be21', subject: 'English',
+    text: 'Choose the sentence with the correct use of the article:',
+    options: ['He is an European scientist.', 'She bought a umbrella yesterday.', 'It was a unique opportunity.', 'He is the honest man.'],
+    correct: 2,
+    explanation: '"Unique" starts with a consonant sound (yu), so "a unique opportunity" is correct.'
+  },
+  {
+    id: 'be22', subject: 'English',
+    text: 'Select the correctly punctuated sentence:',
+    options: ['If you work hard you will succeed.', 'If you work hard, you will succeed.', 'If, you work hard you will succeed.', 'If you work hard you, will succeed.'],
+    correct: 1,
+    explanation: 'A comma is correctly used after the introductory clause.'
+  },
+  {
+    id: 'be23', subject: 'English',
+    text: 'The word "benevolent" most nearly means:',
+    options: ['cruel', 'kind-hearted', 'careless', 'powerful'],
+    correct: 1,
+    explanation: 'Benevolent means kind, generous, or well-meaning.'
+  },
+  {
+    id: 'be24', subject: 'English',
+    text: 'Choose the correct indirect speech: He said, "I can solve this problem."',
+    options: ['He said that he can solve this problem.', 'He said that he could solve that problem.', 'He said he solved this problem.', 'He said that I could solve that problem.'],
+    correct: 1,
+    explanation: 'In indirect speech, "can" changes to "could" and "this" usually changes to "that."'
+  },
+  {
+    id: 'be25', subject: 'English',
+    text: 'Choose the word that best fits the sentence: "The judge is expected to remain completely _____ while hearing the case."',
+    options: ['impartial', 'impulsive', 'arbitrary', 'hostile'],
+    correct: 0,
+    explanation: 'A judge is expected to remain impartial, meaning fair and unbiased.'
+  },
+  {
+    id: 'be26', subject: 'English',
+    text: 'Fill in the blank: Neither the teacher nor the students _____ aware of the change in schedule.',
+    options: ['was', 'is', 'were', 'has been'],
+    correct: 2,
+    explanation: 'With "neither...nor", the verb agrees with the nearer subject. Here "students" is plural, so "were" is correct.'
+  },
+  {
+    id: 'be27', subject: 'English',
+    text: 'The idiom "spill the beans" means:',
+    options: ['waste food', 'reveal a secret', 'make a mistake', 'argue loudly'],
+    correct: 1,
+    explanation: '"Spill the beans" means to reveal secret information.'
+  },
+  {
+    id: 'be28', subject: 'English',
+    text: 'The word "meticulous" most nearly means:',
+    options: ['careless', 'very careful and precise', 'angry', 'confused'],
+    correct: 1,
+    explanation: 'Meticulous means showing great attention to detail; very careful and precise.'
+  },
+  {
+    id: 'be29', subject: 'English',
+    text: 'Choose the grammatically correct sentence:',
+    options: ['Each of the players have a jersey.', 'Each of the players has a jersey.', 'Each of the player has a jersey.', 'Each of players has a jersey.'],
+    correct: 1,
+    explanation: '"Each" is singular, so it takes the singular verb "has."'
+  },
+  {
+    id: 'be30', subject: 'English',
+    text: 'Choose the word opposite in meaning to "scarce":',
+    options: ['rare', 'limited', 'abundant', 'small'],
+    correct: 2,
+    explanation: 'Scarce means in short supply; its opposite is abundant.'
+  },
 ];
 
 export const bitsatLogic = [
@@ -1372,7 +1724,7 @@ export const bitsatLogic = [
   {
     id: 'bl3', subject: 'Logical Reasoning',
     text: 'If SOUTH is coded as TPVUI, then NORTH is coded as:',
-    options: ['OPSUI', 'OPSUII', 'OPSUI', 'OPSUI'],
+    options: ['OPSUI', 'OQSVI', 'OPRUI', 'NPSUI'],
     correct: 0,
     explanation: 'Each letter is shifted by +1: N→O, O→P, R→S, T→U, H→I. So NORTH → OPSUI.'
   },
@@ -1435,7 +1787,7 @@ export const bitsatLogic = [
   {
     id: 'bl12', subject: 'Logical Reasoning',
     text: 'If BOOK is coded as 2151511 (A=1, B=2, ...), then CODE is coded as:',
-    options: ['31545', '34155', '31545', '34154'],
+    options: ['31545', '34155', '31455', '34154'],
     correct: 0,
     explanation: 'C=3, O=15, D=4, E=5 → 31545.'
   },
@@ -1529,6 +1881,76 @@ export const bitsatLogic = [
     options: ['7 days', '7.2 days', '8 days', '6 days'],
     correct: 1,
     explanation: 'Combined rate = 1/12 + 1/18 = 3/36 + 2/36 = 5/36 per day. Days = 36/5 = 7.2 days.'
+  },
+  {
+    id: 'bl26', subject: 'Logical Reasoning',
+    text: 'If DELHI is coded as FGNJK in a +2 alphabet shift code, then MUMBAI is coded as:',
+    options: ['OWODCK', 'OVODCK', 'OVNCAK', 'NWODCJ'],
+    correct: 0,
+    explanation: 'Using a +2 shift: M→O, U→W, M→O, B→D, A→C, I→K, so MUMBAI becomes OWODCK.'
+  },
+  {
+    id: 'bl27', subject: 'Logical Reasoning',
+    text: 'Find the odd one out:',
+    options: ['Triangle', 'Square', 'Circle', 'Rectangle'],
+    correct: 2,
+    explanation: 'Circle is the only option without sides or angles; the others are polygons.'
+  },
+  {
+    id: 'bl28', subject: 'Logical Reasoning',
+    text: 'If today is Wednesday, what day will it be after 100 days?',
+    options: ['Thursday', 'Friday', 'Saturday', 'Sunday'],
+    correct: 1,
+    explanation: '100 mod 7 = 2, so two days after Wednesday is Friday.'
+  },
+  {
+    id: 'bl29', subject: 'Logical Reasoning',
+    text: 'A is taller than B, B is taller than C, and C is taller than D. Who is the shortest?',
+    options: ['A', 'B', 'C', 'D'],
+    correct: 3,
+    explanation: 'The order is A > B > C > D, so D is the shortest.'
+  },
+  {
+    id: 'bl30', subject: 'Logical Reasoning',
+    text: 'Choose the missing term: AZ, BY, CX, ____',
+    options: ['DW', 'DX', 'EV', 'CV'],
+    correct: 0,
+    explanation: 'The first letters move forward while the second letters move backward: A-Z, B-Y, C-X, D-W.'
+  },
+  {
+    id: 'bl31', subject: 'Logical Reasoning',
+    text: 'Statement: Some books are pens. Some pens are boxes. Conclusion: Some books are boxes.',
+    options: ['Definitely follows', 'Definitely does not follow', 'May or may not follow', 'Only if all pens are books'],
+    correct: 2,
+    explanation: 'The overlap through "pens" does not guarantee overlap between books and boxes.'
+  },
+  {
+    id: 'bl32', subject: 'Logical Reasoning',
+    text: 'In a row of students, Ravi is 12th from the left and 9th from the right. How many students are there in the row?',
+    options: ['19', '20', '21', '22'],
+    correct: 1,
+    explanation: 'Total students = 12 + 9 − 1 = 20.'
+  },
+  {
+    id: 'bl33', subject: 'Logical Reasoning',
+    text: 'If "MANGO" is written as "NBOHP" in a +1 alphabet shift code, then "APPLE" will be written as:',
+    options: ['BQQMF', 'BQQMD', 'AQQMF', 'CRRNG'],
+    correct: 0,
+    explanation: 'Shifting each letter by +1 gives A→B, P→Q, P→Q, L→M, E→F, so APPLE becomes BQQMF.'
+  },
+  {
+    id: 'bl34', subject: 'Logical Reasoning',
+    text: 'How many times do the hands of a clock overlap between 12 noon and 12 midnight?',
+    options: ['10', '11', '12', '13'],
+    correct: 1,
+    explanation: 'The hour and minute hands coincide 11 times in 12 hours.'
+  },
+  {
+    id: 'bl35', subject: 'Logical Reasoning',
+    text: 'If in a certain language, TEACHER is coded as VGCEJGT, then STUDENT is coded as:',
+    options: ['UVWFGPV', 'UVWFGOU', 'TUVDFOU', 'UVWFGQT'],
+    correct: 0,
+    explanation: 'Each letter is shifted by +2: S→U, T→V, U→W, D→F, E→G, N→P, T→V.'
   },
 ];
 
@@ -1830,68 +2252,430 @@ export const bitsatTenYearBlueprint = {
   ],
 };
 
-export const bitsatSubjectWisePapers = [
-  {
-    id: 101,
-    slug: 'subject-physics',
-    title: 'BITSAT Physics Subject Test',
-    topics: '30 Physics questions | Mechanics, Electricity, Optics, Modern Physics',
+const SUBJECT_PAPER_SERIES = {
+  physics: [
+    {
+      name: 'Mechanics Core',
+      topics: '30 Physics questions | Kinematics, laws of motion, work-energy, rotation, gravitation',
+      keywords: ['kinematics', 'laws of motion', 'mechanics', 'rotation', 'collision', 'gravitation', 'projectile', 'moment of inertia'],
+      hardRatio: 0.62,
+      description: 'BITSAT-style physics drill centered on mechanics, gravitation, collisions, and rotational applications.',
+    },
+    {
+      name: 'Electrostatics and Current Electricity',
+      topics: '30 Physics questions | Electric field, potential, circuits, capacitors, Wheatstone bridge',
+      keywords: ['electrostatics', 'electric field', 'potential', 'capacitor', 'current electricity', 'wheatstone', 'resistor', 'ohm'],
+      hardRatio: 0.68,
+      description: 'A circuit-heavy paper with electric field, potential, resistance networks, and capacitor reasoning.',
+    },
+    {
+      name: 'Magnetism to EMI',
+      topics: '30 Physics questions | Magnetism, moving charges, AC, inductors, transformers, EMI',
+      keywords: ['magnetic', 'magnetism', 'cyclotron', 'inductor', 'lenz', 'ac', 'transformer', 'impedance'],
+      hardRatio: 0.7,
+      description: 'Covers moving charges in magnetic fields, induction, AC circuits, and transformer-style numericals.',
+    },
+    {
+      name: 'Optics and Modern Physics',
+      topics: '30 Physics questions | Ray optics, wave optics, atoms, nuclei, photoelectric effect, semiconductors',
+      keywords: ['optics', 'lens', 'mirror', 'young', 'photoelectric', 'hydrogen', 'nuclear', 'semiconductor', 'de broglie'],
+      hardRatio: 0.72,
+      description: 'Mixes optics with atoms, nuclei, photoelectric effect, and early modern physics patterns seen in BITSAT.',
+    },
+    {
+      name: 'Thermal Physics and Fluids',
+      topics: '30 Physics questions | Thermodynamics, kinetic theory, heat, elasticity, fluids, surface tension',
+      keywords: ['thermodynamics', 'adiabatic', 'carnot', 'gas', 'kinetic', 'surface tension', 'bernoulli', 'capillary'],
+      hardRatio: 0.58,
+      description: 'A moderate-difficulty physics set built around thermodynamics, gas laws, and fluid mechanics.',
+    },
+    {
+      name: 'Wave Motion and SHM',
+      topics: '30 Physics questions | SHM, waves, resonance, Doppler effect, sound, wave optics',
+      keywords: ['shm', 'simple pendulum', 'wave', 'resonance', 'doppler', 'sound', 'interference', 'fringe'],
+      hardRatio: 0.66,
+      description: 'Focuses on oscillations, sound, resonance, and interference-heavy BITSAT question framing.',
+    },
+    {
+      name: 'Formula Sprint',
+      topics: '30 Physics questions | Direct-formula application across the full syllabus',
+      keywords: ['rms', 'escape velocity', 'bandwidth', 'frequency', 'work function', 'angular momentum', 'wavelength', 'efficiency'],
+      hardRatio: 0.5,
+      description: 'A faster-scoring subject paper built around direct formulas, standard results, and quick elimination.',
+    },
+    {
+      name: 'High Difficulty Mixed',
+      topics: '30 Physics questions | Tougher multi-concept numericals from across BITSAT physics',
+      keywords: ['rotation', 'electromagnetism', 'current electricity', 'wave optics', 'modern physics', 'thermodynamics', 'collision', 'center of mass'],
+      hardRatio: 0.82,
+      description: 'Deliberately tougher subject paper that leans toward multi-step numericals and mixed-concept traps.',
+    },
+    {
+      name: '2026 Shift Mirror',
+      topics: '30 Physics questions | Moderate-to-tough mix mirroring recent shift trends',
+      keywords: ['mechanics', 'electrostatics', 'current electricity', 'optics', 'modern physics', 'thermodynamics', 'semiconductor'],
+      hardRatio: 0.67,
+      description: 'Built to resemble recent BITSAT shift balance: moderate physics with a few high-leverage tough problems.',
+    },
+    {
+      name: 'Last Mile Revision',
+      topics: '30 Physics questions | Final revision paper with high-frequency BITSAT areas',
+      keywords: ['mechanics', 'electrostatics', 'optics', 'modern physics', 'thermodynamics', 'magnetic', 'ac'],
+      hardRatio: 0.6,
+      description: 'Final revision-oriented physics paper featuring the most repeated BITSAT-ready chapters and models.',
+    },
+  ],
+  chemistry: [
+    {
+      name: 'Physical Chemistry Core',
+      topics: '30 Chemistry questions | Mole concept, thermodynamics, equilibrium, kinetics, solutions',
+      keywords: ['thermodynamics', 'equilibrium', 'chemical kinetics', 'mole', 'colligative', 'electrochemistry', 'solution', 'ph'],
+      hardRatio: 0.64,
+      description: 'A physical-chemistry dominant paper with pH, equilibrium, thermodynamics, and rate-law style problems.',
+    },
+    {
+      name: 'Organic Reactions Engine',
+      topics: '30 Chemistry questions | GOC, named reactions, hydrocarbons, carbonyls, biomolecules',
+      keywords: ['organic', 'goc', 'named reaction', 'aldehyde', 'ketone', 'grignard', 'iodoform', 'biomolecule'],
+      hardRatio: 0.7,
+      description: 'Designed around the organic reaction patterns and reagent recognition that recur in BITSAT.',
+    },
+    {
+      name: 'Chemical Bonding and Periodicity',
+      topics: '30 Chemistry questions | Chemical bonding, periodic table, hybridisation, molecular shapes',
+      keywords: ['chemical bonding', 'hybridization', 'vsepr', 'periodic', 'molecular', 'dipole', 'if₅', 'lattice'],
+      hardRatio: 0.68,
+      description: 'Focuses on bonding logic, periodic trends, hybridisation, and structure-property questions.',
+    },
+    {
+      name: 'Coordination and d-f Block',
+      topics: '30 Chemistry questions | Coordination compounds, ligand field ideas, transition elements, metallurgy',
+      keywords: ['coordination', 'ligand', 'd and f block', 'transition', 'magnetic moment', 'complex', 'metal'],
+      hardRatio: 0.72,
+      description: 'A tougher inorganic paper built around coordination chemistry, transition-metal behavior, and complexes.',
+    },
+    {
+      name: 'Electrochemistry and Redox',
+      topics: '30 Chemistry questions | Redox, electrochemistry, conductance, cells, ionic equilibrium',
+      keywords: ['electrochemistry', 'redox', 'cell', 'conductance', 'ionic', 'equilibrium', 'nernst', 'ph'],
+      hardRatio: 0.69,
+      description: 'Cell reactions, redox balancing, electrochemical reasoning, and ionic-equilibrium trap questions.',
+    },
+    {
+      name: 'Thermo and Equilibrium Drill',
+      topics: '30 Chemistry questions | Thermodynamics, chemical equilibrium, surface chemistry, states of matter',
+      keywords: ['thermodynamics', 'equilibrium', 'surface chemistry', 'adsorption', 'entropy', 'gibbs', 'gas'],
+      hardRatio: 0.62,
+      description: 'A steady-scoring chemistry set with thermodynamics, equilibria, and classic state-of-matter concepts.',
+    },
+    {
+      name: 'NCERT Fast Revision',
+      topics: '30 Chemistry questions | Direct NCERT-style facts across physical, organic, and inorganic chemistry',
+      keywords: ['polymer', 'biomolecule', 'vitamin', 'polymerisation', 'periodic', 'acid', 'base', 'salt'],
+      hardRatio: 0.48,
+      description: 'A quicker chemistry revision paper closer to direct NCERT recall and fact-pattern questions.',
+    },
+    {
+      name: 'High Difficulty Mixed',
+      topics: '30 Chemistry questions | Tough mixed chemistry with conceptual traps and hybrid framing',
+      keywords: ['electrochemistry', 'coordination', 'thermodynamics', 'equilibrium', 'named reaction', 'isomerism', 'chemical bonding', 'chemical kinetics'],
+      hardRatio: 0.82,
+      description: 'A hard mixed paper intended to pressure-test chemical concepts, not just memory.',
+    },
+    {
+      name: '2026 Shift Mirror',
+      topics: '30 Chemistry questions | Organic + coordination + thermodynamics mix like recent shifts',
+      keywords: ['organic', 'coordination', 'thermodynamics', 'equilibrium', 'chemical bonding', 'electrochemistry', 'isomerism'],
+      hardRatio: 0.66,
+      description: 'Built around the recent BITSAT chemistry feel: scoring overall, but with pockets of tricky conceptual items.',
+    },
+    {
+      name: 'Last Mile Revision',
+      topics: '30 Chemistry questions | Final revision set from the most repeated BITSAT chemistry areas',
+      keywords: ['organic', 'chemical bonding', 'coordination', 'equilibrium', 'electrochemistry', 'thermodynamics', 'periodic'],
+      hardRatio: 0.58,
+      description: 'A balanced revision paper covering the chemistry chapters most likely to move the BITSAT score quickly.',
+    },
+  ],
+  mathematics: [
+    {
+      name: 'Calculus Core',
+      topics: '40 Mathematics questions | Limits, differentiation, application of derivatives, integration',
+      keywords: ['calculus', 'differential', 'integration', 'derivative', 'limit', 'area', 'tangent'],
+      hardRatio: 0.8,
+      description: 'A calculus-heavy mathematics paper modeled on the single biggest score-separating zone in BITSAT.',
+    },
+    {
+      name: 'Algebra and Sequences',
+      topics: '40 Mathematics questions | Complex numbers, quadratic equations, sequence-series, binomial theorem',
+      keywords: ['algebra', 'sequence', 'series', 'binomial', 'complex', 'quadratic', 'progression'],
+      hardRatio: 0.74,
+      description: 'Targets the algebra core: complex numbers, equations, progressions, and standard BITSAT algebra twists.',
+    },
+    {
+      name: 'Coordinate Geometry',
+      topics: '40 Mathematics questions | Straight lines, circles, parabola, ellipse, hyperbola',
+      keywords: ['coordinate', 'circle', 'parabola', 'ellipse', 'hyperbola', 'line', 'conic'],
+      hardRatio: 0.76,
+      description: 'Conic-section and coordinate-geometry set with the medium-length analytical style common in BITSAT.',
+    },
+    {
+      name: 'Matrices, Determinants and Vectors',
+      topics: '40 Mathematics questions | Matrices, determinants, vectors, 3D geometry, transformations',
+      keywords: ['matrices', 'determinants', 'vector', '3d', 'plane', 'direction ratio', 'transformation'],
+      hardRatio: 0.8,
+      description: 'A strong vectors-plus-linear-algebra paper built for accuracy under time pressure.',
+    },
+    {
+      name: 'Probability and Statistics',
+      topics: '40 Mathematics questions | Probability, P&C, distributions, statistics, linear programming',
+      keywords: ['probability', 'permutation', 'combination', 'statistics', 'mean', 'variance', 'linear programming'],
+      hardRatio: 0.72,
+      description: 'Focuses on probability setups, counting logic, and data interpretation style questions.',
+    },
+    {
+      name: 'Trigonometry and Geometry',
+      topics: '40 Mathematics questions | Trigonometry, heights and distances, properties, coordinate applications',
+      keywords: ['trigonometry', 'triangle', 'angle', 'height', 'distance', 'coordinate', 'identity'],
+      hardRatio: 0.69,
+      description: 'A medium-to-tough trigonometry paper that blends identities, angles, and geometry-based solving.',
+    },
+    {
+      name: 'Formula Sprint',
+      topics: '40 Mathematics questions | Faster one-minute questions across algebra, trigonometry, and vectors',
+      keywords: ['algebra', 'trigonometry', 'matrices', 'determinants', 'vector', 'probability', 'coordinate'],
+      hardRatio: 0.56,
+      description: 'A faster mathematics set designed for revision speed, option elimination, and confidence building.',
+    },
+    {
+      name: 'High Difficulty Mixed',
+      topics: '40 Mathematics questions | Tough mixed paper with longer calculus and probability-heavy items',
+      keywords: ['integration', 'differential', 'vector', '3d', 'probability', 'matrices', 'statistics', 'conic'],
+      hardRatio: 0.9,
+      description: 'A hard mixed mathematics paper that intentionally leans into the lengthier BITSAT-style problems.',
+    },
+    {
+      name: '2026 Shift Mirror',
+      topics: '40 Mathematics questions | Lengthy mixed maths mirroring recent BITSAT shifts',
+      keywords: ['calculus', 'integration', 'differential', 'algebra', 'coordinate', 'vector', 'probability', '3d'],
+      hardRatio: 0.85,
+      description: 'Built to mirror recent BITSAT mathematics: long, accuracy-sensitive, and heavy on calculus and vectors.',
+    },
+    {
+      name: 'Last Mile Revision',
+      topics: '40 Mathematics questions | Final revision of the most repeated BITSAT maths chapters',
+      keywords: ['calculus', 'algebra', 'coordinate', 'vector', 'probability', 'matrices', 'trigonometry'],
+      hardRatio: 0.74,
+      description: 'A final revision paper combining the chapters that most often determine BITSAT maths performance.',
+    },
+  ],
+  english: [
+    {
+      name: 'Grammar Core',
+      topics: '10 English questions | Tenses, agreement, articles, prepositions, sentence correction',
+      keywords: ['grammar', 'sentence', 'error spotting', 'agreement', 'passive', 'punctuation'],
+      hardRatio: 0.46,
+      description: 'Grammar-first English practice set with sentence correction and structure-heavy questions.',
+    },
+    {
+      name: 'Vocabulary Builder',
+      topics: '10 English questions | Synonyms, antonyms, word usage, idioms, verbal precision',
+      keywords: ['synonym', 'antonym', 'word', 'idiom', 'meaning', 'vocabulary', 'enervate', 'taciturn'],
+      hardRatio: 0.42,
+      description: 'A vocabulary-focused paper built around high-yield word meaning and usage patterns.',
+    },
+    {
+      name: 'Usage and Error Spotting',
+      topics: '10 English questions | Usage, tense, parallelism, sentence error, correction',
+      keywords: ['error spotting', 'sentence', 'agreement', 'grammar', 'correct sentence', 'identify the error'],
+      hardRatio: 0.48,
+      description: 'Targets the quick grammar traps that frequently appear in the BITSAT English section.',
+    },
+    {
+      name: 'Reading and Inference',
+      topics: '10 English questions | Short comprehension, inference, tone, central idea',
+      keywords: ['comprehension', 'passage', 'primarily discusses', 'tone', 'inference', 'reading'],
+      hardRatio: 0.44,
+      description: 'A short-reading English set focused on passage intent, inference, and quick verbal extraction.',
+    },
+    {
+      name: 'Spelling and Idiom Mix',
+      topics: '10 English questions | Spelling, idioms, phrases, precise expression',
+      keywords: ['spelled', 'idiom', 'correctly spelled', 'phrase', 'usage', 'word'],
+      hardRatio: 0.35,
+      description: 'Designed for fast verbal scoring through spelling accuracy and idiom recognition.',
+    },
+    {
+      name: 'Figure of Speech and Usage',
+      topics: '10 English questions | Figures of speech, parts of speech, sentence transformation',
+      keywords: ['figure of speech', 'part of speech', 'passive voice', 'sentence', 'personification'],
+      hardRatio: 0.38,
+      description: 'Covers stylistic language, grammar labels, and simple transformation questions.',
+    },
+    {
+      name: 'Fast Revision',
+      topics: '10 English questions | Mixed quick-score English drill across grammar and vocabulary',
+      keywords: ['grammar', 'synonym', 'antonym', 'idiom', 'spelled', 'sentence'],
+      hardRatio: 0.32,
+      description: 'A quick mixed verbal drill built for final-week English revision.',
+    },
+    {
+      name: 'High Accuracy Challenge',
+      topics: '10 English questions | Slightly tougher verbal set with close options and subtle traps',
+      keywords: ['grammar', 'comprehension', 'sentence', 'meaning', 'punctuation', 'usage'],
+      hardRatio: 0.52,
+      description: 'A precision-oriented English paper where distractors are closer and elimination matters more.',
+    },
+    {
+      name: '2026 Shift Mirror',
+      topics: '10 English questions | Recent-pattern mix of vocabulary, grammar, and short comprehension',
+      keywords: ['synonym', 'grammar', 'comprehension', 'idiom', 'spelled', 'sentence'],
+      hardRatio: 0.4,
+      description: 'Mirrors the recent BITSAT English feel: mostly scoring, but costly if rushed carelessly.',
+    },
+    {
+      name: 'Last Mile Revision',
+      topics: '10 English questions | Final compact English revision from recurring BITSAT formats',
+      keywords: ['grammar', 'synonym', 'antonym', 'idiom', 'spelled', 'comprehension'],
+      hardRatio: 0.34,
+      description: 'A last-mile English paper built around the recurring BITSAT verbal formats students should finish quickly.',
+    },
+  ],
+  logic: [
+    {
+      name: 'Series and Coding',
+      topics: '20 Logical Reasoning questions | Number series, letter series, coding-decoding',
+      keywords: ['series', 'coding', 'number', 'letter', 'pattern'],
+      hardRatio: 0.46,
+      description: 'A fast logic paper covering the two most common scoring areas: series and coding-decoding.',
+    },
+    {
+      name: 'Syllogism and Venn',
+      topics: '20 Logical Reasoning questions | Syllogism, Venn diagrams, set logic, statements',
+      keywords: ['syllogism', 'venn', 'statement', 'conclusion', 'set'],
+      hardRatio: 0.5,
+      description: 'Targets classic BITSAT set reasoning and syllogism formats with moderate logical density.',
+    },
+    {
+      name: 'Arrangement Drill',
+      topics: '20 Logical Reasoning questions | Seating arrangement, linear order, ranking, queue',
+      keywords: ['arrangement', 'queue', 'ranking', 'order', 'seating'],
+      hardRatio: 0.58,
+      description: 'Arrangement-heavy paper built for the longer reasoning questions that can burn time quickly.',
+    },
+    {
+      name: 'Directions and Blood Relations',
+      topics: '20 Logical Reasoning questions | Direction sense, family tree, relation mapping',
+      keywords: ['direction', 'blood relation', 'family', 'clockwise', 'relative'],
+      hardRatio: 0.42,
+      description: 'A moderate set focused on relation-mapping and direction-sense diagrams.',
+    },
+    {
+      name: 'Analogy and Classification',
+      topics: '20 Logical Reasoning questions | Analogy, odd one out, classification, grouping',
+      keywords: ['analogy', 'classification', 'odd', 'group', 'relation'],
+      hardRatio: 0.34,
+      description: 'Shorter and faster logic set emphasizing analogy, classification, and quick pattern recognition.',
+    },
+    {
+      name: 'Clock, Calendar and Time',
+      topics: '20 Logical Reasoning questions | Clock, calendar, time sequence, scheduling patterns',
+      keywords: ['clock', 'calendar', 'time', 'schedule', 'day'],
+      hardRatio: 0.44,
+      description: 'A time-logic paper built around clocks, calendars, and sequence-based logical interpretation.',
+    },
+    {
+      name: 'Fast Revision',
+      topics: '20 Logical Reasoning questions | Mixed quick-score LR paper across common BITSAT formats',
+      keywords: ['series', 'coding', 'syllogism', 'venn', 'direction', 'clock'],
+      hardRatio: 0.38,
+      description: 'Final revision set combining the quickest and most repeated BITSAT logical reasoning formats.',
+    },
+    {
+      name: 'High Difficulty Mixed',
+      topics: '20 Logical Reasoning questions | Tougher mixed LR with longer arrangements and dense logic',
+      keywords: ['syllogism', 'arrangement', 'coding', 'venn', 'clock', 'series', 'direction', 'queue'],
+      hardRatio: 0.62,
+      description: 'A harder reasoning set designed to test patience, tracking accuracy, and option elimination.',
+    },
+    {
+      name: '2026 Shift Mirror',
+      topics: '20 Logical Reasoning questions | Recent-pattern LR mix with mostly scoring but varied question types',
+      keywords: ['series', 'coding', 'syllogism', 'arrangement', 'blood relation', 'direction', 'venn'],
+      hardRatio: 0.46,
+      description: 'Mirrors recent BITSAT LR shifts: mostly scoring, but with a few time-consuming arrangement clusters.',
+    },
+    {
+      name: 'Last Mile Revision',
+      topics: '20 Logical Reasoning questions | Final LR revision from the most common BITSAT patterns',
+      keywords: ['series', 'coding', 'syllogism', 'venn', 'direction', 'clock', 'arrangement'],
+      hardRatio: 0.4,
+      description: 'A final logic paper covering the patterns students should be able to solve rapidly on exam day.',
+    },
+  ],
+};
+
+const SUBJECT_META = {
+  physics: {
+    label: 'Physics',
+    slugPrefix: 'subject-physics',
     questions: 30,
-    duration: '45 Min',
     durationMinutes: 45,
+    duration: '45 Min',
     maxMarks: 90,
-    scoring: '+3 / -1',
-    description: 'Subject-wise BITSAT Physics practice set built from the live mock bank.',
   },
-  {
-    id: 102,
-    slug: 'subject-chemistry',
-    title: 'BITSAT Chemistry Subject Test',
-    topics: '30 Chemistry questions | Physical, Organic, Inorganic, Coordination',
+  chemistry: {
+    label: 'Chemistry',
+    slugPrefix: 'subject-chemistry',
     questions: 30,
-    duration: '45 Min',
     durationMinutes: 45,
+    duration: '45 Min',
     maxMarks: 90,
-    scoring: '+3 / -1',
-    description: 'Subject-wise BITSAT Chemistry practice set built from the live mock bank.',
   },
-  {
-    id: 103,
-    slug: 'subject-mathematics',
-    title: 'BITSAT Mathematics Subject Test',
-    topics: '40 Mathematics questions | Calculus, Algebra, Coordinate, Probability',
+  mathematics: {
+    label: 'Mathematics',
+    slugPrefix: 'subject-mathematics',
     questions: 40,
-    duration: '60 Min',
     durationMinutes: 60,
+    duration: '60 Min',
     maxMarks: 120,
-    scoring: '+3 / -1',
-    description: 'Subject-wise BITSAT Mathematics practice set built from the live mock bank.',
   },
-  {
-    id: 104,
-    slug: 'subject-english',
-    title: 'BITSAT English Subject Test',
-    topics: '10 English questions | Grammar, Vocabulary, Usage, Comprehension',
+  english: {
+    label: 'English',
+    slugPrefix: 'subject-english',
     questions: 10,
-    duration: '15 Min',
     durationMinutes: 15,
+    duration: '15 Min',
     maxMarks: 30,
-    scoring: '+3 / -1',
-    description: 'Subject-wise BITSAT English practice set built from the live mock bank.',
   },
-  {
-    id: 105,
-    slug: 'subject-logical-reasoning',
-    title: 'BITSAT Logical Reasoning Subject Test',
-    topics: '20 Logical Reasoning questions | Series, Coding, Syllogism, Arrangement',
+  logic: {
+    label: 'Logical Reasoning',
+    slugPrefix: 'subject-logical-reasoning',
     questions: 20,
-    duration: '30 Min',
     durationMinutes: 30,
+    duration: '30 Min',
     maxMarks: 60,
-    scoring: '+3 / -1',
-    description: 'Subject-wise BITSAT Logical Reasoning practice set built from the live mock bank.',
   },
-];
+};
+
+export const bitsatSubjectWisePapers = Object.entries(SUBJECT_PAPER_SERIES).flatMap(([subjectKey, papers], subjectIndex) => {
+  const meta = SUBJECT_META[subjectKey];
+  return papers.map((paper, index) => ({
+    id: 101 + subjectIndex * 10 + index,
+    slug: `${meta.slugPrefix}-${index + 1}`,
+    title: `BITSAT ${meta.label} Subject Test ${index + 1} — ${paper.name}`,
+    topics: paper.topics,
+    questions: meta.questions,
+    duration: meta.duration,
+    durationMinutes: meta.durationMinutes,
+    maxMarks: meta.maxMarks,
+    scoring: '+3 / -1',
+    description: paper.description,
+    subjectKey,
+    keywords: paper.keywords,
+    hardRatio: paper.hardRatio,
+  }));
+});
 
 // ── PAPER ASSEMBLY ──────────────────────────────────────────
 function seededShuffle(arr, seed) {
@@ -1975,20 +2759,19 @@ export function getBitsatPaper(paperId) {
   const shuffledLo = seededShuffle(bitsatLogic, id * 7331 + 4);
 
   if (subjectPaper) {
-    const subjectKeywordMap = {
-      'subject-physics': ['mechanics', 'electrostatics', 'current electricity', 'optics', 'modern physics', 'rotation', 'thermodynamics'],
-      'subject-chemistry': ['organic', 'chemical bonding', 'coordination', 'equilibrium', 'electrochemistry', 'thermodynamics', 'named reaction', 'goc'],
-      'subject-mathematics': ['calculus', 'integration', 'differential', 'algebra', 'coordinate', 'vector', 'probability', 'matrices', '3d'],
-      'subject-english': ['synonym', 'antonym', 'grammar', 'comprehension', 'spelled', 'sentence', 'idiom'],
-      'subject-logical-reasoning': ['series', 'coding', 'syllogism', 'venn', 'arrangement', 'direction', 'clock', 'queue'],
+    const subjectQuestionBankMap = {
+      physics: shuffledPh,
+      chemistry: shuffledCh,
+      mathematics: shuffledMa,
+      english: shuffledEn,
+      logic: shuffledLo,
     };
-    const questionMap = {
-      'subject-physics': prioritizeByKeywords(shuffledPh, subjectKeywordMap['subject-physics'], 30),
-      'subject-chemistry': prioritizeByKeywords(shuffledCh, subjectKeywordMap['subject-chemistry'], 30),
-      'subject-mathematics': prioritizeByKeywords(shuffledMa, subjectKeywordMap['subject-mathematics'], 40),
-      'subject-english': prioritizeByKeywords(shuffledEn, subjectKeywordMap['subject-english'], 10),
-      'subject-logical-reasoning': prioritizeByKeywords(shuffledLo, subjectKeywordMap['subject-logical-reasoning'], 20),
-    };
+    const subjectQuestions = buildSectionWithHardRatio(
+      subjectQuestionBankMap[subjectPaper.subjectKey] || [],
+      subjectPaper.keywords || [],
+      subjectPaper.questions,
+      subjectPaper.hardRatio
+    );
 
     return {
       id: subjectPaper.id,
@@ -1999,12 +2782,12 @@ export function getBitsatPaper(paperId) {
       totalMarks: subjectPaper.maxMarks,
       correctMarks: 3,
       wrongMarks: -1,
-      questions: questionMap[subjectPaper.slug] || [],
+      questions: subjectQuestions,
     };
   }
 
   const names = [
-    '', 'BITSAT 2026 Analysis Paper',
+    '', 'BITSAT 2026 Mixed Practice Paper',
     'BITSAT Mock Test 2 – Mixed Syllabus',
     'BITSAT Mock Test 3 – Speed Focus',
     'BITSAT Mock Test 4 – Concept Based',
@@ -2014,13 +2797,13 @@ export function getBitsatPaper(paperId) {
     'BITSAT Mock Test 8 – Math Heavy',
     'BITSAT Mock Test 9 – English Focus',
     'BITSAT Mock Test 10 – Final Simulation',
-    'BITSAT Mock Test 11 – Phase 2 Forecast',
-    'BITSAT Mock Test 12 – Phase 1 Memory-Based',
-    'BITSAT Mock Test 13 – 2025 Memory-Based',
-    'BITSAT Mock Test 14 – 2024 Memory-Based',
-    'BITSAT Mock Test 15 – 2023 Memory-Based',
-    'BITSAT Mock Test 16 – 2022 Memory-Based',
-    'BITSAT Mock Test 17 – 2021 Memory-Based',
+    'BITSAT Mock Test 11 – Phase 2 Practice Forecast',
+    'BITSAT Mock Test 12 – Phase 1 Public Reconstruction',
+    'BITSAT Mock Test 13 – 2025 Public Reconstruction',
+    'BITSAT Mock Test 14 – 2024 Public Reconstruction',
+    'BITSAT Mock Test 15 – 2023 Public Reconstruction',
+    'BITSAT Mock Test 16 – 2022 Public Reconstruction',
+    'BITSAT Mock Test 17 – 2021 Public Reconstruction',
   ];
 
   const isPhase2Forecast = id === 11;
@@ -2160,13 +2943,13 @@ export function getBitsatPaper(paperId) {
     id,
     title: names[id] || `BITSAT Mock Test ${id}`,
     description: id === 1
-      ? 'Curated from 10-year BITSAT trend analysis (2016–2025) with recent-year weighting'
+      ? 'A broad mixed practice paper built from the current BITSAT question bank and common exam patterns'
       : id === 11
-        ? 'Predicted from BITSAT 2026 Phase-1 shift patterns: lengthy maths, selective chemistry spikes, moderate physics, scoring English/LR'
+        ? 'A practice paper shaped around recent shift patterns: lengthy maths, selective chemistry spikes, moderate physics, and scoring English/LR'
         : id === 12
-          ? 'Memory-based reconstruction from publicly discussed BITSAT 2026 Session-1 shift analyses (not an official released paper)'
+          ? 'Public reconstruction set based on discussed BITSAT 2026 Session-1 patterns (not an official released paper)'
           : id >= 13 && id <= 17
-            ? `Memory-based reconstruction modeled on public ${2026 - (id - 12)} trend discussions (not an official released paper)`
+            ? `Public reconstruction set modeled on discussed ${2026 - (id - 12)} exam patterns (not an official released paper)`
       : 'Mixed syllabus adaptive paper',
     duration: 180,
     totalMarks: 390,
@@ -2197,7 +2980,7 @@ export const bitsatRankBands = [
 export const allBitsatPapers = Array.from({ length: 17 }, (_, i) => {
   const id = i + 1;
   const topics = [
-    'Trend Analysis 2021-2026 | Complete Pattern',
+    'Mixed Practice | Broad Syllabus Coverage',
     'Mixed Syllabus | Standard Difficulty',
     'Speed Focus | 130 Qs / 180 min',
     'Concept Based | Reasoning Heavy',
@@ -2207,33 +2990,33 @@ export const allBitsatPapers = Array.from({ length: 17 }, (_, i) => {
     'Mathematics Intensive | Calculus',
     'English & Logic | Speed Scoring',
     'Full Simulation | Final Practice',
-    'Phase 2 Forecast | 2026 Session-1 Trend Mirror',
-    'Phase 1 Memory-Based | Public Session-1 Trend Reconstruction',
-    '2025 Memory-Based | Public Trend Reconstruction',
-    '2024 Memory-Based | Public Trend Reconstruction',
-    '2023 Memory-Based | Public Trend Reconstruction',
-    '2022 Memory-Based | Public Trend Reconstruction',
-    '2021 Memory-Based | Public Trend Reconstruction',
+    'Phase 2 Forecast | Practice Set Inspired by Recent Shifts',
+    'Phase 1 Public Reconstruction | Session-1 Discussion Based',
+    '2025 Public Reconstruction | Discussion Based',
+    '2024 Public Reconstruction | Discussion Based',
+    '2023 Public Reconstruction | Discussion Based',
+    '2022 Public Reconstruction | Discussion Based',
+    '2021 Public Reconstruction | Discussion Based',
   ];
   return {
     id,
     title:
       id === 1
-        ? 'BITSAT 2026 Analysis Paper'
+        ? 'BITSAT 2026 Mixed Practice Paper'
         : id === 11
-          ? 'BITSAT Phase 2 Forecast Paper'
+          ? 'BITSAT Phase 2 Practice Forecast'
           : id === 12
-            ? 'BITSAT Phase 1 Memory-Based Paper'
+            ? 'BITSAT Phase 1 Public Reconstruction'
             : id === 13
-              ? 'BITSAT 2025 Memory-Based Paper'
+              ? 'BITSAT 2025 Public Reconstruction'
               : id === 14
-                ? 'BITSAT 2024 Memory-Based Paper'
+                ? 'BITSAT 2024 Public Reconstruction'
                 : id === 15
-                  ? 'BITSAT 2023 Memory-Based Paper'
+                  ? 'BITSAT 2023 Public Reconstruction'
                   : id === 16
-                    ? 'BITSAT 2022 Memory-Based Paper'
+                    ? 'BITSAT 2022 Public Reconstruction'
                     : id === 17
-                      ? 'BITSAT 2021 Memory-Based Paper'
+                      ? 'BITSAT 2021 Public Reconstruction'
             : `Mock Test ${id}`,
     topics: topics[i],
     questions: 130,

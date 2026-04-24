@@ -29,7 +29,7 @@ async function readApiJson(response, fallbackMessage) {
   );
 }
 
-// ── Helpers ─────────────────────────────────────────────────
+// Helpers
 function formatTime(secs) {
   const h = Math.floor(secs / 3600);
   const m = Math.floor((secs % 3600) / 60);
@@ -39,11 +39,11 @@ function formatTime(secs) {
 }
 
 const SECTION_META = {
-  Physics:          { color: '#9aa7b3', bg: 'rgba(154,167,179,0.14)', icon: '⚛️' },
-  Chemistry:        { color: '#96aba1', bg: 'rgba(150,171,161,0.14)', icon: '🧪' },
-  Mathematics:      { color: '#a5a0b2', bg: 'rgba(165,160,178,0.14)', icon: '📐' },
-  English:          { color: '#b5a98a', bg: 'rgba(181,169,138,0.14)',  icon: '📖' },
-  'Logical Reasoning': { color: '#a77f85', bg: 'rgba(167,127,133,0.14)', icon: '🧩' },
+  Physics:          { color: '#4f6f92', bg: 'rgba(77,111,145,0.12)', icon: '⚛️' },
+  Chemistry:        { color: '#517567', bg: 'rgba(81,117,103,0.12)', icon: '🧪' },
+  Mathematics:      { color: '#6b6885', bg: 'rgba(107,104,133,0.12)', icon: '📐' },
+  English:          { color: '#8a7248', bg: 'rgba(138,114,72,0.12)',  icon: '📖' },
+  'Logical Reasoning': { color: '#8a5b62', bg: 'rgba(138,91,98,0.12)', icon: '🧩' },
 };
 
 function predictRank(score) {
@@ -54,7 +54,7 @@ function predictRank(score) {
   return bitsatRankBands[bitsatRankBands.length - 1];
 }
 
-// ── Main Component ───────────────────────────────────────────
+// Main Component
 export default function BitsatTestPage() {
   const params = useParams();
   const paper  = getBitsatPaper(params.id);
@@ -236,7 +236,7 @@ export default function BitsatTestPage() {
     userName,
   ]);
 
-  // ── Scoring ────────────────────────────────────────────────
+  // Scoring
   const correct    = questions.filter(q => answers[q.id] === q.correct).length;
   const wrong      = questions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
   const unattempted = questions.length - correct - wrong;
@@ -252,7 +252,7 @@ export default function BitsatTestPage() {
              pct: Math.round((c / qs.length) * 100) };
   });
 
-  // ── Navigation helpers ─────────────────────────────────────
+  // Navigation helpers
   function jumpToSection(sec) {
     if (isPaused) return;
     const idx = questions.findIndex(q => q.subject === sec);
@@ -281,7 +281,7 @@ export default function BitsatTestPage() {
   const timerPct  = (timeLeft / TOTAL_SECS) * 100;
   const timerColor = timerPct > 33 ? '#9cb4ab' : timerPct > 10 ? '#b5a98a' : '#a77f85';
 
-  // ── INTRO SCREEN ───────────────────────────────────────────
+  // Intro screen
   if (phase === 'intro') return (
     <>
       <Navbar />
@@ -305,7 +305,7 @@ export default function BitsatTestPage() {
             ].map(([k, v]) => (
               <div key={k} style={styles.statBox}>
                 <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{k}</div>
-                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: v === `+${correctMarks}` ? '#9cb4ab' : v === `${wrongMarks}` ? '#a77f85' : '#fff' }}>{v}</div>
+                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: v === `+${correctMarks}` ? '#517567' : v === `${wrongMarks}` ? '#8a5b62' : 'var(--text-main)' }}>{v}</div>
               </div>
             ))}
           </div>
@@ -334,9 +334,9 @@ export default function BitsatTestPage() {
           <div style={{ marginBottom: '28px' }}>
             <h2 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '12px' }}>Instructions</h2>
             <ul style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 2, paddingLeft: '20px' }}>
-              <li>Each correct answer: <strong style={{ color: '#9cb4ab' }}>+3 marks</strong></li>
-              <li>Each wrong answer: <strong style={{ color: '#a77f85' }}>−1 mark</strong> (negative marking!)</li>
-              <li>Unattempted questions: <strong>0 marks</strong></li>
+              <li>Each correct answer: <strong style={{ color: '#517567' }}>+3 marks</strong></li>
+              <li>Each wrong answer: <strong style={{ color: '#8a5b62' }}>−1 mark</strong> (negative marking!)</li>
+              <li>Unattempted questions: <strong style={{ color: 'var(--text-main)' }}>0 marks</strong></li>
               <li>Timer auto-submits when 3 hours expire</li>
               <li>Flag questions for later review using the flag button</li>
               <li>Use section tabs to jump between Physics / Chemistry / Maths / English / Logic</li>
@@ -353,9 +353,22 @@ export default function BitsatTestPage() {
               onChange={(e) => { setUserName(e.target.value); if (nameError) setNameError(''); }}
               placeholder="Enter your name"
               maxLength={50}
-              style={{ width: '100%', padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: `1px solid ${nameError ? '#a77f85' : 'rgba(255,255,255,0.14)'}`, borderRadius: '10px', color: '#fff', fontFamily: 'inherit', fontSize: '0.94rem' }}
+              style={{
+                width: '100%',
+                padding: '12px 14px',
+                background: 'var(--surface-soft)',
+                border: `1px solid ${nameError ? '#8a5b62' : 'var(--surface-border-strong)'}`,
+                borderRadius: '10px',
+                color: 'var(--text-main)',
+                WebkitTextFillColor: 'var(--text-main)',
+                caretColor: 'var(--text-main)',
+                opacity: 1,
+                fontFamily: 'inherit',
+                fontSize: '0.98rem',
+                fontWeight: 500,
+              }}
             />
-            {nameError && <p style={{ marginTop: '8px', color: '#a77f85', fontSize: '0.8rem' }}>{nameError}</p>}
+            {nameError && <p style={{ marginTop: '8px', color: '#8a5b62', fontSize: '0.8rem' }}>{nameError}</p>}
           </div>
 
           <button className="btn-primary" style={{ width: '100%', fontSize: '1.1rem', padding: '16px' }}
@@ -382,7 +395,7 @@ export default function BitsatTestPage() {
     </>
   );
 
-  // ── RESULT SCREEN ──────────────────────────────────────────
+  // Result screen
   if (phase === 'result') {
     const rankPred = predictRank(score);
     const penalty  = wrong * Math.abs(wrongMarks);
@@ -608,7 +621,7 @@ export default function BitsatTestPage() {
     );
   }
 
-  // ── TEST SCREEN ────────────────────────────────────────────
+  // Test screen
   const progressPct = (Object.keys(answers).length / questions.length) * 100;
 
   return (
@@ -618,7 +631,7 @@ export default function BitsatTestPage() {
         {/* Sticky header */}
         <div role="banner" aria-label="Test controls" style={styles.stickyBar}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+            <div style={{ fontSize: '0.98rem', color: 'var(--text-main)', fontWeight: 700, marginBottom: '8px', lineHeight: 1.4 }}>
               {paper.title} — Q{current + 1}/{questions.length}
             </div>
             {/* Progress bar */}
@@ -687,7 +700,7 @@ export default function BitsatTestPage() {
           {/* Question area */}
           <section aria-label={`Question ${current + 1}`} style={styles.questionArea}>
             {/* Negative marking reminder */}
-            <div style={{ padding: '8px 14px', background: 'rgba(167,127,133,0.1)', border: '1px solid rgba(167,127,133,0.26)', borderRadius: '8px', fontSize: '0.78rem', color: '#a77f85', marginBottom: '16px' }}>
+            <div style={{ padding: '10px 14px', background: 'rgba(138,91,98,0.08)', border: '1px solid rgba(138,91,98,0.22)', borderRadius: '10px', fontSize: '0.88rem', color: '#8a5b62', marginBottom: '16px', fontWeight: 600 }}>
               ⚠️ Negative marking active: +{correctMarks} correct · {wrongMarks} wrong · 0 skipped
             </div>
 
@@ -696,12 +709,12 @@ export default function BitsatTestPage() {
               <span style={{ background: meta.bg, color: meta.color, padding: '4px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 700, border: `1px solid ${meta.color}44` }}>
                 <span aria-hidden="true">{meta.icon}</span> {q.subject}
               </span>
-              <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Q{current + 1} of {questions.length}</span>
+              <span style={{ fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: 600 }}>Q{current + 1} of {questions.length}</span>
             </div>
 
             {/* Question text */}
-            <div className="glass-panel" style={{ padding: '20px', marginBottom: '16px' }}>
-              <p style={{ fontWeight: 600, lineHeight: 1.8, fontSize: '1rem' }}>{q.text}</p>
+            <div className="glass-panel" style={{ padding: '26px 24px', marginBottom: '16px', border: '1px solid var(--surface-border-strong)' }}>
+              <p style={{ fontWeight: 700, lineHeight: 1.75, fontSize: '1.35rem', color: 'var(--text-main)', letterSpacing: '-0.01em' }}>{q.text}</p>
             </div>
 
             {/* Options */}
@@ -713,18 +726,18 @@ export default function BitsatTestPage() {
                   return (
                     <label key={oi} style={{
                       display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '14px 18px',
-                      background: selected ? `${meta.color}18` : 'rgba(255,255,255,0.03)',
-                      border: `1px solid ${selected ? meta.color : 'rgba(255,255,255,0.08)'}`,
+                      background: selected ? `${meta.color}18` : 'var(--surface-soft)',
+                      border: `1px solid ${selected ? meta.color : 'var(--surface-border)'}`,
                       borderRadius: '12px', cursor: 'pointer', transition: 'all 0.15s', lineHeight: 1.6,
                     }}>
                       <input type="radio" name={`q-${q.id}`} value={oi} checked={selected}
                         onChange={() => handleOption(q.id, oi)}
                         disabled={isPaused}
                         style={{ marginTop: '3px', accentColor: meta.color }} />
-                      <span style={{ fontWeight: 600, color: selected ? meta.color : 'var(--text-muted)', minWidth: '20px' }}>
+                      <span style={{ fontWeight: 700, color: selected ? meta.color : 'var(--text-main)', minWidth: '24px', fontSize: '1rem' }}>
                         {String.fromCharCode(65 + oi)}.
                       </span>
-                      <span style={{ color: selected ? '#fff' : 'var(--text-muted)' }}>{opt}</span>
+                      <span style={{ color: 'var(--text-main)', fontSize: '1rem', fontWeight: selected ? 600 : 500 }}>{opt}</span>
                     </label>
                   );
                 })}
@@ -737,13 +750,13 @@ export default function BitsatTestPage() {
                 aria-pressed={flagged.has(q.id)}
                 aria-label={flagged.has(q.id) ? 'Unflag question' : 'Flag for review'}
                 disabled={isPaused}
-                style={{ ...styles.controlBtn, color: flagged.has(q.id) ? '#b5a98a' : 'var(--text-muted)', borderColor: flagged.has(q.id) ? '#b5a98a' : 'rgba(255,255,255,0.1)' }}>
+                style={{ ...styles.controlBtn, color: flagged.has(q.id) ? '#8a7248' : 'var(--text-main)', borderColor: flagged.has(q.id) ? '#8a7248' : 'var(--surface-border-strong)' }}>
                 {flagged.has(q.id) ? '🚩 Flagged' : '⚑ Flag'}
               </button>
               {answers[q.id] !== undefined && (
                 <button onClick={() => clearAnswer(q.id)} aria-label="Clear answer"
                   disabled={isPaused}
-                  style={{ ...styles.controlBtn, color: '#a77f85', borderColor: 'rgba(167,127,133,0.32)' }}>
+                  style={{ ...styles.controlBtn, color: '#8a5b62', borderColor: 'rgba(138,91,98,0.26)' }}>
                   ✕ Clear
                 </button>
               )}
@@ -767,7 +780,7 @@ export default function BitsatTestPage() {
 
           {/* Question palette sidebar */}
           <aside aria-label="Question palette" style={styles.palette}>
-            <h2 style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: '12px' }}>
+            <h2 style={{ fontSize: '0.88rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-main)', marginBottom: '12px' }}>
               Question Palette
             </h2>
 
@@ -775,11 +788,11 @@ export default function BitsatTestPage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '14px' }}>
               {[
                 { color: meta.color,                       label: 'Current' },
-                { color: '#9cb4ab',                        label: 'Answered' },
-                { color: 'rgba(255,255,255,0.1)',          label: 'Not visited' },
-                { color: '#b5a98a',                        label: 'Flagged' },
+                { color: '#517567',                        label: 'Answered' },
+                { color: 'rgba(31,35,40,0.16)',            label: 'Not visited' },
+                { color: '#8a7248',                        label: 'Flagged' },
               ].map(({ color, label }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', color: 'var(--text-main)' }}>
                   <div style={{ width: '10px', height: '10px', background: color, borderRadius: '2px' }} aria-hidden="true" />
                   {label}
                 </div>
@@ -800,12 +813,12 @@ export default function BitsatTestPage() {
                       const isCurrent  = idx === current;
                       const isAnswered = answers[id] !== undefined;
                       const isFlagged  = flagged.has(id);
-                      let bg     = 'rgba(255,255,255,0.06)';
-                      let border = 'rgba(255,255,255,0.1)';
-                      let color  = 'var(--text-muted)';
+                      let bg     = 'var(--surface-soft)';
+                      let border = 'var(--surface-border)';
+                      let color  = 'var(--text-main)';
                       if (isCurrent)  { bg = m.color; border = m.color; color = '#fff'; }
-                      else if (isFlagged) { bg = 'rgba(181,169,138,0.16)'; border = '#b5a98a'; color = '#b5a98a'; }
-                      else if (isAnswered) { bg = 'rgba(156,180,171,0.16)'; border = '#9cb4ab'; color = '#9cb4ab'; }
+                      else if (isFlagged) { bg = 'rgba(138,114,72,0.14)'; border = '#8a7248'; color = '#8a7248'; }
+                      else if (isAnswered) { bg = 'rgba(81,117,103,0.14)'; border = '#517567'; color = '#517567'; }
                       return (
                         <button key={id} onClick={() => { if (!isPaused) { setCurrent(idx); setActiveSection(sec); } }}
                           disabled={isPaused}
@@ -822,10 +835,10 @@ export default function BitsatTestPage() {
             })}
 
             {/* Score preview */}
-            <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)', fontSize: '0.78rem' }}>
-              <div style={{ color: 'var(--text-muted)', marginBottom: '6px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Live Score</div>
-              <div style={{ fontWeight: 800, fontSize: '1.1rem', color: score >= 0 ? '#9cb4ab' : '#a77f85' }}>{score} / {totalMarks}</div>
-              <div style={{ color: 'var(--text-muted)', marginTop: '4px' }}>
+            <div style={{ marginTop: '16px', padding: '12px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)', fontSize: '0.82rem' }}>
+              <div style={{ color: 'var(--text-main)', marginBottom: '6px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Live Score</div>
+              <div style={{ fontWeight: 800, fontSize: '1.2rem', color: score >= 0 ? '#517567' : '#8a5b62' }}>{score} / {totalMarks}</div>
+              <div style={{ color: 'var(--text-main)', marginTop: '4px' }}>
                 {correct} correct · {wrong} wrong · −{wrong * Math.abs(wrongMarks)} pts
               </div>
             </div>
@@ -838,37 +851,39 @@ export default function BitsatTestPage() {
 
 const styles = {
   main: { padding: '20px 40px 60px', maxWidth: '900px', margin: '0 auto' },
-  statBox: { padding: '12px 16px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)', textAlign: 'center' },
-  predBox: { padding: '14px 18px', background: 'rgba(255,255,255,0.03)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.07)' },
+  statBox: { padding: '12px 16px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)', textAlign: 'center' },
+  predBox: { padding: '14px 18px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)' },
   stickyBar: {
     position: 'sticky', top: 0, zIndex: 100,
     display: 'flex', alignItems: 'center', gap: '16px',
-    padding: '12px 24px', background: 'rgba(14,18,20,0.96)',
-    borderBottom: '1px solid rgba(255,255,255,0.08)',
+    padding: '14px 24px', background: 'var(--nav-bg)',
+    borderBottom: '1px solid var(--nav-border)',
+    backdropFilter: 'blur(18px)',
+    WebkitBackdropFilter: 'blur(18px)',
   },
   sectionTabs: {
     display: 'flex', gap: '0', overflowX: 'auto',
-    padding: '0 24px', borderBottom: '1px solid rgba(255,255,255,0.07)',
-    background: 'rgba(5,5,15,0.7)', scrollbarWidth: 'none',
+    padding: '0 24px', borderBottom: '1px solid var(--surface-border)',
+    background: 'var(--glass-bg)', scrollbarWidth: 'none',
   },
   sectionTab: {
     display: 'flex', alignItems: 'center', gap: '6px',
     padding: '12px 14px', background: 'none', border: 'none', borderBottom: '2px solid transparent',
-    cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600, fontFamily: 'inherit',
+    cursor: 'pointer', fontSize: '0.92rem', fontWeight: 700, fontFamily: 'inherit',
     whiteSpace: 'nowrap', transition: 'color 0.15s',
   },
   testLayout: {
     display: 'flex', gap: '20px', alignItems: 'flex-start',
-    padding: '20px 24px', maxWidth: '1200px', margin: '0 auto',
+    padding: '20px 24px', maxWidth: 'min(1800px, calc(100vw - 32px))', margin: '0 auto',
   },
   questionArea: { flex: 1, minWidth: 0 },
   palette: {
-    width: '220px', flexShrink: 0, position: 'sticky', top: '130px',
-    padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '14px',
-    border: '1px solid rgba(255,255,255,0.07)', maxHeight: 'calc(100vh - 150px)', overflowY: 'auto',
+    width: 'clamp(320px, 28vw, 420px)', flexShrink: 0, position: 'sticky', top: '130px',
+    padding: '16px', background: 'var(--glass-bg)', borderRadius: '14px',
+    border: '1px solid var(--surface-border-strong)', maxHeight: 'calc(100vh - 150px)', overflowY: 'auto',
   },
   controlBtn: {
-    padding: '8px 16px', background: 'transparent', borderRadius: '8px',
+    padding: '8px 16px', background: 'var(--surface-soft)', borderRadius: '8px',
     border: '1px solid', cursor: 'pointer', fontSize: '0.83rem', fontFamily: 'inherit', fontWeight: 600,
   },
 };

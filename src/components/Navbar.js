@@ -3,21 +3,22 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const NAV_GROUPS = [
+  {
+    label: 'BITSAT',
+    links: [
+      { href: '/bitsat',       label: 'Score Predictor' },
+      { href: '/bitsat/tests', label: 'Mock Tests' },
+    ],
+  },
   {
     label: 'KCET',
     links: [
       { href: '/kcet',          label: 'Rank Predictor' },
       { href: '/kcet/analysis', label: '5-Year Analysis' },
       { href: '/kcet/tests',    label: 'Mock Tests' },
-    ],
-  },
-  {
-    label: 'BITSAT',
-    links: [
-      { href: '/bitsat',       label: 'Score Predictor' },
-      { href: '/bitsat/tests', label: 'Mock Tests' },
     ],
   },
 ];
@@ -41,8 +42,8 @@ export default function Navbar() {
   }
 
   return (
-    <header>
-      <nav aria-label="Main navigation" style={styles.navbar} className="glass-panel">
+    <header style={styles.headerShell} className="site-header-shell">
+      <nav aria-label="Main navigation" style={styles.navbar} className="site-nav">
         {/* Logo */}
         <Link href="/" style={{ textDecoration: 'none' }} aria-label="PrepMaster — go to home">
           <div style={styles.logoContainer}>
@@ -75,6 +76,7 @@ export default function Navbar() {
                   display: 'flex', alignItems: 'center', gap: '4px',
                 }}>
                 {group.label}
+                {group.label === 'BITSAT' && <span style={styles.priorityPill}>Focus</span>}
                 <span aria-hidden="true" style={{ fontSize: '0.65rem', transition: 'transform 0.2s', transform: openMenu === group.label ? 'rotate(180deg)' : 'none' }}>▾</span>
               </button>
 
@@ -101,13 +103,16 @@ export default function Navbar() {
           {/* Direct links */}
           {NAV_DIRECT.map(({ href, label }) => (
             <li key={href} role="none">
-              <Link href={href}
-                style={{ ...styles.link, color: isActive(href) ? 'var(--text-main)' : 'var(--text-main)', padding: '6px 14px', background: isActive(href) ? 'rgba(140,154,149,0.16)' : 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+            <Link href={href}
+                style={{ ...styles.link, color: isActive(href) ? 'var(--text-main)' : 'var(--text-main)', padding: '7px 14px', background: isActive(href) ? 'var(--nav-pill-active)' : 'var(--nav-pill-bg)', border: '1px solid var(--nav-pill-border)', borderRadius: '999px' }}
                 aria-current={isActive(href) ? 'page' : undefined}>
                 {label}
               </Link>
             </li>
           ))}
+          <li role="none">
+            <ThemeToggle />
+          </li>
         </ul>
 
         {/* Mobile hamburger */}
@@ -124,7 +129,7 @@ export default function Navbar() {
       {/* Mobile nav */}
       {mobileOpen && (
         <nav id="mobile-nav" aria-label="Mobile navigation"
-          style={styles.mobileNav} className="glass-panel">
+          style={styles.mobileNav} className="site-nav mobile-nav-sheet">
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <li><Link href="/" onClick={() => setMobileOpen(false)} style={styles.mobileLink} aria-current={pathname === '/' ? 'page' : undefined}>Home</Link></li>
             {NAV_GROUPS.flatMap(g =>
@@ -147,6 +152,9 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+            <li style={{ paddingTop: '8px' }}>
+              <ThemeToggle />
+            </li>
           </ul>
         </nav>
       )}
@@ -155,15 +163,20 @@ export default function Navbar() {
 }
 
 const styles = {
+  headerShell: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 220,
+    padding: 0,
+  },
   navbar: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '14px 40px',
-    margin: '16px 40px',
-    position: 'sticky',
-    top: '16px',
-    zIndex: 200,
+    padding: '14px 28px',
+    margin: 0,
+    maxWidth: 'none',
+    width: '100%',
   },
   logoContainer: {
     display: 'flex',
@@ -171,51 +184,65 @@ const styles = {
     gap: '12px',
   },
   logoMark: {
-    width: '24px',
-    height: '24px',
-    borderRadius: '8px',
-    background: 'var(--accent-primary)',
+    width: '20px',
+    height: '20px',
+    borderRadius: '7px',
+    background: 'linear-gradient(135deg, var(--accent-secondary), var(--accent-primary))',
     display: 'inline-block',
     flexShrink: 0,
   },
   logoText: {
-    fontSize: '1.4rem',
+    fontSize: '1.28rem',
     fontWeight: '800',
-    letterSpacing: '-0.5px',
+    letterSpacing: '-0.4px',
     color: 'var(--text-main)',
   },
   navLinks: {
     display: 'flex',
-    gap: '28px',
+    gap: '12px',
     alignItems: 'center',
     listStyle: 'none',
   },
   link: {
-    fontSize: '0.95rem',
+    fontSize: '0.92rem',
     fontWeight: '600',
     color: 'var(--text-main)',
     textDecoration: 'none',
-    transition: 'color 0.15s',
-    padding: '4px 0',
+    transition: 'color 0.15s, background 0.15s, border-color 0.15s',
+    padding: '8px 12px',
+    borderRadius: '999px',
+  },
+  priorityPill: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '2px 8px',
+    marginLeft: '2px',
+    borderRadius: '999px',
+    fontSize: '0.68rem',
+    fontWeight: 800,
+    letterSpacing: '0.02em',
+    background: 'var(--surface-highlight)',
+    color: 'var(--accent-secondary)',
+    border: '1px solid var(--surface-border-strong)',
   },
   dropdown: {
     position: 'absolute',
-    top: 'calc(100% + 10px)',
+    top: 'calc(100% + 12px)',
     left: '50%',
     transform: 'translateX(-50%)',
-    minWidth: '180px',
-    background: 'rgba(16,20,22,0.98)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '12px',
-    padding: '8px',
+    minWidth: '210px',
+    background: 'var(--dropdown-bg)',
+    border: '1px solid var(--surface-border-strong)',
+    borderRadius: '16px',
+    padding: '10px',
     listStyle: 'none',
     zIndex: 300,
-    boxShadow: '0 12px 28px rgba(0,0,0,0.26)',
+    boxShadow: 'var(--dropdown-shadow)',
   },
   dropdownLink: {
     display: 'block',
-    padding: '9px 14px',
-    borderRadius: '8px',
+    padding: '10px 14px',
+    borderRadius: '10px',
     fontSize: '0.88rem',
     fontWeight: 600,
     textDecoration: 'none',
@@ -230,16 +257,19 @@ const styles = {
     padding: '8px',
   },
   mobileNav: {
-    margin: '0 16px 16px',
-    padding: '16px 20px',
+    margin: 0,
+    maxWidth: 'none',
+    width: '100%',
+    padding: '14px 20px 16px',
+    borderRadius: 0,
   },
   mobileLink: {
     display: 'block',
-    padding: '10px 4px',
-    fontSize: '0.95rem',
+    padding: '11px 6px',
+    fontSize: '0.94rem',
     fontWeight: 600,
     textDecoration: 'none',
     color: 'var(--text-main)',
-    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    borderBottom: '1px solid var(--surface-border)',
   },
 };

@@ -3,40 +3,41 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import { allBitsatPapers, bitsatSubjectWisePapers } from '@/data/bitsatQuestions';
+import { allBitsatPapers, bitsatQuestionsLastUpdated, bitsatSubjectWisePapers } from '@/data/bitsatQuestions';
 
 function getPaperTag(id) {
   if (id === 1) return 'Analysis Paper';
   if (id === 11) return 'Phase 2 Forecast';
-  if (id === 12) return 'Phase 1 Memory';
-  if (id >= 13 && id <= 17) return 'Yearly Memory';
+  if (id === 12) return 'Phase 1 Reconstruction';
+  if (id >= 13 && id <= 17) return 'Yearly Reconstruction';
   if (id === 5 || id === 10) return 'Hard';
   if (id === 2 || id === 3) return 'Easy';
   return 'Medium';
 }
 
 const diffColor = {
-  'Analysis Paper': '#a5a0b2',
-  Easy: '#9cb4ab',
-  Medium: '#b5a98a',
-  Hard: '#a77f85',
-  'Phase 2 Forecast': '#96aba1',
-  'Phase 1 Memory': '#9aa7b3',
-  'Yearly Memory': '#8f9aa3',
+  'Analysis Paper': 'var(--accent-secondary)',
+  Easy: 'var(--accent-tertiary)',
+  Medium: 'var(--accent-primary)',
+  Hard: 'var(--text-muted)',
+  'Phase 2 Forecast': 'var(--accent-secondary)',
+  'Phase 1 Reconstruction': 'var(--accent-primary)',
+  'Yearly Reconstruction': 'var(--accent-tertiary)',
 };
 
-const subjectIcons = {
-  'subject-physics': '⚛️',
-  'subject-chemistry': '🧪',
-  'subject-mathematics': '📐',
-  'subject-english': '📖',
-  'subject-logical-reasoning': '🧩',
-};
+function getSubjectIcon(slug) {
+  if (slug.startsWith('subject-physics')) return '⚛️';
+  if (slug.startsWith('subject-chemistry')) return '🧪';
+  if (slug.startsWith('subject-mathematics')) return '📐';
+  if (slug.startsWith('subject-english')) return '📖';
+  if (slug.startsWith('subject-logical-reasoning')) return '🧩';
+  return '📝';
+}
 
 const filterOptions = [
   { id: 'full', label: 'Full-Length' },
   { id: 'subject', label: 'Subject-wise' },
-  { id: 'memory', label: 'Memory-Based' },
+  { id: 'memory', label: 'Public Reconstructions' },
 ];
 
 function isMemoryPaper(id) {
@@ -45,6 +46,11 @@ function isMemoryPaper(id) {
 
 export default function BitsatTestsPage() {
   const [activeFilter, setActiveFilter] = useState('full');
+  const formattedLastUpdated = new Intl.DateTimeFormat('en-IN', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'Asia/Kolkata',
+  }).format(new Date(bitsatQuestionsLastUpdated));
   const visiblePapers = activeFilter === 'memory'
     ? allBitsatPapers.filter((paper) => isMemoryPaper(paper.id))
     : allBitsatPapers;
@@ -68,8 +74,11 @@ export default function BitsatTestsPage() {
             BITSAT <span className="text-gradient">Mock Tests</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7 }}>
-            {allBitsatPapers.length} full-length papers plus subject-wise practice sets. Start from Paper 1
-            (10-year trend analysis) or drill one section at a time before taking a full mock.
+            {allBitsatPapers.length} full-length practice papers plus subject-wise sets. Start with the broad mixed papers,
+            then use section drills or public reconstruction sets for targeted practice.
+          </p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '10px' }}>
+            Question bank last updated: <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{formattedLastUpdated} IST</span>
           </p>
         </header>
 
@@ -95,10 +104,10 @@ export default function BitsatTestsPage() {
           </div>
           <p style={styles.filterCopy}>
             {activeFilter === 'full'
-              ? 'Browse the full BITSAT mock set, including analysis, forecast, and mixed-syllabus simulations.'
+              ? 'Browse the full BITSAT-style practice set, including mixed-syllabus papers and tougher revision variants.'
               : activeFilter === 'subject'
-                ? 'Practice one section at a time with shorter, subject-focused BITSAT-style tests.'
-                : 'Use the memory-based papers to rehearse the Phase 1 and recent-year public trend reconstructions.'}
+                ? 'Practice one section at a time with shorter, subject-focused BITSAT-style tests built from the current bank.'
+                : 'Use these papers as public-discussion-based reconstructions and rehearsal sets, not official released papers.'}
           </p>
         </section>
 
@@ -127,10 +136,10 @@ export default function BitsatTestsPage() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
             {[
-              { subj: 'Physics',            color: '#378ADD', insight: 'SHM, Rotational Motion & Electrostatics — recurring high-frequency areas.' },
-              { subj: 'Chemistry',          color: '#1D9E75', insight: 'Organic reactions and Coordination Chemistry dominate; Thermodynamics reliable.' },
-              { subj: 'Mathematics',        color: '#7F77DD', insight: 'Calculus (~12 Qs) is the biggest section. 3D Geometry trending up.' },
-              { subj: 'English + Logic',    color: '#fee440', insight: 'Consistent pattern — practice 15 min/day for near-perfect scores.' },
+              { subj: 'Physics',            color: 'var(--accent-secondary)', insight: 'SHM, Rotational Motion & Electrostatics — recurring high-frequency areas.' },
+              { subj: 'Chemistry',          color: 'var(--accent-primary)', insight: 'Organic reactions and Coordination Chemistry dominate; Thermodynamics reliable.' },
+              { subj: 'Mathematics',        color: 'var(--accent-tertiary)', insight: 'Calculus (~12 Qs) is the biggest section. 3D Geometry trending up.' },
+              { subj: 'English + Logic',    color: 'var(--text-main)', insight: 'Consistent pattern — practice 15 min/day for near-perfect scores.' },
             ].map(({ subj, color, insight }) => (
               <div key={subj} style={{ borderLeft: `3px solid ${color}`, paddingLeft: '14px' }}>
                 <div style={{ fontWeight: 700, color, marginBottom: '4px', fontSize: '0.88rem' }}>{subj}</div>
@@ -149,10 +158,10 @@ export default function BitsatTestsPage() {
                 <article key={paper.slug} role="listitem" className="glass-panel" style={styles.subjectCard}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '12px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.3rem' }} aria-hidden="true">{subjectIcons[paper.slug]}</span>
+                      <span style={{ fontSize: '1.3rem' }} aria-hidden="true">{getSubjectIcon(paper.slug)}</span>
                       <h3 style={{ fontWeight: 700, fontSize: '0.98rem', lineHeight: 1.3 }}>{paper.title}</h3>
                     </div>
-                    <span style={{ background: 'rgba(140,154,149,0.12)', color: '#9cb4ab', border: '1px solid rgba(140,154,149,0.26)', padding: '2px 10px', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 700 }}>
+                    <span style={styles.subjectBadge}>
                       Subject-wise
                     </span>
                   </div>
@@ -172,9 +181,8 @@ export default function BitsatTestsPage() {
                   </dl>
                   <Link href={`/bitsat/tests/${paper.slug}`}
                     aria-label={`Start ${paper.title}`}
-                    style={{ display: 'block', textAlign: 'center', padding: '10px', background: 'rgba(165,160,178,0.14)', color: '#e7e8e6', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.88rem', border: '1px solid rgba(165,160,178,0.3)', transition: 'all 0.2s' }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'rgba(165,160,178,0.24)'; }}
-                    onMouseOut={e => { e.currentTarget.style.background = 'rgba(165,160,178,0.14)'; }}>
+                    style={styles.cardLink}>
+                    
                     Start Subject Test →
                   </Link>
                 </article>
@@ -184,7 +192,7 @@ export default function BitsatTestsPage() {
             <div style={styles.grid} role="list">
               {visiblePapers.map((paper) => {
                 const diff = getPaperTag(paper.id);
-                const col = diffColor[diff] || '#fee440';
+                const col = diffColor[diff] || 'var(--accent-secondary)';
                 return (
                   <article key={paper.id} role="listitem" className="glass-panel" style={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
@@ -212,9 +220,7 @@ export default function BitsatTestsPage() {
                     </dl>
                     <Link href={`/bitsat/tests/${paper.id}`}
                       aria-label={`Start BITSAT ${paper.title}`}
-                      style={{ display: 'block', textAlign: 'center', padding: '10px', background: 'rgba(95,118,111,0.16)', color: '#e7e8e6', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem', border: '1px solid rgba(95,118,111,0.35)', transition: 'all 0.2s' }}
-                      onMouseOver={e => { e.currentTarget.style.background = 'rgba(95,118,111,0.28)'; }}
-                      onMouseOut={e => { e.currentTarget.style.background = 'rgba(95,118,111,0.16)'; }}>
+                      style={styles.cardLink}>
                       Start Test →
                     </Link>
                   </article>
@@ -239,8 +245,8 @@ const styles = {
   filterBar: { display: 'flex', gap: '8px', flexWrap: 'wrap' },
   filterButton: {
     borderRadius: '999px',
-    border: '1px solid rgba(255,255,255,0.12)',
-    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid var(--surface-border)',
+    background: 'var(--surface-soft)',
     color: 'var(--text-muted)',
     padding: '9px 16px',
     fontSize: '0.85rem',
@@ -249,9 +255,9 @@ const styles = {
     transition: 'all 0.2s ease',
   },
   filterButtonActive: {
-    background: 'rgba(95,118,111,0.22)',
-    color: '#eef1ee',
-    border: '1px solid rgba(95,118,111,0.42)',
+    background: 'var(--surface-highlight)',
+    color: 'var(--text-main)',
+    border: '1px solid var(--surface-border-strong)',
   },
   filterCopy: {
     color: 'var(--text-muted)',
@@ -267,9 +273,31 @@ const styles = {
   chip: {
     display: 'flex', alignItems: 'center', gap: '6px',
     padding: '5px 14px', borderRadius: '20px', fontSize: '0.82rem', fontWeight: 600,
-    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-muted)',
+    background: 'var(--surface-soft)', border: '1px solid var(--surface-border)', color: 'var(--text-muted)',
   },
-  subjectGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '14px' },
+  subjectBadge: {
+    background: 'var(--surface-highlight)',
+    color: 'var(--accent-primary)',
+    border: '1px solid var(--surface-border-strong)',
+    padding: '2px 10px',
+    borderRadius: '20px',
+    fontSize: '0.72rem',
+    fontWeight: 700,
+  },
+  cardLink: {
+    display: 'block',
+    textAlign: 'center',
+    padding: '10px',
+    background: 'var(--surface-highlight)',
+    color: 'var(--text-main)',
+    borderRadius: '12px',
+    textDecoration: 'none',
+    fontWeight: 700,
+    fontSize: '0.9rem',
+    border: '1px solid var(--surface-border-strong)',
+    transition: 'all 0.2s ease',
+  },
+  subjectGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '14px' },
   subjectCard: { padding: '18px', display: 'flex', flexDirection: 'column' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' },
   card: { padding: '20px', display: 'flex', flexDirection: 'column' },

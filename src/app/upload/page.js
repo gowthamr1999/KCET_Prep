@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { parseQuestionPaper, parseJsonPaper, saveCustomPaper, getCustomPapers, deleteCustomPaper } from '@/lib/paperParser';
 
-// ── PDF extraction (lazy-loaded to avoid SSR issues) ──────────
+// PDF extraction (lazy-loaded to avoid SSR issues)
 async function extractTextFromPDF(file) {
   // Dynamically import pdfjs-dist only on the client
   const pdfjsLib = await import('pdfjs-dist');
@@ -24,7 +24,7 @@ async function extractTextFromPDF(file) {
   return fullText;
 }
 
-// ── Exam config ───────────────────────────────────────────────
+// Exam config
 const EXAM_CONFIGS = {
   KCET: {
     label: 'KCET',
@@ -70,13 +70,11 @@ export default function UploadPage() {
   const [parsed,      setParsed]      = useState(null);   // { questions, warnings }
   const [editQ,       setEditQ]       = useState(null);   // question being edited
   const [savedId,     setSavedId]     = useState(null);
-  const [myPapers,    setMyPapers]    = useState([]);
+  const [myPapers,    setMyPapers]    = useState(() => getCustomPapers());
   const [dragOver,    setDragOver]    = useState(false);
   const fileRef = useRef(null);
 
-  useEffect(() => { setMyPapers(getCustomPapers()); }, [step]);
-
-  // ── File handling ─────────────────────────────────────────
+  // File handling
   async function handleFile(file) {
     if (!file) return;
     setLoadError('');
@@ -87,7 +85,7 @@ export default function UploadPage() {
       const isJsonFile = file.name.endsWith('.json') || file.type === 'application/json';
 
       if (isJsonFile) {
-        // ── JSON path: parse immediately, auto-fill examType from meta ──
+        // JSON path: parse immediately and auto-fill examType from meta
         const text = await file.text();
         const { questions, warnings, meta } = parseJsonPaper(text);
         if (questions.length === 0) {
@@ -141,7 +139,7 @@ export default function UploadPage() {
     if (file) handleFile(file);
   }
 
-  // ── Parse & preview ───────────────────────────────────────
+  // Parse and preview
   function handleParse() {
     const cfg = EXAM_CONFIGS[examType];
     // For multi-section exams, pass first section label; parser will assign single subject
@@ -150,7 +148,7 @@ export default function UploadPage() {
     setStep('preview');
   }
 
-  // ── Edit a question inline ────────────────────────────────
+  // Edit a question inline
   function saveEdit(updated) {
     setParsed(prev => ({
       ...prev,
@@ -163,7 +161,7 @@ export default function UploadPage() {
     setParsed(prev => ({ ...prev, questions: prev.questions.filter(q => q.id !== id) }));
   }
 
-  // ── Save ──────────────────────────────────────────────────
+  // Save
   function handleSave() {
     const cfg = EXAM_CONFIGS[examType];
     const paper = {
@@ -177,13 +175,14 @@ export default function UploadPage() {
       source:       fileName,
     };
     const id = saveCustomPaper(paper);
+    setMyPapers(getCustomPapers());
     setSavedId(id);
     setStep('done');
   }
 
   const cfg = EXAM_CONFIGS[examType];
 
-  // ─────────────────────────────────────────────────────────
+  // Main render
   return (
     <>
       <Navbar />
@@ -201,14 +200,14 @@ export default function UploadPage() {
             Upload a <span className="text-gradient">Question Paper</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-            Upload any KCET / BITSAT PDF and we'll parse it into a full mock test — complete with timer, scoring, and rank prediction.
+            Upload any KCET / BITSAT PDF and we&apos;ll parse it into a full mock test — complete with timer, scoring, and rank prediction.
           </p>
         </header>
 
         {/* Step indicator */}
         <StepBar current={step} />
 
-        {/* ── STEP 1: Upload ─────────────────────────────── */}
+        {/* Step 1: Upload */}
         {step === 'upload' && (
           <UploadStep
             dragOver={dragOver} setDragOver={setDragOver}
@@ -221,7 +220,7 @@ export default function UploadPage() {
           />
         )}
 
-        {/* ── STEP 2: Exam type ──────────────────────────── */}
+        {/* Step 2: Exam type */}
         {step === 'examtype' && (
           <section aria-labelledby="examtype-heading" className="glass-panel" style={styles.card}>
             <h2 id="examtype-heading" style={styles.cardTitle}>What type of paper is this?</h2>
@@ -271,7 +270,7 @@ export default function UploadPage() {
           </section>
         )}
 
-        {/* ── STEP 3: Preview & Edit ─────────────────────── */}
+        {/* Step 3: Preview & Edit */}
         {step === 'preview' && parsed && (
           <PreviewStep
             parsed={parsed} setParsed={setParsed}
@@ -284,7 +283,7 @@ export default function UploadPage() {
           />
         )}
 
-        {/* ── STEP 4: Done ───────────────────────────────── */}
+        {/* Step 4: Done */}
         {step === 'done' && (
           <DoneStep examType={examType} savedId={savedId}
             onUploadAnother={() => { setStep('upload'); setRawText(''); setFileName(''); setParsed(null); setSavedId(null); }} />
@@ -302,7 +301,7 @@ export default function UploadPage() {
   );
 }
 
-// ── Sub-components ────────────────────────────────────────────
+// Sub-components
 
 function StepBar({ current }) {
   const steps = [
@@ -480,7 +479,7 @@ function UploadStep({ dragOver, setDragOver, handleDrop, handleFile, fileRef, lo
             <strong style={{ color: 'var(--accent-secondary)' }}>Supported field names:</strong><br />
             Question text: <code style={styles.code}>text</code>, <code style={styles.code}>question</code>, <code style={styles.code}>q</code>, <code style={styles.code}>stem</code><br />
             Options: <code style={styles.code}>options</code>, <code style={styles.code}>choices</code>, or keys <code style={styles.code}>A B C D</code><br />
-            Correct answer: <code style={styles.code}>correct</code> (0-based index), <code style={styles.code}>answer</code> ("A"–"D" or 1–4), <code style={styles.code}>correctIndex</code><br />
+            Correct answer: <code style={styles.code}>correct</code> (0-based index), <code style={styles.code}>answer</code> (&quot;A&quot;–&quot;D&quot; or 1–4), <code style={styles.code}>correctIndex</code><br />
             Subject: <code style={styles.code}>subject</code>, <code style={styles.code}>section</code>, <code style={styles.code}>category</code><br />
             Explanation: <code style={styles.code}>explanation</code>, <code style={styles.code}>solution</code>
           </div>
@@ -500,7 +499,7 @@ function UploadStep({ dragOver, setDragOver, handleDrop, handleFile, fileRef, lo
             style={{ ...styles.input, width: '100%', resize: 'vertical', lineHeight: 1.6, fontFamily: 'monospace', fontSize: '0.85rem', boxSizing: 'border-box' }} />
           <p id="paste-hint" style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '8px' }}>
             Supported: numbered questions (1. / Q1. / (1)) with options (A) / A. / A) on separate lines.
-            Include an "Answer Key" section at the end for automatic correct-answer detection.
+            Include an &quot;Answer Key&quot; section at the end for automatic correct-answer detection.
             You can also paste raw JSON here.
           </p>
           <button className="btn-primary" style={{ marginTop: '16px' }}
@@ -563,7 +562,7 @@ function PreviewStep({ parsed, setParsed, examType, cfg, paperName, year, editQ,
         <div role="alert" className="glass-panel" style={{ padding: '24px', textAlign: 'center', color: '#ff5a7e' }}>
           <p style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px' }}>No questions were detected.</p>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-            Try the "Paste Text" tab and paste the paper content directly. Make sure questions are numbered (1. / Q1.) and options are labelled (A. / (A) / A)).
+            Try the &quot;Paste Text&quot; tab and paste the paper content directly. Make sure questions are numbered (1. / Q1.) and options are labelled (A. / (A) / A)).
           </p>
           <button className="btn-secondary" style={{ marginTop: '16px' }} onClick={onBack}>Go Back</button>
         </div>
@@ -716,7 +715,7 @@ function MyPapersSection({ papers, onDelete }) {
   );
 }
 
-// ── Styles ────────────────────────────────────────────────────
+// Styles
 const styles = {
   main: { padding: '20px 40px 60px', maxWidth: '900px', margin: '0 auto' },
   breadcrumb: { display: 'flex', gap: '8px', alignItems: 'center', listStyle: 'none', fontSize: '0.82rem', marginBottom: '12px' },
