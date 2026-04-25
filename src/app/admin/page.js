@@ -36,7 +36,7 @@ export default function AdminPage() {
         // Overall stats
         const { data: allRows, error: e1 } = await supabase
           .from('test_attempts')
-          .select('score, total_marks, paper_id, paper_name, time_taken_seconds, created_at');
+          .select('score, total_marks, paper_id, paper_name, candidate_name, time_taken_seconds, created_at');
 
         if (e1) throw e1;
 
@@ -62,7 +62,7 @@ export default function AdminPage() {
         // Recent 20
         const { data: recentRows, error: e2 } = await supabase
           .from('test_attempts')
-          .select('paper_id, paper_name, score, total_marks, time_taken_seconds, created_at')
+          .select('paper_id, paper_name, candidate_name, score, total_marks, time_taken_seconds, created_at')
           .order('created_at', { ascending: false })
           .limit(20);
 
@@ -160,6 +160,7 @@ export default function AdminPage() {
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
                 <thead>
                   <tr style={{ borderBottom: '2px solid var(--border)', textAlign: 'left' }}>
+                    <th style={{ padding: '8px 12px' }}>Name</th>
                     <th style={{ padding: '8px 12px' }}>Paper</th>
                     <th style={{ padding: '8px 12px' }}>Score</th>
                     <th style={{ padding: '8px 12px' }}>%</th>
@@ -170,6 +171,7 @@ export default function AdminPage() {
                 <tbody>
                   {recent.map((r, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
+                      <td style={{ padding: '8px 12px', fontWeight: 600 }}>{r.candidate_name || 'Anonymous'}</td>
                       <td style={{ padding: '8px 12px' }}>{r.paper_name || `Paper ${r.paper_id}`}</td>
                       <td style={{ padding: '8px 12px', fontWeight: 600 }}>{r.score}/{r.total_marks}</td>
                       <td style={{ padding: '8px 12px' }}>{((r.score / r.total_marks) * 100).toFixed(1)}%</td>

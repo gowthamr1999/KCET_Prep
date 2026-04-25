@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import { allBitsatPapers, bitsatQuestionsLastUpdated, bitsatSubjectWisePapers } from '@/data/bitsatQuestions';
+import { allBitsatPapers, bitsatDailyPapers, bitsatQuestionsLastUpdated, bitsatSubjectWisePapers } from '@/data/bitsatQuestions';
 
 function getPaperTag(id) {
+  if (id >= 20260000) return 'Daily';
   if (id === 1) return 'Analysis Paper';
   if (id === 11) return 'Phase 2 Forecast';
   if (id === 12) return 'Phase 1 Reconstruction';
@@ -16,6 +17,7 @@ function getPaperTag(id) {
 }
 
 const diffColor = {
+  Daily: 'var(--accent-secondary)',
   'Analysis Paper': 'var(--accent-secondary)',
   Easy: 'var(--accent-tertiary)',
   Medium: 'var(--accent-primary)',
@@ -35,17 +37,18 @@ function getSubjectIcon(slug) {
 }
 
 const filterOptions = [
+  { id: 'daily', label: 'Daily' },
   { id: 'full', label: 'Full-Length' },
   { id: 'subject', label: 'Subject-wise' },
   { id: 'memory', label: 'Public Reconstructions' },
 ];
 
 function isMemoryPaper(id) {
-  return id >= 12 && id <= 17;
+  return typeof id === 'number' && id >= 12 && id <= 17;
 }
 
 export default function BitsatTestsPage() {
-  const [activeFilter, setActiveFilter] = useState('full');
+  const [activeFilter, setActiveFilter] = useState('daily');
   const formattedLastUpdated = new Intl.DateTimeFormat('en-IN', {
     dateStyle: 'medium',
     timeStyle: 'short',
@@ -53,7 +56,9 @@ export default function BitsatTestsPage() {
   }).format(new Date(bitsatQuestionsLastUpdated));
   const visiblePapers = activeFilter === 'memory'
     ? allBitsatPapers.filter((paper) => isMemoryPaper(paper.id))
-    : allBitsatPapers;
+    : activeFilter === 'daily'
+      ? bitsatDailyPapers
+    : allBitsatPapers.filter((paper) => typeof paper.id === 'number' && paper.id < 20260000);
 
   return (
     <>
@@ -74,7 +79,7 @@ export default function BitsatTestsPage() {
             BITSAT <span className="text-gradient">Mock Tests</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.7 }}>
-            {allBitsatPapers.length} full-length practice papers plus subject-wise sets. Start with the broad mixed papers,
+            {allBitsatPapers.length} practice papers plus subject-wise sets. Start with daily mixed practice or broad full-length papers,
             then use section drills or public reconstruction sets for targeted practice.
           </p>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '10px' }}>
@@ -105,6 +110,8 @@ export default function BitsatTestsPage() {
           <p style={styles.filterCopy}>
             {activeFilter === 'full'
               ? 'Browse the full BITSAT-style practice set, including mixed-syllabus papers and tougher revision variants.'
+              : activeFilter === 'daily'
+                ? 'Use the newest all-subject daily set for short revision across Physics, Chemistry, Mathematics, English, and Logical Reasoning.'
               : activeFilter === 'subject'
                 ? 'Practice one section at a time with shorter, subject-focused BITSAT-style tests built from the current bank.'
                 : 'Use these papers as public-discussion-based reconstructions and rehearsal sets, not official released papers.'}
@@ -197,7 +204,7 @@ export default function BitsatTestsPage() {
                   <article key={paper.id} role="listitem" className="glass-panel" style={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                        Paper {paper.id}
+                        {paper.id >= 20260000 ? 'Daily Practice' : `Paper ${paper.id}`}
                       </div>
                       <span style={{ background: `${col}1a`, color: col, border: `1px solid ${col}44`, padding: '2px 10px', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 700 }}>
                         {diff}

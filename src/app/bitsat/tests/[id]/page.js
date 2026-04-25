@@ -769,11 +769,20 @@ export default function BitsatTestPage() {
                 aria-label="Previous question">
                 ← Previous
               </button>
-              <button onClick={() => !isPaused && setCurrent(c => Math.min(questions.length - 1, c + 1))}
-                disabled={current === questions.length - 1 || isPaused}
-                className="btn-primary" style={{ padding: '10px 24px', opacity: (current === questions.length - 1 || isPaused) ? 0.4 : 1 }}
-                aria-label="Next question">
-                Next →
+              <button onClick={() => {
+                if (isPaused) return;
+                if (current === questions.length - 1) {
+                  if (window.confirm('Submit the test? You cannot change answers after submission.')) {
+                    submitTest();
+                  }
+                  return;
+                }
+                setCurrent(c => Math.min(questions.length - 1, c + 1));
+              }}
+                disabled={isPaused}
+                className="btn-primary" style={{ padding: '10px 24px', opacity: isPaused ? 0.4 : 1 }}
+                aria-label={current === questions.length - 1 ? 'Submit test' : 'Next question'}>
+                {current === questions.length - 1 ? 'Submit Test' : 'Next →'}
               </button>
             </div>
           </section>

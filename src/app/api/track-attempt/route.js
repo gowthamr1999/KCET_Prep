@@ -25,24 +25,10 @@ export async function POST(request) {
     };
 
     const cleanName = typeof candidateName === 'string' ? candidateName.trim().slice(0, 50) : '';
-    let error = null;
-
-    if (cleanName) {
-      const withName = await supabase.from('test_attempts').insert({
-        ...baseInsertRow,
-        candidate_name: cleanName,
-      });
-      error = withName.error;
-
-      if (error && /candidate_name|column/i.test(error.message || '')) {
-        // Backward-compatible fallback for older schemas without candidate_name.
-        const fallback = await supabase.from('test_attempts').insert(baseInsertRow);
-        error = fallback.error;
-      }
-    } else {
-      const withoutName = await supabase.from('test_attempts').insert(baseInsertRow);
-      error = withoutName.error;
-    }
+    const { error } = await supabase.from('test_attempts').insert({
+      ...baseInsertRow,
+      candidate_name: cleanName || null,
+    });
 
     if (error) {
       console.error('Supabase insert error:', error.message);

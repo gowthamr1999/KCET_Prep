@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import BitsatUpdateNotifier from "@/components/BitsatUpdateNotifier";
 
 export const metadata = {
   title: "PrepMaster | Crack KCET & BITSAT",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         {/* Skip to main content — keyboard / screen-reader shortcut */}
         <a href="#main-content" className="skip-link">Skip to main content</a>
         {children}
+        <BitsatUpdateNotifier />
       </body>
     </html>
   );

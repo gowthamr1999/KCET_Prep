@@ -7,9 +7,18 @@
 // Duration: 180 minutes | Max marks: 390
 // ============================================================
 
-export const bitsatQuestionsLastUpdated = '2026-04-24T00:00:00+09:00';
+import {
+  bitsatDailyPhysics,
+  bitsatDailyChemistry,
+  bitsatDailyMath,
+  bitsatDailyEnglish,
+  bitsatDailyLogic,
+  latestBitsatDailyPaper,
+} from './bitsatDailyQuestions';
 
-export const bitsatPhysics = [
+export const bitsatQuestionsLastUpdated = '2026-04-25T00:00:00+05:30';
+
+const bitsatPhysicsBase = [
   {
     id: 'bp1', subject: 'Physics',
     text: 'A block slides down an incline of angle 37° with coefficient of friction 0.25. Take g = 10 m/s², sin37° = 0.6, cos37° = 0.8. Its acceleration is:',
@@ -502,7 +511,7 @@ export const bitsatPhysics = [
   },
 ];
 
-export const bitsatChemistry = [
+const bitsatChemistryBase = [
   {
     id: 'bc1', subject: 'Chemistry',
     text: 'The hybridization and shape of IF₅ are respectively:',
@@ -995,7 +1004,7 @@ export const bitsatChemistry = [
   },
 ];
 
-export const bitsatMath = [
+const bitsatMathBase = [
   {
     id: 'bm1', subject: 'Mathematics',
     text: 'If |2 1; k 3| = 5, then k equals:',
@@ -1488,7 +1497,7 @@ export const bitsatMath = [
   },
 ];
 
-export const bitsatEnglish = [
+const bitsatEnglishBase = [
   {
     id: 'be1', subject: 'English',
     text: 'Choose the word closest in meaning to OBDURATE:',
@@ -1706,7 +1715,7 @@ export const bitsatEnglish = [
   },
 ];
 
-export const bitsatLogic = [
+const bitsatLogicBase = [
   {
     id: 'bl1', subject: 'Logical Reasoning',
     text: 'Five persons A, B, C, D and E are sitting in a row. A is to the left of B, B is to the left of C, and D is to the right of C. Who must be in the middle if they are arranged in that order with E at one end?',
@@ -2235,6 +2244,33 @@ const bitsatLogicHard = [
   },
 ];
 
+export const bitsatPhysics = [
+  ...bitsatPhysicsBase,
+  ...bitsatDailyPhysics,
+];
+
+export const bitsatChemistry = [
+  ...bitsatChemistryBase,
+  ...bitsatDailyChemistry,
+];
+
+export const bitsatMath = [
+  ...bitsatMathBase,
+  ...bitsatDailyMath,
+];
+
+export const bitsatEnglish = [
+  ...bitsatEnglishBase,
+  ...bitsatDailyEnglish,
+];
+
+export const bitsatLogic = [
+  ...bitsatLogicBase,
+  ...bitsatDailyLogic,
+];
+
+export const bitsatDailyPapers = [latestBitsatDailyPaper];
+
 export const bitsatTenYearBlueprint = {
   span: '2016-2025',
   pattern: {
@@ -2750,6 +2786,24 @@ const BITSAT_HIGH_DIFFICULTY_HARD_RATIO = {
 };
 
 export function getBitsatPaper(paperId) {
+  const dailyPaper = bitsatDailyPapers.find((paper) => (
+    String(paper.id) === String(paperId) || paper.slug === paperId
+  ));
+
+  if (dailyPaper) {
+    return {
+      id: dailyPaper.id,
+      slug: dailyPaper.slug,
+      title: dailyPaper.title,
+      description: dailyPaper.description,
+      duration: dailyPaper.durationMinutes,
+      totalMarks: dailyPaper.maxMarks,
+      correctMarks: 3,
+      wrongMarks: -1,
+      questions: dailyPaper.questionSet,
+    };
+  }
+
   const subjectPaper = bitsatSubjectWisePapers.find((paper) => paper.slug === paperId);
   const id = subjectPaper ? subjectPaper.id : parseInt(paperId, 10);
   const shuffledPh = seededShuffle(bitsatPhysics, id * 7331);
@@ -2977,7 +3031,9 @@ export const bitsatRankBands = [
   { minScore: 0, maxScore: 209, rankRange: '20,000+', admission: 'Lower chance in top rounds' },
 ];
 
-export const allBitsatPapers = Array.from({ length: 17 }, (_, i) => {
+export const allBitsatPapers = [
+  ...bitsatDailyPapers,
+  ...Array.from({ length: 17 }, (_, i) => {
   const id = i + 1;
   const topics = [
     'Mixed Practice | Broad Syllabus Coverage',
@@ -3024,4 +3080,5 @@ export const allBitsatPapers = Array.from({ length: 17 }, (_, i) => {
     maxMarks: 390,
     scoring: '+3 / −1',
   };
-});
+  }),
+];

@@ -73,23 +73,10 @@ export async function POST(request) {
     };
 
     const cleanName = typeof candidateName === 'string' ? candidateName.trim().slice(0, 50) : '';
-    let insertError = null;
-
-    if (cleanName) {
-      const withName = await supabase.from('test_attempts').insert({
-        ...baseInsertRow,
-        candidate_name: cleanName,
-      });
-      insertError = withName.error;
-
-      if (insertError && /candidate_name|column/i.test(insertError.message || '')) {
-        const fallback = await supabase.from('test_attempts').insert(baseInsertRow);
-        insertError = fallback.error;
-      }
-    } else {
-      const withoutName = await supabase.from('test_attempts').insert(baseInsertRow);
-      insertError = withoutName.error;
-    }
+    const { error: insertError } = await supabase.from('test_attempts').insert({
+      ...baseInsertRow,
+      candidate_name: cleanName || null,
+    });
 
     if (insertError) {
       console.error('bitsat-insights insert error:', insertError.message);
