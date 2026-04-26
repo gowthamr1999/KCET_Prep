@@ -16,7 +16,7 @@ import {
   latestBitsatDailyPaper,
 } from './bitsatDailyQuestions';
 
-export const bitsatQuestionsLastUpdated = '2026-04-25T00:00:00+05:30';
+export const bitsatQuestionsLastUpdated = '2026-04-26T00:00:00+05:30';
 
 const bitsatPhysicsBase = [
   {

@@ -1,138 +1,138 @@
-export const bitsatDailyQuestionDate = '2026-04-25';
-export const bitsatDailyPaperId = 20260425;
+export const bitsatDailyQuestionDate = '2026-04-26';
+export const bitsatDailyPaperId = 20260426;
 
 export const bitsatDailyPhysics = [
   {
-    id: 'bdp20260425_1',
+    id: 'bdp20260426_1',
     subject: 'Physics',
-    text: 'A particle executing SHM has amplitude A and angular frequency omega. Its speed when displacement is A/2 is:',
-    options: ['omega A/2', 'omega A/sqrt(2)', 'sqrt(3) omega A/2', 'omega A'],
-    correct: 2,
-    explanation: 'For SHM, v = omega sqrt(A^2 - x^2). At x = A/2, v = omega A sqrt(3/4) = sqrt(3) omega A/2.'
+    text: 'A projectile is fired with speed 20 m/s at an angle of 30 degrees to the horizontal. Taking g = 10 m/s^2, its maximum height is:',
+    options: ['2.5 m', '5 m', '10 m', '20 m'],
+    correct: 1,
+    explanation: 'Vertical component u_y = 20 sin 30 = 10 m/s. Maximum height H = u_y^2/(2g) = 100/20 = 5 m.'
   },
   {
-    id: 'bdp20260425_2',
+    id: 'bdp20260426_2',
     subject: 'Physics',
-    text: 'A wire of resistance R is stretched uniformly to double its length. Its new resistance is:',
-    options: ['R/2', 'R', '2R', '4R'],
-    correct: 3,
-    explanation: 'Volume remains constant, so area halves when length doubles. Since R = rho L/A, new resistance becomes 4R.'
+    text: 'Two capacitors of 6 microfarad and 3 microfarad are connected in series. Their equivalent capacitance is:',
+    options: ['2 microfarad', '3 microfarad', '4.5 microfarad', '9 microfarad'],
+    correct: 0,
+    explanation: 'For series capacitors, C_eq = C1C2/(C1 + C2) = 6 x 3 / 9 = 2 microfarad.'
   },
   {
-    id: 'bdp20260425_3',
+    id: 'bdp20260426_3',
     subject: 'Physics',
-    text: 'The de Broglie wavelength of an electron accelerated through potential V is proportional to:',
-    options: ['V', 'sqrt(V)', '1/sqrt(V)', '1/V'],
-    correct: 2,
-    explanation: 'lambda = h/sqrt(2meV), so de Broglie wavelength is inversely proportional to sqrt(V).'
+    text: 'A convex mirror always forms an image that is:',
+    options: ['real, inverted and enlarged', 'virtual, erect and diminished', 'real, erect and diminished', 'virtual, inverted and enlarged'],
+    correct: 1,
+    explanation: 'A convex mirror forms a virtual, erect, and diminished image for all real object positions.'
   },
 ];
 
 export const bitsatDailyChemistry = [
   {
-    id: 'bdc20260425_1',
+    id: 'bdc20260426_1',
     subject: 'Chemistry',
-    text: 'For the reaction 2A + B -> products, if the rate law is rate = k[A]^2[B], the overall order is:',
-    options: ['1', '2', '3', '4'],
+    text: 'The conjugate base of H2PO4- is:',
+    options: ['H3PO4', 'HPO4^2-', 'PO4^3-', 'H2PO4+'],
+    correct: 1,
+    explanation: 'A conjugate base is formed by removal of one proton. H2PO4- loses H+ to form HPO4^2-.'
+  },
+  {
+    id: 'bdc20260426_2',
+    subject: 'Chemistry',
+    text: 'For a first-order reaction, the half-life is:',
+    options: ['directly proportional to initial concentration', 'inversely proportional to initial concentration', 'independent of initial concentration', 'equal to k/0.693'],
     correct: 2,
-    explanation: 'Overall order is the sum of powers in the rate law: 2 + 1 = 3.'
+    explanation: 'For first-order kinetics, t1/2 = 0.693/k, so it is independent of initial concentration.'
   },
   {
-    id: 'bdc20260425_2',
+    id: 'bdc20260426_3',
     subject: 'Chemistry',
-    text: 'Which complex is expected to show geometrical isomerism?',
-    options: ['[Co(NH3)6]3+', '[Pt(NH3)2Cl2]', '[Ag(NH3)2]+', '[Ni(CO)4]'],
+    text: 'Which reagent converts an alcohol to an aldehyde without further oxidation to acid?',
+    options: ['KMnO4/H+', 'PCC', 'acidified K2Cr2O7', 'hot concentrated HNO3'],
     correct: 1,
-    explanation: 'Square planar [Pt(NH3)2Cl2] can exist as cis and trans isomers.'
-  },
-  {
-    id: 'bdc20260425_3',
-    subject: 'Chemistry',
-    text: 'The major product when propene reacts with HBr in the absence of peroxide is:',
-    options: ['1-bromopropane', '2-bromopropane', 'propane', 'propan-1-ol'],
-    correct: 1,
-    explanation: 'Without peroxide, HBr follows Markovnikov addition, giving 2-bromopropane as the major product.'
+    explanation: 'PCC oxidizes primary alcohols to aldehydes under mild conditions without usually giving carboxylic acids.'
   },
 ];
 
 export const bitsatDailyMath = [
   {
-    id: 'bdm20260425_1',
+    id: 'bdm20260426_1',
     subject: 'Mathematics',
-    text: 'If A is a 2 x 2 matrix with determinant 5, then det(3A) is:',
-    options: ['15', '30', '45', '60'],
+    text: 'If f(x) = x^2 + 1, then f(f(2)) equals:',
+    options: ['10', '17', '26', '37'],
     correct: 2,
-    explanation: 'For a 2 x 2 matrix, det(kA) = k^2 det(A). Thus det(3A) = 9 x 5 = 45.'
+    explanation: 'f(2) = 5, so f(f(2)) = f(5) = 25 + 1 = 26.'
   },
   {
-    id: 'bdm20260425_2',
+    id: 'bdm20260426_2',
     subject: 'Mathematics',
-    text: 'The derivative of tan inverse x with respect to x is:',
-    options: ['1/(1 + x^2)', '1/(1 - x^2)', '-1/(1 + x^2)', 'x/(1 + x^2)'],
+    text: 'The value of the determinant |1 2; 3 4| is:',
+    options: ['-2', '2', '10', '-10'],
     correct: 0,
-    explanation: 'd/dx(tan inverse x) = 1/(1 + x^2).'
+    explanation: 'Determinant = 1 x 4 - 2 x 3 = 4 - 6 = -2.'
   },
   {
-    id: 'bdm20260425_3',
+    id: 'bdm20260426_3',
     subject: 'Mathematics',
-    text: 'If the probability of an event A is 0.35, then the probability of not A is:',
-    options: ['0.35', '0.45', '0.65', '1.35'],
-    correct: 2,
-    explanation: 'P(not A) = 1 - P(A) = 1 - 0.35 = 0.65.'
-  },
-  {
-    id: 'bdm20260425_4',
-    subject: 'Mathematics',
-    text: 'The equation of a circle with centre (0, 0) and radius 5 is:',
-    options: ['x + y = 5', 'x^2 + y^2 = 25', 'x^2 - y^2 = 25', 'x^2 + y^2 = 5'],
+    text: 'If sin theta = 3/5 and theta is acute, then cos theta is:',
+    options: ['3/5', '4/5', '5/4', '1/5'],
     correct: 1,
-    explanation: 'A circle with centre at origin and radius r has equation x^2 + y^2 = r^2. Here r = 5.'
+    explanation: 'For an acute angle, cos theta = sqrt(1 - sin^2 theta) = sqrt(1 - 9/25) = 4/5.'
+  },
+  {
+    id: 'bdm20260426_4',
+    subject: 'Mathematics',
+    text: 'The mean of 4, 7, 9, 10, and 15 is:',
+    options: ['8', '9', '10', '11'],
+    correct: 1,
+    explanation: 'Mean = (4 + 7 + 9 + 10 + 15)/5 = 45/5 = 9.'
   },
 ];
 
 export const bitsatDailyEnglish = [
   {
-    id: 'bde20260425_1',
+    id: 'bde20260426_1',
     subject: 'English',
-    text: 'Choose the word closest in meaning to "concise":',
-    options: ['brief', 'careless', 'angry', 'ancient'],
-    correct: 0,
-    explanation: 'Concise means giving much information clearly in few words; brief is the closest meaning.'
+    text: 'Choose the word opposite in meaning to "optimistic":',
+    options: ['hopeful', 'confident', 'pessimistic', 'cheerful'],
+    correct: 2,
+    explanation: 'Optimistic means hopeful or positive; pessimistic is the opposite.'
   },
   {
-    id: 'bde20260425_2',
+    id: 'bde20260426_2',
     subject: 'English',
-    text: 'Choose the correct sentence:',
-    options: ['Neither of the answers are correct.', 'Neither of the answers is correct.', 'Neither answers is correct.', 'Neither of answer is correct.'],
-    correct: 1,
-    explanation: 'Neither is treated as singular here, so the correct verb is "is".'
+    text: 'Choose the grammatically correct sentence:',
+    options: ['The data is reliable.', 'The datas are reliable.', 'The data are reliable.', 'The data were a reliable.'],
+    correct: 2,
+    explanation: 'In formal usage, data is treated as plural, so "The data are reliable" is correct.'
   },
 ];
 
 export const bitsatDailyLogic = [
   {
-    id: 'bdl20260425_1',
+    id: 'bdl20260426_1',
     subject: 'Logical Reasoning',
-    text: 'Find the next term: 2, 6, 12, 20, 30, ?',
-    options: ['40', '42', '44', '48'],
-    correct: 1,
-    explanation: 'The terms are n(n+1): 1x2, 2x3, 3x4, 4x5, 5x6, so next is 6x7 = 42.'
+    text: 'Find the next term in the series: 5, 11, 23, 47, ?',
+    options: ['87', '93', '95', '99'],
+    correct: 2,
+    explanation: 'Each term is previous x 2 + 1: 5, 11, 23, 47, 95.'
   },
   {
-    id: 'bdl20260425_2',
+    id: 'bdl20260426_2',
     subject: 'Logical Reasoning',
-    text: 'If SOUTH is coded as TPVUI by shifting each letter forward by one, then NORTH is coded as:',
-    options: ['OPSUI', 'MNSUG', 'OPSUH', 'OPVUI'],
-    correct: 0,
-    explanation: 'Each letter shifts by +1: N->O, O->P, R->S, T->U, H->I.'
+    text: 'If A means +, B means -, C means x, and D means /, then 12 C 3 B 8 A 4 equals:',
+    options: ['28', '32', '36', '40'],
+    correct: 1,
+    explanation: 'Replace symbols: 12 x 3 - 8 + 4 = 36 - 8 + 4 = 32.'
   },
   {
-    id: 'bdl20260425_3',
+    id: 'bdl20260426_3',
     subject: 'Logical Reasoning',
-    text: 'A is the brother of B. B is the sister of C. C is the father of D. How is A related to D?',
-    options: ['Father', 'Uncle', 'Brother', 'Grandfather'],
+    text: 'Pointing to a woman, Rohan says, "She is the daughter of my father\'s only son." How is the woman related to Rohan?',
+    options: ['Sister', 'Daughter', 'Mother', 'Cousin'],
     correct: 1,
-    explanation: 'A is sibling of C, and C is D\'s father. Therefore A is D\'s uncle.'
+    explanation: 'Rohan\'s father\'s only son is Rohan himself. The woman is Rohan\'s daughter.'
   },
 ];
 
