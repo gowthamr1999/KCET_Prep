@@ -11,6 +11,7 @@ function getPaperTag(id) {
   if (id === 11) return 'Phase 2 Forecast';
   if (id === 12) return 'Phase 1 Reconstruction';
   if (id >= 13 && id <= 17) return 'Yearly Reconstruction';
+  if (id === 18) return 'Today’s Set';
   if (id === 5 || id === 10) return 'Hard';
   if (id === 2 || id === 3) return 'Easy';
   return 'Medium';
@@ -25,6 +26,7 @@ const diffColor = {
   'Phase 2 Forecast': 'var(--accent-secondary)',
   'Phase 1 Reconstruction': 'var(--accent-primary)',
   'Yearly Reconstruction': 'var(--accent-tertiary)',
+  'Today’s Set': 'var(--accent-secondary)',
 };
 
 function getSubjectIcon(slug) {

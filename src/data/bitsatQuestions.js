@@ -7,16 +7,7 @@
 // Duration: 180 minutes | Max marks: 390
 // ============================================================
 
-import {
-  bitsatDailyPhysics,
-  bitsatDailyChemistry,
-  bitsatDailyMath,
-  bitsatDailyEnglish,
-  bitsatDailyLogic,
-  latestBitsatDailyPaper,
-} from './bitsatDailyQuestions';
-
-export const bitsatQuestionsLastUpdated = '2026-04-26T00:00:00+05:30';
+export const bitsatQuestionsLastUpdated = '2026-04-27T00:00:00+09:00';
 
 const bitsatPhysicsBase = [
   {
@@ -508,6 +499,41 @@ const bitsatPhysicsBase = [
     options: ['β = α/(1 + α)', 'β = α/(1 − α)', 'β = 1 − α', 'β = 1/α'],
     correct: 1,
     explanation: 'Using α = β/(1 + β), we get β = α/(1 − α).'
+  },
+  {
+    id: 'bp71', subject: 'Physics',
+    text: 'A body starts from rest and covers 80 m in 4 s with uniform acceleration. Its acceleration is:',
+    options: ['5 m/s²', '10 m/s²', '20 m/s²', '40 m/s²'],
+    correct: 1,
+    explanation: 'Using s = ut + (1/2)at² with u = 0: 80 = (1/2)a(16), so a = 10 m/s².'
+  },
+  {
+    id: 'bp72', subject: 'Physics',
+    text: 'A 4 μF capacitor is charged to 100 V. The energy stored in it is:',
+    options: ['0.02 J', '0.04 J', '0.2 J', '2 J'],
+    correct: 0,
+    explanation: 'Energy U = (1/2)CV² = (1/2)(4×10⁻⁶)(100)² = 0.02 J.'
+  },
+  {
+    id: 'bp73', subject: 'Physics',
+    text: 'In a p-n junction diode under forward bias, the depletion layer width:',
+    options: ['increases', 'decreases', 'remains unchanged', 'becomes infinite'],
+    correct: 1,
+    explanation: 'Forward bias lowers the junction barrier, so the depletion region becomes narrower.'
+  },
+  {
+    id: 'bp74', subject: 'Physics',
+    text: 'The time period of a simple pendulum becomes double when its length is:',
+    options: ['halved', 'doubled', 'made four times', 'made one-fourth'],
+    correct: 2,
+    explanation: 'T = 2π√(L/g). To make T double, length must become four times.'
+  },
+  {
+    id: 'bp75', subject: 'Physics',
+    text: 'A wire carrying 5 A current is placed perpendicular to a 0.2 T magnetic field. Force on 2 m of wire is:',
+    options: ['0.2 N', '1 N', '2 N', '5 N'],
+    correct: 2,
+    explanation: 'Magnetic force on a current-carrying wire is F = BIL sinθ = 0.2×5×2×1 = 2 N.'
   },
 ];
 
@@ -1002,6 +1028,41 @@ const bitsatChemistryBase = [
     correct: 3,
     explanation: 'Aldehydes and formic acid reduce Tollens’ reagent, but acetone is a ketone and does not respond.'
   },
+  {
+    id: 'bc71', subject: 'Chemistry',
+    text: 'For the reaction N₂(g) + 3H₂(g) ⇌ 2NH₃(g), increasing pressure at constant temperature shifts equilibrium:',
+    options: ['towards reactants', 'towards products', 'nowhere', 'only if catalyst is added'],
+    correct: 1,
+    explanation: 'The product side has fewer gaseous moles, so higher pressure favors ammonia formation.'
+  },
+  {
+    id: 'bc72', subject: 'Chemistry',
+    text: 'Which reagent converts an alcohol to an alkyl chloride most directly?',
+    options: ['SOCl₂', 'NaBH₄', 'Tollens’ reagent', 'Bromine water'],
+    correct: 0,
+    explanation: 'Thionyl chloride converts alcohols to alkyl chlorides, producing gaseous by-products that drive the reaction.'
+  },
+  {
+    id: 'bc73', subject: 'Chemistry',
+    text: 'The number of unpaired electrons in Fe²⁺ for a high-spin octahedral complex is:',
+    options: ['0', '2', '4', '6'],
+    correct: 2,
+    explanation: 'Fe²⁺ is d⁶. In a high-spin octahedral field, its configuration has four unpaired electrons.'
+  },
+  {
+    id: 'bc74', subject: 'Chemistry',
+    text: 'The van’t Hoff factor for completely dissociated CaCl₂ in dilute solution is approximately:',
+    options: ['1', '2', '3', '4'],
+    correct: 2,
+    explanation: 'CaCl₂ dissociates into one Ca²⁺ ion and two Cl⁻ ions, giving three particles per formula unit.'
+  },
+  {
+    id: 'bc75', subject: 'Chemistry',
+    text: 'Which of the following has the highest first ionization enthalpy?',
+    options: ['Na', 'Mg', 'Al', 'Si'],
+    correct: 1,
+    explanation: 'Across the period ionization enthalpy generally increases, but Mg is higher than Al due to its stable filled 3s² subshell.'
+  },
 ];
 
 const bitsatMathBase = [
@@ -1495,6 +1556,41 @@ const bitsatMathBase = [
     correct: 1,
     explanation: 'For x² − sx + p = 0, the product of roots is p. Hence αβ = 10.'
   },
+  {
+    id: 'bm71', subject: 'Mathematics',
+    text: 'The value of ∫₀¹ 3x² dx is:',
+    options: ['0', '1', '2', '3'],
+    correct: 1,
+    explanation: '∫₀¹ 3x² dx = [x³]₀¹ = 1.'
+  },
+  {
+    id: 'bm72', subject: 'Mathematics',
+    text: 'If vectors a = 2i − j + 2k and b = i + 2j − 2k, then a · b equals:',
+    options: ['−4', '−2', '0', '4'],
+    correct: 0,
+    explanation: 'a · b = 2(1) + (−1)(2) + 2(−2) = 2 − 2 − 4 = −4.'
+  },
+  {
+    id: 'bm73', subject: 'Mathematics',
+    text: 'The number of three-digit numbers divisible by 5 that can be formed using 1, 2, 3, 4, 5 without repetition is:',
+    options: ['6', '12', '16', '20'],
+    correct: 1,
+    explanation: 'The unit digit must be 5. The hundreds and tens places can be filled in 4×3 = 12 ways.'
+  },
+  {
+    id: 'bm74', subject: 'Mathematics',
+    text: 'If A = [[1, 2], [3, 4]], then det(A²) is:',
+    options: ['−2', '2', '4', '16'],
+    correct: 2,
+    explanation: 'det(A) = 1×4 − 2×3 = −2. Therefore det(A²) = (det A)² = 4.'
+  },
+  {
+    id: 'bm75', subject: 'Mathematics',
+    text: 'The eccentricity of the ellipse x²/25 + y²/9 = 1 is:',
+    options: ['3/5', '4/5', '5/4', '2/5'],
+    correct: 1,
+    explanation: 'Here a² = 25 and b² = 9. e = √(1 − b²/a²) = √(1 − 9/25) = 4/5.'
+  },
 ];
 
 const bitsatEnglishBase = [
@@ -1712,6 +1808,27 @@ const bitsatEnglishBase = [
     options: ['rare', 'limited', 'abundant', 'small'],
     correct: 2,
     explanation: 'Scarce means in short supply; its opposite is abundant.'
+  },
+  {
+    id: 'be31', subject: 'English',
+    text: 'Choose the word closest in meaning to "prudent":',
+    options: ['careless', 'wise', 'angry', 'rapid'],
+    correct: 1,
+    explanation: 'Prudent means careful, sensible, and wise in making decisions.'
+  },
+  {
+    id: 'be32', subject: 'English',
+    text: 'Choose the grammatically correct sentence:',
+    options: ['The data is being analysed.', 'The data are being analysed.', 'The datas are analysed.', 'The data have analysed.'],
+    correct: 1,
+    explanation: 'In formal usage, data is commonly treated as plural, so "data are" is the best option here.'
+  },
+  {
+    id: 'be33', subject: 'English',
+    text: 'Fill in the blank: Hardly had the bell rung _____ the students entered the hall.',
+    options: ['than', 'when', 'then', 'that'],
+    correct: 1,
+    explanation: 'The correct paired construction is "hardly had...when".'
   },
 ];
 
@@ -1960,6 +2077,27 @@ const bitsatLogicBase = [
     options: ['UVWFGPV', 'UVWFGOU', 'TUVDFOU', 'UVWFGQT'],
     correct: 0,
     explanation: 'Each letter is shifted by +2: S→U, T→V, U→W, D→F, E→G, N→P, T→V.'
+  },
+  {
+    id: 'bl36', subject: 'Logical Reasoning',
+    text: 'In a certain code, MATRIX is written as NBUSJY. How is VECTOR written?',
+    options: ['WFDUPS', 'WFDUQS', 'UDDUPS', 'WEDUPS'],
+    correct: 0,
+    explanation: 'Each letter is shifted one step forward: V→W, E→F, C→D, T→U, O→P, R→S.'
+  },
+  {
+    id: 'bl37', subject: 'Logical Reasoning',
+    text: 'Find the missing term: 2, 6, 12, 20, 30, ?',
+    options: ['40', '42', '44', '46'],
+    correct: 1,
+    explanation: 'The terms are n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6, so next is 6×7 = 42.'
+  },
+  {
+    id: 'bl38', subject: 'Logical Reasoning',
+    text: 'A is the brother of B. B is the daughter of C. C is the wife of D. How is A related to D?',
+    options: ['Brother', 'Son', 'Father', 'Nephew'],
+    correct: 1,
+    explanation: 'B is D’s daughter and A is B’s brother, so A is D’s son.'
   },
 ];
 
@@ -2785,6 +2923,26 @@ const BITSAT_HIGH_DIFFICULTY_HARD_RATIO = {
   logic: 0.6,
 };
 
+const TODAY_2026_04_27_IDS = {
+  physics: ['bp71', 'bp72', 'bp73', 'bp74', 'bp75'],
+  chemistry: ['bc71', 'bc72', 'bc73', 'bc74', 'bc75'],
+  math: ['bm71', 'bm72', 'bm73', 'bm74', 'bm75'],
+  english: ['be31', 'be32', 'be33'],
+  logic: ['bl36', 'bl37', 'bl38'],
+};
+
+function buildTodaySection(questions, pinnedIds, keywords, count, hardRatio) {
+  const pinnedSet = new Set(pinnedIds);
+  const pinned = pinnedIds
+    .map((qid) => questions.find((q) => q.id === qid))
+    .filter(Boolean);
+  const remaining = questions.filter((q) => !pinnedSet.has(q.id));
+  return [
+    ...pinned,
+    ...buildSectionWithHardRatio(remaining, keywords, Math.max(0, count - pinned.length), hardRatio),
+  ];
+}
+
 export function getBitsatPaper(paperId) {
   const dailyPaper = bitsatDailyPapers.find((paper) => (
     String(paper.id) === String(paperId) || paper.slug === paperId
@@ -2858,13 +3016,15 @@ export function getBitsatPaper(paperId) {
     'BITSAT Mock Test 15 – 2023 Public Reconstruction',
     'BITSAT Mock Test 16 – 2022 Public Reconstruction',
     'BITSAT Mock Test 17 – 2021 Public Reconstruction',
+    'BITSAT Mock Test 18 – Today’s Practice Set',
   ];
 
   const isPhase2Forecast = id === 11;
   const isPhase1Memory = id === 12;
   const isYearlyMemory = id >= 13 && id <= 17;
+  const isTodayPracticeSet = id === 18;
   const isHighDifficultyPaper = id === 5;
-  const isGeneralMockPaper = !isPhase2Forecast && !isPhase1Memory && !isYearlyMemory;
+  const isGeneralMockPaper = !isPhase2Forecast && !isPhase1Memory && !isYearlyMemory && !isTodayPracticeSet;
 
   const yearlyKeywordMap = {
     13: {
@@ -2911,6 +3071,11 @@ export function getBitsatPaper(paperId) {
       'kinematics', 'electrostatics', 'current electricity', 'thermodynamics',
       'rotation', 'optics', 'laws of motion', 'electromagnetism',
     ], 30)
+    : isTodayPracticeSet
+      ? buildTodaySection(shuffledPh, TODAY_2026_04_27_IDS.physics, [
+        'kinematics', 'capacitor', 'semiconductor', 'simple pendulum', 'magnetic field',
+        'current electricity', 'modern physics', 'optics', 'thermodynamics',
+      ], 30, BITSAT_STYLE_HARD_RATIO.physics)
     : isPhase1Memory
       ? prioritizeByKeywords(shuffledPh, [
         'mechanics', 'electrostatics', 'current electricity', 'magnetism',
@@ -2929,6 +3094,11 @@ export function getBitsatPaper(paperId) {
       'organic', 'electrochemistry', 'chemical bonding', 'periodicity',
       'surface chemistry', 'thermodynamics', 'isomerism', 'coordination', 'goc',
     ], 30)
+    : isTodayPracticeSet
+      ? buildTodaySection(shuffledCh, TODAY_2026_04_27_IDS.chemistry, [
+        'equilibrium', 'organic', 'coordination', 'colligative', 'periodic',
+        'thermodynamics', 'chemical bonding', 'electrochemistry', 'inorganic',
+      ], 30, BITSAT_STYLE_HARD_RATIO.chemistry)
     : isPhase1Memory
       ? prioritizeByKeywords(shuffledCh, [
         'organic', 'named reaction', 'thermodynamics', 'equilibrium',
@@ -2947,6 +3117,11 @@ export function getBitsatPaper(paperId) {
       'calculus', 'differential', 'integration', 'probability', 'vector',
       '3d', 'coordinate', 'statistics', 'linear programming', 'algebra',
     ], 40)
+    : isTodayPracticeSet
+      ? buildTodaySection(shuffledMa, TODAY_2026_04_27_IDS.math, [
+        'integration', 'vector', 'permutation', 'matrices', 'ellipse',
+        'calculus', 'probability', 'coordinate', '3d', 'algebra',
+      ], 40, BITSAT_STYLE_HARD_RATIO.math)
     : isPhase1Memory
       ? prioritizeByKeywords(shuffledMa, [
         'calculus', 'integration', 'differential', 'algebra', 'coordinate',
@@ -2964,6 +3139,10 @@ export function getBitsatPaper(paperId) {
     ? prioritizeByKeywords(shuffledEn, [
       'synonym', 'antonym', 'homophone', 'grammar', 'comprehension',
     ], 10)
+    : isTodayPracticeSet
+      ? buildTodaySection(shuffledEn, TODAY_2026_04_27_IDS.english, [
+        'synonym', 'grammar', 'hardly', 'sentence', 'comprehension',
+      ], 10, BITSAT_STYLE_HARD_RATIO.english)
     : isPhase1Memory
       ? prioritizeByKeywords(shuffledEn, [
         'synonym', 'antonym', 'grammar', 'error spotting', 'comprehension',
@@ -2980,6 +3159,10 @@ export function getBitsatPaper(paperId) {
     ? prioritizeByKeywords(shuffledLo, [
       'series', 'venn', 'coding', 'queue', 'clock', 'syllogism', 'mirror',
     ], 20)
+    : isTodayPracticeSet
+      ? buildTodaySection(shuffledLo, TODAY_2026_04_27_IDS.logic, [
+        'coding', 'series', 'blood relation', 'syllogism', 'venn', 'clock', 'direction',
+      ], 20, BITSAT_STYLE_HARD_RATIO.logic)
     : isPhase1Memory
       ? prioritizeByKeywords(shuffledLo, [
         'series', 'coding', 'syllogism', 'arrangement', 'blood relation',
@@ -3000,6 +3183,8 @@ export function getBitsatPaper(paperId) {
       ? 'A broad mixed practice paper built from the current BITSAT question bank and common exam patterns'
       : id === 11
         ? 'A practice paper shaped around recent shift patterns: lengthy maths, selective chemistry spikes, moderate physics, and scoring English/LR'
+        : id === 18
+          ? 'Today’s original BITSAT-style practice set for Session-2 prep, refreshed on April 27, 2026'
         : id === 12
           ? 'Public reconstruction set based on discussed BITSAT 2026 Session-1 patterns (not an official released paper)'
           : id >= 13 && id <= 17
@@ -3031,9 +3216,7 @@ export const bitsatRankBands = [
   { minScore: 0, maxScore: 209, rankRange: '20,000+', admission: 'Lower chance in top rounds' },
 ];
 
-export const allBitsatPapers = [
-  ...bitsatDailyPapers,
-  ...Array.from({ length: 17 }, (_, i) => {
+export const allBitsatPapers = Array.from({ length: 17 }, (_, i) => {
   const id = i + 1;
   const topics = [
     'Mixed Practice | Broad Syllabus Coverage',
@@ -3053,6 +3236,7 @@ export const allBitsatPapers = [
     '2023 Public Reconstruction | Discussion Based',
     '2022 Public Reconstruction | Discussion Based',
     '2021 Public Reconstruction | Discussion Based',
+    'Today’s Practice Set | Session-2 Prep Mix',
   ];
   return {
     id,
@@ -3073,6 +3257,8 @@ export const allBitsatPapers = [
                     ? 'BITSAT 2022 Public Reconstruction'
                     : id === 17
                       ? 'BITSAT 2021 Public Reconstruction'
+                      : id === 18
+                        ? 'BITSAT Today’s Practice Set'
             : `Mock Test ${id}`,
     topics: topics[i],
     questions: 130,
