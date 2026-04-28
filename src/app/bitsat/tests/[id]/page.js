@@ -54,6 +54,25 @@ function predictRank(score) {
   return bitsatRankBands[bitsatRankBands.length - 1];
 }
 
+function cleanChallengeName(name) {
+  if (typeof name !== 'string') return 'A friend';
+  const clean = name.trim().slice(0, 50);
+  return clean || 'A friend';
+}
+
+function parseChallengeParams(search, totalMarks) {
+  const searchParams = new URLSearchParams(search);
+  const rawScore = Number(searchParams.get('challengeScore'));
+
+  if (!Number.isFinite(rawScore)) return null;
+
+  const score = Math.max(-130, Math.min(totalMarks, Math.round(rawScore)));
+  return {
+    score,
+    name: cleanChallengeName(searchParams.get('challenger')),
+  };
+}
+
 // Main Component
 export default function BitsatTestPage() {
   const params = useParams();
@@ -79,12 +98,23 @@ export default function BitsatTestPage() {
   const [insightError, setInsightError] = useState('');
   const [isSavedResult, setIsSavedResult] = useState(false);
   const [displayScore, setDisplayScore] = useState(0);
+  const [challenge, setChallenge] = useState(null);
+  const [shareStatus, setShareStatus] = useState('');
+  const [showReview, setShowReview] = useState(false);
 
   const timerRef = useRef(null);
   const hasSyncedResultRef = useRef(false);
 
   // Unique sections in order
   const sections = useMemo(() => [...new Set(questions.map(q => q.subject))], [questions]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const search = window.location.search;
+    window.requestAnimationFrame(() => {
+      setChallenge(parseChallengeParams(search, totalMarks));
+    });
+  }, [totalMarks]);
 
   const submitTest = useCallback(() => {
     clearInterval(timerRef.current);
@@ -242,6 +272,53 @@ export default function BitsatTestPage() {
   const unattempted = questions.length - correct - wrong;
   const score      = correct * correctMarks + wrong * wrongMarks;   // +3/−1
 
+  const challengeOutcome = challenge
+    ? {
+      diff: score - challenge.score,
+      label: score > challenge.score
+        ? `You beat ${challenge.name} by ${score - challenge.score} marks.`
+        : score === challenge.score
+          ? `You tied ${challenge.name}'s score.`
+          : `${challenge.name} is ahead by ${challenge.score - score} marks.`,
+      color: score >= challenge.score ? '#9cb4ab' : '#a77f85',
+    }
+    : null;
+
+  async function copyChallengeLink() {
+    if (typeof window === 'undefined') return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('challengeScore', String(score));
+    url.searchParams.set('challenger', cleanChallengeName(userName || 'A friend'));
+
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      setShareStatus('Challenge link copied.');
+    } catch {
+      setShareStatus(url.toString());
+    }
+  }
+
+  function resetTest() {
+    setAnswers({});
+    setFlagged(new Set());
+    setCurrent(0);
+    setTimeLeft(TOTAL_SECS);
+    setIsPaused(false);
+    setDisplayScore(0);
+    setShareStatus('');
+    setShowReview(false);
+    setInsight(null);
+    setLeaderboard([]);
+    setLeaderboardError('');
+    setInsightError('');
+    setIsSyncingInsight(false);
+    setIsSavedResult(false);
+    hasSyncedResultRef.current = false;
+    setPhase('intro');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // Section-wise breakdown
   const sectionStats = sections.map(sec => {
     const qs = questions.filter(q => q.subject === sec);
@@ -292,6 +369,20 @@ export default function BitsatTestPage() {
             <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '8px' }} className="text-gradient">{paper.title}</h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{paper.description}</p>
           </div>
+
+          {challenge && (
+            <section aria-label="Friend challenge" style={{ ...styles.challengeBox, marginBottom: '24px' }}>
+              <div>
+                <div style={styles.challengeKicker}>Friend Challenge</div>
+                <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-main)', marginTop: '4px' }}>
+                  Beat {challenge.name}&apos;s {challenge.score} / {totalMarks}
+                </div>
+                <p style={{ marginTop: '6px', color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
+                  Same test, same scoring. Finish it and your result will be compared instantly.
+                </p>
+              </div>
+            </section>
+          )}
 
           {/* Stats grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '24px' }}>
@@ -382,6 +473,8 @@ export default function BitsatTestPage() {
               setNameError('');
               setIsPaused(false);
               setDisplayScore(0);
+              setShareStatus('');
+              setShowReview(false);
               setLeaderboard([]);
               setLeaderboardError('');
               hasSyncedResultRef.current = false;
@@ -433,6 +526,54 @@ export default function BitsatTestPage() {
                   <div style={{ fontWeight: 800, fontSize: '1.15rem', color }}>{value}</div>
                 </div>
               ))}
+            </div>
+          </section>
+
+          <section aria-label="Result actions" className="glass-panel animate-fade-in-up delay-100" style={styles.resultActions}>
+            <div>
+              <div style={{ fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>What next?</div>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
+                Start another test now, or open solutions only when you want a full review.
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <button className="btn-primary" onClick={resetTest}>
+                Retake Test
+              </button>
+              <Link href="/bitsat/tests"><button className="btn-secondary">All BITSAT Tests</button></Link>
+              <button type="button" className="btn-secondary" onClick={() => setShowReview(prev => !prev)}>
+                {showReview ? 'Hide Solutions' : 'View Solutions'}
+              </button>
+            </div>
+          </section>
+
+          <section aria-labelledby="challenge-heading" className="glass-panel animate-fade-in-up delay-100" style={{ padding: '28px', marginBottom: '20px' }}>
+            <h2 id="challenge-heading" style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '14px' }}>Challenge Friends</h2>
+            {challengeOutcome && (
+              <div style={{ ...styles.challengeBox, marginBottom: '14px', borderColor: `${challengeOutcome.color}55` }}>
+                <div>
+                  <div style={styles.challengeKicker}>Current Challenge</div>
+                  <div style={{ fontWeight: 800, color: challengeOutcome.color, fontSize: '1.05rem', marginTop: '4px' }}>
+                    {challengeOutcome.label}
+                  </div>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '6px' }}>
+                    Target score: {challenge.score} / {totalMarks}
+                  </p>
+                </div>
+              </div>
+            )}
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.6, marginBottom: '14px' }}>
+              Share this exact test with your score attached. Friends can take it and compare their score against yours.
+            </p>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+              <button type="button" className="btn-primary" onClick={copyChallengeLink}>
+                Copy Challenge Link
+              </button>
+              {shareStatus && (
+                <span style={{ color: shareStatus.startsWith('http') ? 'var(--text-muted)' : '#9cb4ab', fontSize: '0.82rem', overflowWrap: 'anywhere' }}>
+                  {shareStatus}
+                </span>
+              )}
             </div>
           </section>
 
@@ -563,59 +704,64 @@ export default function BitsatTestPage() {
 
           {/* Full review */}
           <section aria-labelledby="review-heading" className="animate-fade-in-up delay-300">
-            <h2 id="review-heading" style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '16px' }}>Question Review</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {questions.map((q, idx) => {
-                const given   = answers[q.id];
-                const correct = given === q.correct;
-                const skipped = given === undefined;
-                const m       = SECTION_META[q.subject] || { color: '#fff' };
-                const borderCol = skipped ? 'rgba(255,255,255,0.08)' : correct ? 'rgba(0,245,212,0.3)' : 'rgba(255,90,126,0.3)';
-                return (
-                  <article key={q.id} className="glass-panel" style={{ padding: '20px', borderLeft: `3px solid ${borderCol}` }}
-                    aria-label={`Question ${idx + 1}: ${skipped ? 'skipped' : correct ? 'correct' : 'incorrect'}`}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', flexWrap: 'wrap', gap: '6px' }}>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700 }}>Q{idx + 1}</span>
-                      <span style={{ fontSize: '0.75rem', color: m.color, fontWeight: 700, background: m.bg, padding: '2px 10px', borderRadius: '20px' }}>{q.subject}</span>
-                    </div>
-                    <p style={{ fontWeight: 600, marginBottom: '14px', lineHeight: 1.6 }}>{q.text}</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      {q.options.map((opt, oi) => {
-                        const isCorrect = oi === q.correct;
-                        const isGiven   = oi === given;
-                        let bg = 'rgba(255,255,255,0.03)';
-                        let border = 'rgba(255,255,255,0.07)';
-                        let col = 'var(--text-muted)';
-                        if (isCorrect)       { bg = 'rgba(156,180,171,0.12)';  border = '#9cb4ab'; col = '#9cb4ab'; }
-                        if (isGiven && !isCorrect) { bg = 'rgba(167,127,133,0.12)'; border = '#a77f85'; col = '#a77f85'; }
-                        return (
-                          <div key={oi} style={{ padding: '8px 14px', background: bg, border: `1px solid ${border}`, borderRadius: '8px', fontSize: '0.86rem', color: col }}>
-                            <span style={{ fontWeight: 700, marginRight: '8px' }}>{String.fromCharCode(65 + oi)}.</span>{opt}
-                            {isCorrect && <span aria-label="correct answer" style={{ marginLeft: '8px' }}>✓</span>}
-                            {isGiven && !isCorrect && <span aria-label="your wrong answer" style={{ marginLeft: '8px' }}>✗</span>}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {q.explanation && (
-                      <div style={{ marginTop: '12px', padding: '10px 14px', background: 'rgba(165,160,178,0.10)', borderRadius: '8px', border: '1px solid rgba(165,160,178,0.24)', fontSize: '0.83rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                        <strong style={{ color: '#a5a0b2' }}>Explanation: </strong>{q.explanation}
-                      </div>
-                    )}
-                  </article>
-                );
-              })}
+            <div className="glass-panel" style={{ padding: '24px', marginBottom: showReview ? '16px' : '0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div>
+                  <h2 id="review-heading" style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: '4px' }}>Question Review</h2>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem' }}>
+                    Solutions are hidden by default so you can quickly move to the next test.
+                  </p>
+                </div>
+                <button type="button" className="btn-secondary" onClick={() => setShowReview(prev => !prev)}>
+                  {showReview ? 'Hide Solutions' : `Show ${questions.length} Solutions`}
+                </button>
+              </div>
             </div>
+            {showReview && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {questions.map((q, idx) => {
+                  const given   = answers[q.id];
+                  const correct = given === q.correct;
+                  const skipped = given === undefined;
+                  const m       = SECTION_META[q.subject] || { color: '#fff' };
+                  const borderCol = skipped ? 'rgba(255,255,255,0.08)' : correct ? 'rgba(0,245,212,0.3)' : 'rgba(255,90,126,0.3)';
+                  return (
+                    <article key={q.id} className="glass-panel" style={{ padding: '20px', borderLeft: `3px solid ${borderCol}` }}
+                      aria-label={`Question ${idx + 1}: ${skipped ? 'skipped' : correct ? 'correct' : 'incorrect'}`}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', flexWrap: 'wrap', gap: '6px' }}>
+                        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700 }}>Q{idx + 1}</span>
+                        <span style={{ fontSize: '0.75rem', color: m.color, fontWeight: 700, background: m.bg, padding: '2px 10px', borderRadius: '20px' }}>{q.subject}</span>
+                      </div>
+                      <p style={{ fontWeight: 600, marginBottom: '14px', lineHeight: 1.6 }}>{q.text}</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        {q.options.map((opt, oi) => {
+                          const isCorrect = oi === q.correct;
+                          const isGiven   = oi === given;
+                          let bg = 'rgba(255,255,255,0.03)';
+                          let border = 'rgba(255,255,255,0.07)';
+                          let col = 'var(--text-muted)';
+                          if (isCorrect)       { bg = 'rgba(156,180,171,0.12)';  border = '#9cb4ab'; col = '#9cb4ab'; }
+                          if (isGiven && !isCorrect) { bg = 'rgba(167,127,133,0.12)'; border = '#a77f85'; col = '#a77f85'; }
+                          return (
+                            <div key={oi} style={{ padding: '8px 14px', background: bg, border: `1px solid ${border}`, borderRadius: '8px', fontSize: '0.86rem', color: col }}>
+                              <span style={{ fontWeight: 700, marginRight: '8px' }}>{String.fromCharCode(65 + oi)}.</span>{opt}
+                              {isCorrect && <span aria-label="correct answer" style={{ marginLeft: '8px' }}>✓</span>}
+                              {isGiven && !isCorrect && <span aria-label="your wrong answer" style={{ marginLeft: '8px' }}>✗</span>}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {q.explanation && (
+                        <div style={{ marginTop: '12px', padding: '10px 14px', background: 'rgba(165,160,178,0.10)', borderRadius: '8px', border: '1px solid rgba(165,160,178,0.24)', fontSize: '0.83rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                          <strong style={{ color: '#a5a0b2' }}>Explanation: </strong>{q.explanation}
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+            )}
           </section>
-
-          {/* Actions */}
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '32px' }}>
-            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setIsPaused(false); setDisplayScore(0); setInsight(null); setLeaderboard([]); setLeaderboardError(''); setInsightError(''); setIsSyncingInsight(false); setIsSavedResult(false); hasSyncedResultRef.current = false; setPhase('intro'); }}>
-              Retake Test
-            </button>
-            <Link href="/bitsat/tests"><button className="btn-secondary">All BITSAT Tests</button></Link>
-            <Link href="/bitsat"><button className="btn-secondary">Rank Predictor</button></Link>
-          </div>
         </main>
       </>
     );
@@ -862,6 +1008,17 @@ const styles = {
   main: { padding: '20px 40px 60px', maxWidth: '900px', margin: '0 auto' },
   statBox: { padding: '12px 16px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)', textAlign: 'center' },
   predBox: { padding: '14px 18px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)' },
+  resultActions: {
+    padding: '18px 20px',
+    marginBottom: '20px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '16px',
+    flexWrap: 'wrap',
+  },
+  challengeBox: { padding: '16px 18px', background: 'rgba(156,180,171,0.09)', borderRadius: '10px', border: '1px solid rgba(156,180,171,0.28)' },
+  challengeKicker: { fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 800 },
   stickyBar: {
     position: 'sticky', top: 0, zIndex: 100,
     display: 'flex', alignItems: 'center', gap: '16px',
