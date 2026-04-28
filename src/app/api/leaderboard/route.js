@@ -11,7 +11,13 @@ function normalizeName(name) {
   return cleaned ? cleaned.slice(0, 50) : 'Anonymous';
 }
 
-async function fetchAttempts({ examType, paperId, includeName }) {
+function normalizeRoomId(roomId) {
+  if (typeof roomId !== 'string') return '';
+  const cleaned = roomId.trim().toLowerCase();
+  return /^[a-z0-9-]{6,64}$/.test(cleaned) ? cleaned : '';
+}
+
+async function fetchAttempts({ examType, paperId, roomId, includeName }) {
   const columns = includeName
     ? 'score, candidate_name, time_taken_seconds, created_at'
     : 'score, time_taken_seconds, created_at';
@@ -29,6 +35,10 @@ async function fetchAttempts({ examType, paperId, includeName }) {
     query = query.eq('paper_id', paperId);
   }
 
+  if (roomId) {
+    query = query.eq('room_id', roomId);
+  }
+
   const { data, error } = await query;
   return { data: Array.isArray(data) ? data : [], error };
 }
@@ -39,17 +49,18 @@ export async function GET(request) {
     const examType = searchParams.get('examType') || 'kcet';
     const paperIdRaw = searchParams.get('paperId');
     const paperId = paperIdRaw == null ? null : Number(paperIdRaw);
+    const roomId = normalizeRoomId(searchParams.get('roomId') || '');
 
     if (!['kcet', 'bitsat'].includes(examType)) {
       return Response.json({ error: 'Invalid examType' }, { status: 400 });
     }
 
-    const withNames = await fetchAttempts({ examType, paperId, includeName: true });
+    const withNames = await fetchAttempts({ examType, paperId, roomId, includeName: true });
     let rows = withNames.data;
     let queryError = withNames.error;
 
     if (queryError && /candidate_name|column/i.test(queryError.message || '')) {
-      const withoutNames = await fetchAttempts({ examType, paperId, includeName: false });
+      const withoutNames = await fetchAttempts({ examType, paperId, roomId, includeName: false });
       rows = withoutNames.data;
       queryError = withoutNames.error;
     }

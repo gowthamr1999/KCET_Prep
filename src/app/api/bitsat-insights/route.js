@@ -21,6 +21,12 @@ function rankAmong(scores, currentScore) {
   return better + 1;
 }
 
+function normalizeRoomId(roomId) {
+  if (typeof roomId !== 'string') return '';
+  const cleaned = roomId.trim().toLowerCase();
+  return /^[a-z0-9-]{6,64}$/.test(cleaned) ? cleaned : '';
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -31,6 +37,7 @@ export async function POST(request) {
       totalMarks,
       timeTaken,
       candidateName,
+      roomId,
       sectionStats = [],
     } = body;
 
@@ -73,10 +80,21 @@ export async function POST(request) {
     };
 
     const cleanName = typeof candidateName === 'string' ? candidateName.trim().slice(0, 50) : '';
-    const { error: insertError } = await supabase.from('test_attempts').insert({
+    const cleanRoomId = normalizeRoomId(roomId);
+    const insertPayload = {
       ...baseInsertRow,
       candidate_name: cleanName || null,
-    });
+      ...(cleanRoomId ? { room_id: cleanRoomId } : {}),
+    };
+
+    let { error: insertError } = await supabase.from('test_attempts').insert(insertPayload);
+
+    if (insertError && cleanRoomId && /room_id|column/i.test(insertError.message || '')) {
+      const fallbackPayload = { ...insertPayload };
+      delete fallbackPayload.room_id;
+      const retry = await supabase.from('test_attempts').insert(fallbackPayload);
+      insertError = retry.error;
+    }
 
     if (insertError) {
       console.error('bitsat-insights insert error:', insertError.message);

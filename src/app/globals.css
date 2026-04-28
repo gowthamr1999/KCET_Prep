@@ -114,6 +114,30 @@ textarea::placeholder {
   opacity: 1;
 }
 
+.room-select {
+  color: var(--text-main) !important;
+  background: var(--glass-bg) !important;
+  color-scheme: light;
+}
+
+.room-select option,
+.room-select optgroup {
+  color: #1f2328;
+  background: #ffffff;
+}
+
+html[data-theme='dark'] .room-select {
+  color: #f0f6fc !important;
+  background: #161b22 !important;
+  color-scheme: dark;
+}
+
+html[data-theme='dark'] .room-select option,
+html[data-theme='dark'] .room-select optgroup {
+  color: #f0f6fc;
+  background: #161b22;
+}
+
 ul {
   list-style: none;
 }

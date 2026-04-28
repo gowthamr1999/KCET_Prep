@@ -29,6 +29,7 @@ const EXAMS = [
     border: 'rgba(156,168,164,0.24)',
     links: [
       { label: 'Start Mock Test', href: '/bitsat/tests', primary: true },
+      { label: 'Create Room', href: '/rooms', primary: false },
       { label: 'Score Predictor', href: '/bitsat', primary: false },
     ],
   },
@@ -62,6 +63,12 @@ const FEATURES = [
     color: 'rgba(156,168,164,0.12)',
     title: 'Instant Results & Analysis',
     desc: 'Correct / wrong / skipped breakdown per subject. See exactly which questions you got wrong and why.',
+  },
+  {
+    icon: '🏁',
+    color: 'rgba(181,169,138,0.14)',
+    title: 'Beat My Score Rooms',
+    desc: 'Create a shared BITSAT room, send one link to friends, and compare everyone on the same paper scoreboard after submit.',
   },
   {
     icon: '🎯',
@@ -171,7 +178,7 @@ export default function Home() {
           </h1>
           <p className="hero-subtitle">
             KCET may be behind you, so the homepage now puts BITSAT first: full-length practice papers, public reconstruction sets,
-            instant scoring, and score prediction tools right in your browser. KCET tools are still here whenever you need them.
+            instant scoring, score prediction, and shareable score rooms where friends compete on the same paper.
           </p>
           <div className="hero-cta-row">
             <Link href="/bitsat/tests">
@@ -182,6 +189,11 @@ export default function Home() {
             <Link href="/bitsat">
               <button className="btn-secondary hero-btn">
                 Open BITSAT Score Predictor →
+              </button>
+            </Link>
+            <Link href="/rooms">
+              <button className="btn-secondary hero-btn">
+                Create Score Room →
               </button>
             </Link>
           </div>
@@ -234,6 +246,42 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="section" aria-labelledby="rooms-heading">
+          <div className="glass-panel" style={{ padding: '28px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(240px, 0.8fr)', gap: '22px', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 800, marginBottom: '8px' }}>
+                New Social Feature
+              </div>
+              <h2 id="rooms-heading" className="section-title" style={{ marginBottom: '10px' }}>
+                Beat My Score Rooms
+              </h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.96rem', lineHeight: 1.7, marginBottom: '16px' }}>
+                Create a private room for any BITSAT paper and share one link with friends. Everyone takes the same test, then the room ranks scores by marks and time taken, so your group can compare fairly without mixing into the public leaderboard.
+              </p>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <Link href="/rooms">
+                  <button className="btn-primary">Create a Room →</button>
+                </Link>
+                <Link href="/bitsat/tests">
+                  <button className="btn-secondary">Browse BITSAT Papers</button>
+                </Link>
+              </div>
+            </div>
+            <div style={{ display: 'grid', gap: '10px' }}>
+              {[
+                ['1', 'Pick a BITSAT paper'],
+                ['2', 'Share the room link'],
+                ['3', 'Compare the room scoreboard'],
+              ].map(([n, text]) => (
+                <div key={n} style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '12px 14px', borderRadius: '10px', background: 'var(--surface-soft)', border: '1px solid var(--surface-border)' }}>
+                  <span style={{ width: '28px', height: '28px', borderRadius: '999px', display: 'grid', placeItems: 'center', background: 'rgba(181,169,138,0.16)', color: '#b5a98a', fontWeight: 900 }}>{n}</span>
+                  <span style={{ color: 'var(--text-main)', fontWeight: 700, fontSize: '0.9rem' }}>{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -360,6 +408,7 @@ export default function Home() {
             </div>
             <div className="footer-col">
               <h3 className="footer-col-heading">Tools</h3>
+              <Link href="/rooms" className="footer-link">Create Room</Link>
               <Link href="/upload" className="footer-link">Upload Paper</Link>
             </div>
           </nav>

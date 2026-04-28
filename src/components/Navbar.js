@@ -25,6 +25,7 @@ const NAV_GROUPS = [
 
 // Direct top-level links (no dropdown)
 const NAV_DIRECT = [
+  { href: '/rooms', label: 'Create Room' },
   { href: '/upload', label: '📤 Upload Paper' },
 ];
 

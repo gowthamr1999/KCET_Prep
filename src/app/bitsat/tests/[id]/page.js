@@ -60,9 +60,22 @@ function cleanChallengeName(name) {
   return clean || 'A friend';
 }
 
+function normalizeRoomId(roomId) {
+  if (typeof roomId !== 'string') return '';
+  const cleaned = roomId.trim().toLowerCase();
+  return /^[a-z0-9-]{6,64}$/.test(cleaned) ? cleaned : '';
+}
+
+function createRoomId(paperId) {
+  const randomPart = Math.random().toString(36).slice(2, 8);
+  const timePart = Date.now().toString(36).slice(-6);
+  return `bitsat-${paperId}-${timePart}-${randomPart}`.toLowerCase();
+}
+
 function parseChallengeParams(search, totalMarks) {
   const searchParams = new URLSearchParams(search);
   const rawScore = Number(searchParams.get('challengeScore'));
+  const roomId = normalizeRoomId(searchParams.get('room'));
 
   if (!Number.isFinite(rawScore)) return null;
 
@@ -70,7 +83,13 @@ function parseChallengeParams(search, totalMarks) {
   return {
     score,
     name: cleanChallengeName(searchParams.get('challenger')),
+    roomId,
   };
+}
+
+function parseRoomParams(search) {
+  const searchParams = new URLSearchParams(search);
+  return normalizeRoomId(searchParams.get('room'));
 }
 
 // Main Component
@@ -99,6 +118,9 @@ export default function BitsatTestPage() {
   const [isSavedResult, setIsSavedResult] = useState(false);
   const [displayScore, setDisplayScore] = useState(0);
   const [challenge, setChallenge] = useState(null);
+  const [roomId, setRoomId] = useState('');
+  const [roomLeaderboard, setRoomLeaderboard] = useState([]);
+  const [roomLeaderboardError, setRoomLeaderboardError] = useState('');
   const [shareStatus, setShareStatus] = useState('');
   const [showReview, setShowReview] = useState(false);
 
@@ -112,7 +134,9 @@ export default function BitsatTestPage() {
     if (typeof window === 'undefined') return;
     const search = window.location.search;
     window.requestAnimationFrame(() => {
-      setChallenge(parseChallengeParams(search, totalMarks));
+      const parsedChallenge = parseChallengeParams(search, totalMarks);
+      setChallenge(parsedChallenge);
+      setRoomId(parsedChallenge?.roomId || parseRoomParams(search));
     });
   }, [totalMarks]);
 
@@ -120,9 +144,10 @@ export default function BitsatTestPage() {
     clearInterval(timerRef.current);
     setIsPaused(false);
     setTimeTaken(TOTAL_SECS - timeLeft);
+    setRoomId((currentRoomId) => currentRoomId || createRoomId(paper.id));
     setPhase('result');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [timeLeft, TOTAL_SECS]);
+  }, [timeLeft, TOTAL_SECS, paper.id]);
 
   useEffect(() => {
     if (phase !== 'test' || isPaused) return;
@@ -208,6 +233,7 @@ export default function BitsatTestPage() {
             score: scoreNow,
             totalMarks,
             timeTaken,
+            roomId,
             sectionStats: sectionStatsNow,
           }),
         });
@@ -218,12 +244,24 @@ export default function BitsatTestPage() {
         }
 
         const lbResponse = await fetch(`/api/leaderboard?examType=bitsat&paperId=${paper.id}`);
+        const roomLbResponse = roomId
+          ? await fetch(`/api/leaderboard?examType=bitsat&paperId=${paper.id}&roomId=${encodeURIComponent(roomId)}`)
+          : null;
         let lbData = null;
+        let roomLbData = null;
 
         try {
           lbData = await readApiJson(lbResponse, 'Unable to load leaderboard right now.');
         } catch (lbErr) {
           lbData = { error: lbErr.message || 'Unable to load leaderboard right now.' };
+        }
+
+        if (roomLbResponse) {
+          try {
+            roomLbData = await readApiJson(roomLbResponse, 'Unable to load room leaderboard right now.');
+          } catch (roomLbErr) {
+            roomLbData = { error: roomLbErr.message || 'Unable to load room leaderboard right now.' };
+          }
         }
 
         if (!ignore) {
@@ -234,6 +272,13 @@ export default function BitsatTestPage() {
           } else {
             setLeaderboard([]);
             setLeaderboardError(lbData?.error || 'Unable to load leaderboard right now.');
+          }
+          if (roomLbResponse?.ok) {
+            setRoomLeaderboard(Array.isArray(roomLbData?.leaderboard) ? roomLbData.leaderboard : []);
+            setRoomLeaderboardError('');
+          } else if (roomLbResponse) {
+            setRoomLeaderboard([]);
+            setRoomLeaderboardError(roomLbData?.error || 'Unable to load room leaderboard right now.');
           }
           setIsSavedResult(true);
         }
@@ -264,6 +309,7 @@ export default function BitsatTestPage() {
     questions,
     sections,
     userName,
+    roomId,
   ]);
 
   // Scoring
@@ -287,13 +333,17 @@ export default function BitsatTestPage() {
   async function copyChallengeLink() {
     if (typeof window === 'undefined') return;
 
+    const activeRoomId = roomId || createRoomId(paper.id);
+    if (!roomId) setRoomId(activeRoomId);
+
     const url = new URL(window.location.href);
     url.searchParams.set('challengeScore', String(score));
     url.searchParams.set('challenger', cleanChallengeName(userName || 'A friend'));
+    url.searchParams.set('room', activeRoomId);
 
     try {
       await navigator.clipboard.writeText(url.toString());
-      setShareStatus('Challenge link copied.');
+      setShareStatus('Room challenge link copied.');
     } catch {
       setShareStatus(url.toString());
     }
@@ -308,6 +358,8 @@ export default function BitsatTestPage() {
     setDisplayScore(0);
     setShareStatus('');
     setShowReview(false);
+    setRoomLeaderboard([]);
+    setRoomLeaderboardError('');
     setInsight(null);
     setLeaderboard([]);
     setLeaderboardError('');
@@ -370,15 +422,19 @@ export default function BitsatTestPage() {
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{paper.description}</p>
           </div>
 
-          {challenge && (
+          {(challenge || roomId) && (
             <section aria-label="Friend challenge" style={{ ...styles.challengeBox, marginBottom: '24px' }}>
               <div>
-                <div style={styles.challengeKicker}>Friend Challenge</div>
+                <div style={styles.challengeKicker}>{challenge ? 'Friend Challenge' : 'Room Challenge'}</div>
                 <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-main)', marginTop: '4px' }}>
-                  Beat {challenge.name}&apos;s {challenge.score} / {totalMarks}
+                  {challenge
+                    ? <>Beat {challenge.name}&apos;s {challenge.score} / {totalMarks}</>
+                    : 'Join this shared scoreboard'}
                 </div>
                 <p style={{ marginTop: '6px', color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
-                  Same test, same scoring. Finish it and your result will be compared instantly.
+                  {challenge
+                    ? 'Same test, same scoring. Finish it and your result will be compared instantly.'
+                    : 'Same test, same scoring. Submit your result to appear in this room.'}
                 </p>
               </div>
             </section>
@@ -477,6 +533,8 @@ export default function BitsatTestPage() {
               setShowReview(false);
               setLeaderboard([]);
               setLeaderboardError('');
+              setRoomLeaderboard([]);
+              setRoomLeaderboardError('');
               hasSyncedResultRef.current = false;
               setPhase('test');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -548,7 +606,7 @@ export default function BitsatTestPage() {
           </section>
 
           <section aria-labelledby="challenge-heading" className="glass-panel animate-fade-in-up delay-100" style={{ padding: '28px', marginBottom: '20px' }}>
-            <h2 id="challenge-heading" style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '14px' }}>Challenge Friends</h2>
+            <h2 id="challenge-heading" style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '14px' }}>Beat My Score Room</h2>
             {challengeOutcome && (
               <div style={{ ...styles.challengeBox, marginBottom: '14px', borderColor: `${challengeOutcome.color}55` }}>
                 <div>
@@ -563,16 +621,40 @@ export default function BitsatTestPage() {
               </div>
             )}
             <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.6, marginBottom: '14px' }}>
-              Share this exact test with your score attached. Friends can take it and compare their score against yours.
+              Share one room link. Friends take this exact test, then everyone in the room appears on the same scoreboard.
             </p>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
               <button type="button" className="btn-primary" onClick={copyChallengeLink}>
-                Copy Challenge Link
+                Copy Room Link
               </button>
-              {shareStatus && (
-                <span style={{ color: shareStatus.startsWith('http') ? 'var(--text-muted)' : '#9cb4ab', fontSize: '0.82rem', overflowWrap: 'anywhere' }}>
-                  {shareStatus}
-                </span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                Room: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>{roomId || 'created after submit'}</span>
+              </span>
+            </div>
+            {shareStatus && (
+              <p style={{ color: shareStatus.startsWith('http') ? 'var(--text-muted)' : '#9cb4ab', fontSize: '0.82rem', overflowWrap: 'anywhere', marginBottom: '14px' }}>
+                {shareStatus}
+              </p>
+            )}
+            <div style={{ borderTop: '1px solid var(--surface-border)', paddingTop: '14px' }}>
+              <div style={{ fontWeight: 800, fontSize: '0.92rem', marginBottom: '10px' }}>Room Scoreboard</div>
+              {roomLeaderboardError && <p style={{ color: '#a77f85', fontSize: '0.84rem' }}>{roomLeaderboardError}</p>}
+              {!roomLeaderboard.length && !roomLeaderboardError && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem' }}>Your score will appear here once the room result syncs. Share the link to add friends.</p>
+              )}
+              {!!roomLeaderboard.length && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {roomLeaderboard.slice(0, 10).map((row) => (
+                    <div key={`room-${row.rank}-${row.name}-${row.score}-${row.timeTaken}`} style={{ display: 'grid', gridTemplateColumns: '44px 1fr auto auto', gap: '10px', alignItems: 'center', padding: '10px 12px', borderRadius: '10px', background: row.name === userName ? 'rgba(156,180,171,0.12)' : 'rgba(255,255,255,0.03)', border: `1px solid ${row.name === userName ? 'rgba(156,180,171,0.32)' : 'rgba(255,255,255,0.08)'}` }}>
+                      <span style={{ fontWeight: 800, color: '#b5a98a' }}>#{row.rank}</span>
+                      <span style={{ fontWeight: 600 }}>{row.name}</span>
+                      <span style={{ fontWeight: 700, color: '#9cb4ab' }}>{row.score}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', minWidth: '60px', textAlign: 'right' }}>
+                        {row.timeTaken == null ? '--:--' : formatTime(row.timeTaken)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </section>
