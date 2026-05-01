@@ -1,4 +1,4 @@
-import clientPromise, { DB_NAME, DAILY_QUEST_COLLECTION } from '@/lib/mongodb';
+import getClientPromise, { DB_NAME, DAILY_QUEST_COLLECTION } from '@/lib/mongodb';
 
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
 
@@ -11,7 +11,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const date = searchParams.get('date');
 
-    const client = await clientPromise;
+    const client = await getClientPromise();
     const db = client.db(DB_NAME);
 
     const filter = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? { date } : {};
@@ -71,7 +71,7 @@ export async function PUT(request) {
       }
     }
 
-    const client = await clientPromise;
+    const client = await getClientPromise();
     const db = client.db(DB_NAME);
     const collection = db.collection(DAILY_QUEST_COLLECTION);
 

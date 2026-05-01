@@ -15,6 +15,7 @@ import {
   bitsatDailyLogic,
   latestBitsatDailyPaper,
 } from './bitsatDailyQuestions.js';
+import { hardMockQuestions } from './bitsatHardMockQuestions.js';
 
 export const bitsatQuestionsLastUpdated = '2026-05-01T00:00:00+09:00';
 
@@ -2973,6 +2974,20 @@ export function getBitsatPaper(paperId) {
 
   const subjectPaper = bitsatSubjectWisePapers.find((paper) => paper.slug === paperId);
   const id = subjectPaper ? subjectPaper.id : parseInt(paperId, 10);
+
+  if (id === 19) {
+    return {
+      id,
+      title: 'BITSAT Hardest Mock Test',
+      description: 'A full-length, high-difficulty BITSAT-style paper built around recent hard-shift patterns: lengthy mathematics, mixed-concept physics, tricky chemistry, and speed-pressure English/LR.',
+      duration: 180,
+      totalMarks: 390,
+      correctMarks: 3,
+      wrongMarks: -1,
+      questions: hardMockQuestions,
+    };
+  }
+
   const shuffledPh = seededShuffle(bitsatPhysics, id * 7331);
   const shuffledCh = seededShuffle(bitsatChemistry, id * 7331 + 1);
   const shuffledMa = seededShuffle(bitsatMath, id * 7331 + 2);
@@ -3026,6 +3041,7 @@ export function getBitsatPaper(paperId) {
     'BITSAT Mock Test 16 – 2022 Public Reconstruction',
     'BITSAT Mock Test 17 – 2021 Public Reconstruction',
     'BITSAT Mock Test 18 – Today’s Practice Set',
+    'BITSAT Mock Test 19 – Hardest Full Mock',
   ];
 
   const isPhase2Forecast = id === 11;
@@ -3225,7 +3241,7 @@ export const bitsatRankBands = [
   { minScore: 0, maxScore: 209, rankRange: '20,000+', admission: 'Lower chance in top rounds' },
 ];
 
-export const allBitsatPapers = Array.from({ length: 18 }, (_, i) => {
+export const allBitsatPapers = Array.from({ length: 19 }, (_, i) => {
   const id = i + 1;
   const topics = [
     'Mixed Practice | Broad Syllabus Coverage',
@@ -3246,6 +3262,7 @@ export const allBitsatPapers = Array.from({ length: 18 }, (_, i) => {
     '2022 Public Reconstruction | Discussion Based',
     '2021 Public Reconstruction | Discussion Based',
     'Today’s Practice Set | Session-2 Prep Mix',
+    'Hardest Full Mock | Recent Shift Inspired',
   ];
   return {
     id,
@@ -3268,6 +3285,8 @@ export const allBitsatPapers = Array.from({ length: 18 }, (_, i) => {
                       ? 'BITSAT 2021 Public Reconstruction'
                       : id === 18
                         ? 'BITSAT Today’s Practice Set'
+                        : id === 19
+                          ? 'BITSAT Hardest Mock Test'
                         : `Mock Test ${id}`,
     topics: topics[i],
     questions: 130,

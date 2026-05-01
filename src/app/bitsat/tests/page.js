@@ -12,6 +12,7 @@ function getPaperTag(id) {
   if (id === 12) return 'Phase 1 Reconstruction';
   if (id >= 13 && id <= 17) return 'Yearly Reconstruction';
   if (id === 18) return 'Today’s Set';
+  if (id === 19) return 'Hardest';
   if (id === 5 || id === 10) return 'Hard';
   if (id === 2 || id === 3) return 'Easy';
   return 'Medium';
@@ -27,6 +28,7 @@ const diffColor = {
   'Phase 1 Reconstruction': 'var(--accent-primary)',
   'Yearly Reconstruction': 'var(--accent-tertiary)',
   'Today’s Set': 'var(--accent-secondary)',
+  Hardest: '#8a5b62',
 };
 
 function getSubjectIcon(slug) {
