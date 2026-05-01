@@ -95,7 +95,10 @@ function parseRoomParams(search) {
 // Main Component
 export default function BitsatTestPage() {
   const params = useParams();
-  const paper  = getBitsatPaper(params.id);
+
+  // Start with static data (zero loading flash). A useEffect below silently
+  // upgrades with live MongoDB data if the paper exists in the database.
+  const [paper, setPaper] = useState(() => getBitsatPaper(params.id));
   const { questions, duration, correctMarks, wrongMarks, totalMarks } = paper;
 
   const TOTAL_SECS = duration * 60;
@@ -139,6 +142,31 @@ export default function BitsatTestPage() {
       setRoomId(parsedChallenge?.roomId || parseRoomParams(search));
     });
   }, [totalMarks]);
+
+  // Silently upgrade paper from MongoDB (daily_quest or bitsat_papers collection).
+  // Only runs once on mount; only applies while still on the intro screen so a
+  // test already in progress is never disrupted.
+  useEffect(() => {
+    let ignore = false;
+    async function tryMongoPaper() {
+      try {
+        const res = await fetch(`/api/bitsat-paper?id=${encodeURIComponent(params.id)}`);
+        if (!res.ok) return; // 404 → stay with static data
+        const data = await res.json();
+        if (!ignore && data?.paper) {
+          setPaper(data.paper);
+          setTimeLeft((data.paper.duration ?? duration) * 60);
+        }
+      } catch {
+        // network / db error — static data already in place, nothing to do
+      }
+    }
+    // Only fetch during intro; if the user somehow starts the test before the
+    // fetch resolves the phase state will have changed and we bail early.
+    if (phase === 'intro') tryMongoPaper();
+    return () => { ignore = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]); // intentionally only on mount
 
   const submitTest = useCallback(() => {
     clearInterval(timerRef.current);

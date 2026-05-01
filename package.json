@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:daily": "node scripts/seed-mongodb.mjs --daily",
+    "seed:paper": "node scripts/seed-mongodb.mjs --paper",
+    "seed:all": "node scripts/seed-mongodb.mjs --daily --all-papers"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",

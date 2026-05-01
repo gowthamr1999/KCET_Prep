@@ -33,3 +33,4 @@ export default getClientPromise;
 
 export const DB_NAME = 'mock_papers';
 export const DAILY_QUEST_COLLECTION = 'daily_quest';
+export const PAPERS_COLLECTION = 'bitsat_papers';

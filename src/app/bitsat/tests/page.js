@@ -1,9 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { allBitsatPapers, bitsatDailyPapers, bitsatQuestionsLastUpdated, bitsatSubjectWisePapers } from '@/data/bitsatQuestions';
+
+// Static fallback lists (used instantly while MongoDB loads)
+const STATIC_FULL    = allBitsatPapers.filter(p => typeof p.id === 'number' && p.id < 20260000);
+const STATIC_DAILY   = bitsatDailyPapers;
 
 function getPaperTag(id) {
   if (id >= 20260000) return 'Daily';
@@ -53,16 +57,45 @@ function isMemoryPaper(id) {
 
 export default function BitsatTestsPage() {
   const [activeFilter, setActiveFilter] = useState('daily');
+  const [dbPapers, setDbPapers] = useState(null); // null = loading, [] = empty/error
+  const [dbLoading, setDbLoading] = useState(true);
+
+  useEffect(() => {
+    let ignore = false;
+    async function fetchFromMongo() {
+      try {
+        const res = await fetch('/api/bitsat-papers?filter=all');
+        const data = await res.json();
+        if (!ignore && Array.isArray(data?.papers) && data.papers.length > 0) {
+          setDbPapers(data.papers);
+        } else if (!ignore) {
+          setDbPapers(null); // fallback to static
+        }
+      } catch {
+        if (!ignore) setDbPapers(null);
+      } finally {
+        if (!ignore) setDbLoading(false);
+      }
+    }
+    fetchFromMongo();
+    return () => { ignore = true; };
+  }, []);
+
+  // Use MongoDB papers if available, else static fallback
+  const fullPapers  = dbPapers ? dbPapers.filter(p => !p.isDaily) : STATIC_FULL;
+  const dailyPapers = dbPapers ? dbPapers.filter(p => p.isDaily)  : STATIC_DAILY;
+
   const formattedLastUpdated = new Intl.DateTimeFormat('en-IN', {
     dateStyle: 'medium',
     timeStyle: 'short',
     timeZone: 'Asia/Kolkata',
   }).format(new Date(bitsatQuestionsLastUpdated));
+
   const visiblePapers = activeFilter === 'memory'
-    ? allBitsatPapers.filter((paper) => isMemoryPaper(paper.id))
+    ? fullPapers.filter((paper) => isMemoryPaper(paper.id))
     : activeFilter === 'daily'
-      ? bitsatDailyPapers
-    : allBitsatPapers.filter((paper) => typeof paper.id === 'number' && paper.id < 20260000);
+      ? dailyPapers
+      : fullPapers;
 
   return (
     <>
@@ -88,6 +121,9 @@ export default function BitsatTestsPage() {
           </p>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '10px' }}>
             Question bank last updated: <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{formattedLastUpdated} IST</span>
+            {dbLoading && <span style={{ marginLeft: '10px', color: 'var(--text-muted)', fontSize: '0.78rem' }}>⏳ Loading from database…</span>}
+            {!dbLoading && dbPapers && <span style={{ marginLeft: '10px', color: 'var(--accent-secondary)', fontSize: '0.78rem', fontWeight: 700 }}>● Live from MongoDB ({dbPapers.length} papers)</span>}
+            {!dbLoading && !dbPapers && <span style={{ marginLeft: '10px', color: 'var(--text-muted)', fontSize: '0.78rem' }}>· Static data</span>}
           </p>
         </header>
 
