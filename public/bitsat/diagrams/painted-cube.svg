@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="360" viewBox="0 0 500 360" role="img" aria-labelledby="title desc">
+  <title id="title">Painted cube divided into smaller cubes</title>
+  <desc id="desc">A cube with visible faces divided into four parts along each edge.</desc>
+  <rect width="500" height="360" fill="#ffffff"/>
+  <polygon points="130,92 310,92 390,152 210,152" fill="#d7e7ff" stroke="#111111" stroke-width="2"/>
+  <polygon points="130,92 210,152 210,302 130,242" fill="#b9d3ff" stroke="#111111" stroke-width="2"/>
+  <polygon points="210,152 390,152 390,302 210,302" fill="#9fbfff" stroke="#111111" stroke-width="2"/>
+  <g stroke="#111111" stroke-width="1.4">
+    <line x1="175" y1="92" x2="255" y2="152"/><line x1="220" y1="92" x2="300" y2="152"/><line x1="265" y1="92" x2="345" y2="152"/>
+    <line x1="150" y1="107" x2="330" y2="107"/><line x1="170" y1="122" x2="350" y2="122"/><line x1="190" y1="137" x2="370" y2="137"/>
+    <line x1="130" y1="129.5" x2="210" y2="189.5"/><line x1="130" y1="167" x2="210" y2="227"/><line x1="130" y1="204.5" x2="210" y2="264.5"/>
+    <line x1="150" y1="107" x2="150" y2="257"/><line x1="170" y1="122" x2="170" y2="272"/><line x1="190" y1="137" x2="190" y2="287"/>
+    <line x1="255" y1="152" x2="255" y2="302"/><line x1="300" y1="152" x2="300" y2="302"/><line x1="345" y1="152" x2="345" y2="302"/>
+    <line x1="210" y1="189.5" x2="390" y2="189.5"/><line x1="210" y1="227" x2="390" y2="227"/><line x1="210" y1="264.5" x2="390" y2="264.5"/>
+  </g>
+  <text x="142" y="330" font-family="Arial, sans-serif" font-size="20" fill="#111111">All outside faces are painted; each edge is cut into 4 equal parts.</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="260" viewBox="0 0 720 260" role="img" aria-labelledby="title desc">
+  <title id="title">Young double slit diagram</title>
+  <desc id="desc">Two slits separated by d are placed at distance D from a screen where fringe width beta is marked.</desc>
+  <rect width="720" height="260" fill="#ffffff"/>
+  <line x1="116" y1="40" x2="116" y2="220" stroke="#111111" stroke-width="5"/>
+  <rect x="111" y="92" width="10" height="18" fill="#ffffff"/>
+  <rect x="111" y="150" width="10" height="18" fill="#ffffff"/>
+  <text x="86" y="105" font-family="Arial, sans-serif" font-size="18" fill="#111111">S1</text>
+  <text x="86" y="165" font-family="Arial, sans-serif" font-size="18" fill="#111111">S2</text>
+  <line x1="142" y1="101" x2="588" y2="86" stroke="#555555" stroke-width="2"/>
+  <line x1="142" y1="159" x2="588" y2="86" stroke="#555555" stroke-width="2"/>
+  <line x1="142" y1="101" x2="588" y2="129" stroke="#777777" stroke-width="2"/>
+  <line x1="142" y1="159" x2="588" y2="129" stroke="#777777" stroke-width="2"/>
+  <line x1="588" y1="36" x2="588" y2="224" stroke="#111111" stroke-width="5"/>
+  <line x1="608" y1="86" x2="642" y2="86" stroke="#111111" stroke-width="2"/>
+  <line x1="608" y1="129" x2="642" y2="129" stroke="#111111" stroke-width="2"/>
+  <line x1="625" y1="86" x2="625" y2="129" stroke="#111111" stroke-width="2"/>
+  <path d="M625 86 L620 96 M625 86 L630 96 M625 129 L620 119 M625 129 L630 119" stroke="#111111" stroke-width="2" fill="none"/>
+  <text x="650" y="113" font-family="Arial, sans-serif" font-size="20" fill="#111111">beta</text>
+  <line x1="156" y1="101" x2="156" y2="159" stroke="#111111" stroke-width="2"/>
+  <path d="M156 101 L151 111 M156 101 L161 111 M156 159 L151 149 M156 159 L161 149" stroke="#111111" stroke-width="2" fill="none"/>
+  <text x="166" y="136" font-family="Arial, sans-serif" font-size="20" fill="#111111">d</text>
+  <line x1="116" y1="232" x2="588" y2="232" stroke="#111111" stroke-width="2"/>
+  <path d="M116 232 L126 227 M116 232 L126 237 M588 232 L578 227 M588 232 L578 237" stroke="#111111" stroke-width="2" fill="none"/>
+  <text x="344" y="254" font-family="Arial, sans-serif" font-size="20" fill="#111111">D</text>
+</svg>

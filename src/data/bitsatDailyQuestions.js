@@ -1,138 +1,138 @@
-export const bitsatDailyQuestionDate = '2026-04-28';
-export const bitsatDailyPaperId = 20260428;
+export const bitsatDailyQuestionDate = '2026-05-01';
+export const bitsatDailyPaperId = 20260501;
 
 export const bitsatDailyPhysics = [
   {
-    id: 'bdp20260428_1',
+    id: 'bdp20260501_1',
     subject: 'Physics',
-    text: 'A body is thrown vertically upward with speed 30 m/s. Taking g = 10 m/s^2, the time taken to return to the point of projection is:',
-    options: ['3 s', '4 s', '5 s', '6 s'],
-    correct: 3,
-    explanation: 'Time of flight for vertical projection is T = 2u/g = 2 x 30 / 10 = 6 s.'
+    text: 'A projectile is fired with speed 20 m/s at 30 degrees to the horizontal. Taking g = 10 m/s^2, its range is:',
+    options: ['20 sqrt(3) m', '40 sqrt(3) m', '20 m', '40 m'],
+    correct: 0,
+    explanation: 'Range R = u^2 sin 2theta / g = 400 x sin 60 degrees / 10 = 40 x sqrt(3)/2 = 20sqrt(3) m.'
   },
   {
-    id: 'bdp20260428_2',
+    id: 'bdp20260501_2',
     subject: 'Physics',
-    text: 'A 2 ohm and a 4 ohm resistor are connected in parallel across a 12 V battery. The total current drawn is:',
-    options: ['3 A', '6 A', '9 A', '12 A'],
-    correct: 2,
-    explanation: 'Equivalent resistance is (2 x 4)/(2 + 4) = 4/3 ohm. Current I = V/R = 12/(4/3) = 9 A.'
-  },
-  {
-    id: 'bdp20260428_3',
-    subject: 'Physics',
-    text: 'For a simple pendulum of length l, the time period is proportional to:',
-    options: ['l', 'sqrt(l)', '1/l', '1/sqrt(l)'],
+    text: 'A capacitor of capacitance 4 microfarad is charged to 100 V. The energy stored in it is:',
+    options: ['0.01 J', '0.02 J', '0.04 J', '0.08 J'],
     correct: 1,
-    explanation: 'T = 2pi sqrt(l/g), so the time period is proportional to sqrt(l).'
+    explanation: 'Energy U = (1/2)CV^2 = 0.5 x 4 x 10^-6 x 100^2 = 0.02 J.'
+  },
+  {
+    id: 'bdp20260501_3',
+    subject: 'Physics',
+    text: 'For a convex mirror, the image formed of a real object is always:',
+    options: ['Real, inverted, and magnified', 'Virtual, erect, and diminished', 'Real, erect, and diminished', 'Virtual, inverted, and magnified'],
+    correct: 1,
+    explanation: 'A convex mirror always forms a virtual, erect, and diminished image for a real object.'
   },
 ];
 
 export const bitsatDailyChemistry = [
   {
-    id: 'bdc20260428_1',
+    id: 'bdc20260501_1',
     subject: 'Chemistry',
-    text: 'Which element has the highest electronegativity?',
-    options: ['Oxygen', 'Chlorine', 'Fluorine', 'Nitrogen'],
+    text: 'Which of the following has the highest first ionisation enthalpy?',
+    options: ['Na', 'Mg', 'Al', 'Si'],
+    correct: 3,
+    explanation: 'First ionisation enthalpy generally increases across period 3. Although Mg is higher than Al due to a filled 3s subshell, Si is the highest among these options.'
+  },
+  {
+    id: 'bdc20260501_2',
+    subject: 'Chemistry',
+    text: 'For the reaction N2 + 3H2 -> 2NH3, if the rate of disappearance of H2 is 0.06 mol L^-1 s^-1, the rate of formation of NH3 is:',
+    options: ['0.02 mol L^-1 s^-1', '0.03 mol L^-1 s^-1', '0.04 mol L^-1 s^-1', '0.09 mol L^-1 s^-1'],
     correct: 2,
-    explanation: 'Fluorine is the most electronegative element on the Pauling scale.'
+    explanation: 'Rate relation: -(1/3)d[H2]/dt = (1/2)d[NH3]/dt. So d[NH3]/dt = (2/3) x 0.06 = 0.04 mol L^-1 s^-1.'
   },
   {
-    id: 'bdc20260428_2',
+    id: 'bdc20260501_3',
     subject: 'Chemistry',
-    text: 'For an ideal gas, the compressibility factor Z is:',
-    options: ['0', '1', 'greater than 1 always', 'less than 1 always'],
+    text: 'The major product obtained on dehydration of ethanol with concentrated H2SO4 at 443 K is:',
+    options: ['Ethane', 'Ethene', 'Ethanal', 'Diethyl ether'],
     correct: 1,
-    explanation: 'For an ideal gas, PV = nRT, so Z = PV/nRT = 1.'
-  },
-  {
-    id: 'bdc20260428_3',
-    subject: 'Chemistry',
-    text: 'The IUPAC name of CH3COCH3 is:',
-    options: ['Propanal', 'Propanone', 'Ethanone', 'Methoxyethane'],
-    correct: 1,
-    explanation: 'CH3COCH3 is a three-carbon ketone, named propanone.'
+    explanation: 'At 443 K, concentrated H2SO4 dehydrates ethanol mainly to ethene.'
   },
 ];
 
 export const bitsatDailyMath = [
   {
-    id: 'bdm20260428_1',
+    id: 'bdm20260501_1',
     subject: 'Mathematics',
-    text: 'If A = [[1, 2], [0, 3]], then det(A) is:',
-    options: ['1', '2', '3', '6'],
-    correct: 2,
-    explanation: 'For a 2 x 2 matrix, determinant = 1 x 3 - 2 x 0 = 3.'
+    text: 'If f(x) = x^3 - 3x^2 + 2, then f\'(2) is:',
+    options: ['0', '3', '6', '12'],
+    correct: 0,
+    explanation: 'f\'(x) = 3x^2 - 6x. Hence f\'(2) = 12 - 12 = 0.'
   },
   {
-    id: 'bdm20260428_2',
+    id: 'bdm20260501_2',
     subject: 'Mathematics',
-    text: 'The derivative of e^(2x) with respect to x is:',
-    options: ['e^(2x)', '2e^(2x)', 'e^x', '2e^x'],
+    text: 'The value of integral from 0 to 1 of 2x dx is:',
+    options: ['0', '1/2', '1', '2'],
+    correct: 2,
+    explanation: 'Integral of 2x is x^2. From 0 to 1, the value is 1.'
+  },
+  {
+    id: 'bdm20260501_3',
+    subject: 'Mathematics',
+    text: 'If z = 3 + 4i, then |z| is:',
+    options: ['1', '5', '7', '25'],
     correct: 1,
-    explanation: 'By chain rule, d/dx e^(2x) = 2e^(2x).'
+    explanation: '|3 + 4i| = sqrt(3^2 + 4^2) = 5.'
   },
   {
-    id: 'bdm20260428_3',
+    id: 'bdm20260501_4',
     subject: 'Mathematics',
-    text: 'If two dice are thrown, the probability of getting a sum of 7 is:',
-    options: ['1/12', '1/9', '1/6', '1/4'],
-    correct: 2,
-    explanation: 'Favourable outcomes are (1,6), (2,5), (3,4), (4,3), (5,2), (6,1): 6 out of 36, so probability = 1/6.'
-  },
-  {
-    id: 'bdm20260428_4',
-    subject: 'Mathematics',
-    text: 'The distance between the points (1, 2) and (4, 6) is:',
-    options: ['3', '4', '5', '7'],
-    correct: 2,
-    explanation: 'Distance = sqrt((4 - 1)^2 + (6 - 2)^2) = sqrt(9 + 16) = 5.'
+    text: 'The number of ways to arrange the letters of the word LEVEL is:',
+    options: ['20', '30', '60', '120'],
+    correct: 1,
+    explanation: 'LEVEL has 5 letters with L repeated twice and E repeated twice. Arrangements = 5!/(2!2!) = 30.'
   },
 ];
 
 export const bitsatDailyEnglish = [
   {
-    id: 'bde20260428_1',
+    id: 'bde20260501_1',
     subject: 'English',
-    text: 'Choose the correct synonym of "brief":',
-    options: ['Lengthy', 'Short', 'Complex', 'Hidden'],
+    text: 'Choose the word opposite in meaning to "scarce":',
+    options: ['Rare', 'Plentiful', 'Hidden', 'Costly'],
     correct: 1,
-    explanation: 'Brief means short or concise.'
+    explanation: 'Scarce means insufficient or rare; its opposite is plentiful.'
   },
   {
-    id: 'bde20260428_2',
+    id: 'bde20260501_2',
     subject: 'English',
-    text: 'Choose the correctly punctuated sentence:',
-    options: ['However I was late.', 'However, I was late.', 'However I, was late.', 'However; I, was late.'],
+    text: 'Choose the grammatically correct sentence:',
+    options: ['Neither of the answers are correct.', 'Neither of the answers is correct.', 'Neither answers is correct.', 'Neither of answer is correct.'],
     correct: 1,
-    explanation: 'A comma is normally used after introductory however: "However, I was late."'
+    explanation: 'Neither is treated as singular here, so the correct verb is "is".'
   },
 ];
 
 export const bitsatDailyLogic = [
   {
-    id: 'bdl20260428_1',
+    id: 'bdl20260501_1',
     subject: 'Logical Reasoning',
-    text: 'Find the next term in the series: 4, 9, 19, 39, ?',
-    options: ['69', '79', '89', '99'],
-    correct: 1,
-    explanation: 'Each term is previous x 2 + 1: 4, 9, 19, 39, 79.'
+    text: 'Find the next term in the series: 2, 6, 12, 20, 30, ?',
+    options: ['36', '40', '42', '44'],
+    correct: 2,
+    explanation: 'The pattern is n(n+1): 1x2, 2x3, 3x4, 4x5, 5x6, so the next term is 6x7 = 42.'
   },
   {
-    id: 'bdl20260428_2',
+    id: 'bdl20260501_2',
     subject: 'Logical Reasoning',
-    text: 'If SOUTH is coded as TPVUI, then NORTH is coded as:',
-    options: ['OPSUI', 'MPSUI', 'OPTSI', 'OQSVI'],
+    text: 'If BOOK is coded as CPPL, then PAGE is coded as:',
+    options: ['QBHF', 'QBGF', 'OZFD', 'QAHF'],
     correct: 0,
-    explanation: 'Each letter is shifted by +1: N->O, O->P, R->S, T->U, H->I.'
+    explanation: 'Each letter is shifted forward by one: P->Q, A->B, G->H, E->F.'
   },
   {
-    id: 'bdl20260428_3',
+    id: 'bdl20260501_3',
     subject: 'Logical Reasoning',
-    text: 'Riya walks 5 km east, then 3 km north. Her displacement from the starting point is:',
-    options: ['8 km', 'sqrt(34) km', '2 km', '15 km'],
+    text: 'A is the sister of B. B is the father of C. How is A related to C?',
+    options: ['Mother', 'Aunt', 'Sister', 'Grandmother'],
     correct: 1,
-    explanation: 'The path forms a right triangle, so displacement = sqrt(5^2 + 3^2) = sqrt(34) km.'
+    explanation: 'A is the sister of C\'s father, so A is C\'s aunt.'
   },
 ];
 

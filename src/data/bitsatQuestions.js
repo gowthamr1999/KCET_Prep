@@ -16,7 +16,7 @@ import {
   latestBitsatDailyPaper,
 } from './bitsatDailyQuestions.js';
 
-export const bitsatQuestionsLastUpdated = '2026-04-28T00:00:00+09:00';
+export const bitsatQuestionsLastUpdated = '2026-05-01T00:00:00+09:00';
 
 const bitsatPhysicsBase = [
   {
@@ -2932,12 +2932,12 @@ const BITSAT_HIGH_DIFFICULTY_HARD_RATIO = {
   logic: 0.6,
 };
 
-const TODAY_2026_04_28_IDS = {
-  physics: ['bdp20260428_1', 'bdp20260428_2', 'bdp20260428_3', 'bp66', 'bp69'],
-  chemistry: ['bdc20260428_1', 'bdc20260428_2', 'bdc20260428_3', 'bc66', 'bc70'],
-  math: ['bdm20260428_1', 'bdm20260428_2', 'bdm20260428_3', 'bdm20260428_4', 'bm66'],
-  english: ['bde20260428_1', 'bde20260428_2', 'be28'],
-  logic: ['bdl20260428_1', 'bdl20260428_2', 'bdl20260428_3', 'bl33'],
+const TODAY_2026_05_01_IDS = {
+  physics: ['bdp20260501_1', 'bdp20260501_2', 'bdp20260501_3', 'bp66', 'bp69'],
+  chemistry: ['bdc20260501_1', 'bdc20260501_2', 'bdc20260501_3', 'bc66', 'bc70'],
+  math: ['bdm20260501_1', 'bdm20260501_2', 'bdm20260501_3', 'bdm20260501_4', 'bm66'],
+  english: ['bde20260501_1', 'bde20260501_2', 'be28'],
+  logic: ['bdl20260501_1', 'bdl20260501_2', 'bdl20260501_3', 'bl33'],
 };
 
 function buildTodaySection(questions, pinnedIds, keywords, count, hardRatio) {
@@ -3081,7 +3081,7 @@ export function getBitsatPaper(paperId) {
       'rotation', 'optics', 'laws of motion', 'electromagnetism',
     ], 30)
     : isTodayPracticeSet
-      ? buildTodaySection(shuffledPh, TODAY_2026_04_28_IDS.physics, [
+      ? buildTodaySection(shuffledPh, TODAY_2026_05_01_IDS.physics, [
         'kinematics', 'capacitor', 'semiconductor', 'simple pendulum', 'magnetic field',
         'current electricity', 'modern physics', 'optics', 'thermodynamics',
       ], 30, BITSAT_STYLE_HARD_RATIO.physics)
@@ -3104,7 +3104,7 @@ export function getBitsatPaper(paperId) {
       'surface chemistry', 'thermodynamics', 'isomerism', 'coordination', 'goc',
     ], 30)
     : isTodayPracticeSet
-      ? buildTodaySection(shuffledCh, TODAY_2026_04_28_IDS.chemistry, [
+      ? buildTodaySection(shuffledCh, TODAY_2026_05_01_IDS.chemistry, [
         'equilibrium', 'organic', 'coordination', 'colligative', 'periodic',
         'thermodynamics', 'chemical bonding', 'electrochemistry', 'inorganic',
       ], 30, BITSAT_STYLE_HARD_RATIO.chemistry)
@@ -3127,7 +3127,7 @@ export function getBitsatPaper(paperId) {
       '3d', 'coordinate', 'statistics', 'linear programming', 'algebra',
     ], 40)
     : isTodayPracticeSet
-      ? buildTodaySection(shuffledMa, TODAY_2026_04_28_IDS.math, [
+      ? buildTodaySection(shuffledMa, TODAY_2026_05_01_IDS.math, [
         'integration', 'vector', 'permutation', 'matrices', 'ellipse',
         'calculus', 'probability', 'coordinate', '3d', 'algebra',
       ], 40, BITSAT_STYLE_HARD_RATIO.math)
@@ -3149,7 +3149,7 @@ export function getBitsatPaper(paperId) {
       'synonym', 'antonym', 'homophone', 'grammar', 'comprehension',
     ], 10)
     : isTodayPracticeSet
-      ? buildTodaySection(shuffledEn, TODAY_2026_04_28_IDS.english, [
+      ? buildTodaySection(shuffledEn, TODAY_2026_05_01_IDS.english, [
         'synonym', 'grammar', 'hardly', 'sentence', 'comprehension',
       ], 10, BITSAT_STYLE_HARD_RATIO.english)
     : isPhase1Memory
@@ -3169,7 +3169,7 @@ export function getBitsatPaper(paperId) {
       'series', 'venn', 'coding', 'queue', 'clock', 'syllogism', 'mirror',
     ], 20)
     : isTodayPracticeSet
-      ? buildTodaySection(shuffledLo, TODAY_2026_04_28_IDS.logic, [
+      ? buildTodaySection(shuffledLo, TODAY_2026_05_01_IDS.logic, [
         'coding', 'series', 'blood relation', 'syllogism', 'venn', 'clock', 'direction',
       ], 20, BITSAT_STYLE_HARD_RATIO.logic)
     : isPhase1Memory
@@ -3193,7 +3193,7 @@ export function getBitsatPaper(paperId) {
       : id === 11
         ? 'A practice paper shaped around recent shift patterns: lengthy maths, selective chemistry spikes, moderate physics, and scoring English/LR'
         : id === 18
-          ? 'Today’s original BITSAT-style practice set for Session-2 prep, refreshed on April 28, 2026'
+          ? 'Today’s original BITSAT-style practice set for Session-2 prep, refreshed on May 1, 2026'
         : id === 12
           ? 'Public reconstruction set based on discussed BITSAT 2026 Session-1 patterns (not an official released paper)'
           : id >= 13 && id <= 17

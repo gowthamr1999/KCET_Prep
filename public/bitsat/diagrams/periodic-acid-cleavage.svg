@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" role="img" aria-labelledby="title desc">
+  <title id="title">Vicinal diol options</title>
+  <desc id="desc">Four labelled organic structures A, B, C and D for periodic acid cleavage.</desc>
+  <rect width="760" height="420" fill="#ffffff"/>
+  <style>text{font-family:Arial,sans-serif;fill:#111;font-size:22px}.label{font-weight:700;font-size:26px}line{stroke:#111;stroke-width:2.4;stroke-linecap:round}</style>
+  <text class="label" x="34" y="62">A</text><text x="86" y="62">(CH3)3C</text><line x1="190" y1="57" x2="236" y2="57"/><text x="246" y="62">CH</text><line x1="292" y1="57" x2="338" y2="57"/><text x="348" y="62">CH3</text><line x1="168" y1="72" x2="168" y2="112"/><text x="150" y="140">OH</text><line x1="262" y1="72" x2="262" y2="112"/><text x="244" y="140">OH</text>
+  <text class="label" x="418" y="62">B</text><text x="470" y="62">HOCH2</text><line x1="552" y1="57" x2="598" y2="57"/><text x="608" y="62">CH2OH</text>
+  <text class="label" x="34" y="244">C</text><text x="86" y="244">(CH3)2C</text><line x1="188" y1="239" x2="234" y2="239"/><text x="244" y="244">CH2OH</text><line x1="168" y1="254" x2="168" y2="294"/><text x="150" y="322">OH</text>
+  <text class="label" x="418" y="244">D</text><text x="470" y="244">CH3</text><line x1="524" y1="239" x2="570" y2="239"/><text x="580" y="244">CH</text><line x1="624" y1="239" x2="670" y2="239"/><text x="680" y="244">CH</text><line x1="716" y1="239" x2="746" y2="239"/><text x="698" y="278">CH3</text><line x1="596" y1="254" x2="596" y2="294"/><text x="578" y="322">OH</text><line x1="698" y1="254" x2="698" y2="294"/><text x="680" y="322">OH</text>
+</svg>

@@ -1,0 +1,27 @@
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error('Missing MONGODB_URI environment variable. Add it to your .env.local file.');
+}
+
+let client;
+let clientPromise;
+
+if (process.env.NODE_ENV === 'development') {
+  // In development, reuse the client across hot-reloads
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri);
+    global._mongoClientPromise = client.connect();
+  }
+  clientPromise = global._mongoClientPromise;
+} else {
+  client = new MongoClient(uri);
+  clientPromise = client.connect();
+}
+
+export default clientPromise;
+
+export const DB_NAME = 'mock_papers';
+export const DAILY_QUEST_COLLECTION = 'daily_quest';
