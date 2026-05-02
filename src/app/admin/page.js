@@ -69,11 +69,34 @@ function UploadPaperPanel({ password }) {
 
     for (const paper of parsed.papers) {
       try {
-        const res = await fetch('/api/bitsat-paper', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password, ...paper }),
-        });
+        const isDaily = Number(paper.paperId) >= 20260000;
+        let res;
+
+        if (isDaily) {
+          // Convert paperId like 20260502 → "2026-05-02"
+          const pid = String(paper.paperId);
+          const date = `${pid.slice(0, 4)}-${pid.slice(4, 6)}-${pid.slice(6, 8)}`;
+          const questions = paper.questions.map((q) => ({
+            id:          q.id,
+            subject:     q.subject,
+            text:        q.text,
+            options:     q.options,
+            correct:     q.correct,
+            explanation: q.explanation ?? q.solution ?? '',
+          }));
+          res = await fetch('/api/daily-quest', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password, date, questions }),
+          });
+        } else {
+          res = await fetch('/api/bitsat-paper', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password, ...paper }),
+          });
+        }
+
         const data = await res.json();
         if (!res.ok) { lastError = data.error || 'Upload failed'; break; }
         successCount++;
