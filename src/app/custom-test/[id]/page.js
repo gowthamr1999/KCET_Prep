@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { AiPerformancePanel, AiQuestionHelp } from '@/components/AiStudyTools';
 import { getCustomPaperById } from '@/lib/paperParser';
 
 // Helpers
@@ -65,6 +66,7 @@ export default function CustomTestPage() {
   const [phase,       setPhase]      = useState('intro');
   const [answers,     setAnswers]    = useState({});
   const [flagged,     setFlagged]    = useState(new Set());
+  const [invalidated, setInvalidated] = useState(new Set());
   const [current,     setCurrent]    = useState(0);
   const [timeLeft,    setTimeLeft]   = useState(0);
   const [timeTaken,   setTimeTaken]  = useState(0);
@@ -119,24 +121,43 @@ export default function CustomTestPage() {
   );
 
   // Scoring
-  const correct     = questions.filter(q => answers[q.id] === q.correct).length;
-  const wrong       = questions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
-  const unattempted = questions.length - correct - wrong;
+  const scoredQuestions = questions.filter(q => !invalidated.has(q.id));
+  const correct     = scoredQuestions.filter(q => answers[q.id] === q.correct).length;
+  const wrong       = scoredQuestions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
+  const unattempted = scoredQuestions.length - correct - wrong;
   const score       = correct * correctMarks + wrong * wrongMarks;
   const maxScore    = questions.length * correctMarks;
 
   // Section stats
   const sectionStats = sections.map(sec => {
-    const qs = questions.filter(q => q.subject === sec);
+    const qs = questions.filter(q => q.subject === sec && !invalidated.has(q.id));
     const c  = qs.filter(q => answers[q.id] === q.correct).length;
     const w  = qs.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
     return { sec, total: qs.length, correct: c, wrong: w, unattempted: qs.length - c - w,
-             pct: Math.round((c / qs.length) * 100) };
+             pct: qs.length ? Math.round((c / qs.length) * 100) : 0 };
   });
 
-  function handleOption(qId, optIdx) { setAnswers(prev => ({ ...prev, [qId]: optIdx })); }
+  function handleOption(qId, optIdx) {
+    if (invalidated.has(qId)) return;
+    setAnswers(prev => ({ ...prev, [qId]: optIdx }));
+  }
   function clearAnswer(qId)          { setAnswers(prev => { const n = {...prev}; delete n[qId]; return n; }); }
   function toggleFlag(qId)           { setFlagged(prev => { const n = new Set(prev); n.has(qId) ? n.delete(qId) : n.add(qId); return n; }); }
+  function invalidateForAi(qId) {
+    if (!qId) return;
+    setInvalidated(prev => {
+      if (prev.has(qId)) return prev;
+      const next = new Set(prev);
+      next.add(qId);
+      return next;
+    });
+    setAnswers(prev => {
+      if (prev[qId] === undefined) return prev;
+      const next = { ...prev };
+      delete next[qId];
+      return next;
+    });
+  }
   function jumpToSection(sec) {
     const idx = questions.findIndex(q => q.subject === sec);
     if (idx !== -1) { setCurrent(idx); setActiveSection(sec); }
@@ -221,7 +242,7 @@ export default function CustomTestPage() {
           )}
 
           <button className="btn-primary" style={{ width: '100%', fontSize: '1.05rem', padding: '15px' }}
-            onClick={() => { setPhase('test'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            onClick={() => { setInvalidated(new Set()); setPhase('test'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             Begin Test →
           </button>
         </div>
@@ -233,14 +254,30 @@ export default function CustomTestPage() {
   if (phase === 'result') {
     const penalty = wrong * Math.abs(wrongMarks);
     const accuracy = correct + wrong > 0 ? Math.round(correct / (correct + wrong) * 100) : 0;
+    const aiPayload = {
+      examType: paper.examType || 'Custom Mock',
+      paperTitle: paper.title,
+      score,
+      totalMarks: maxScore,
+      correct,
+      wrong,
+      unattempted,
+      timeTaken,
+      sectionStats,
+      questions,
+      answers,
+      invalidatedCount: invalidated.size,
+    };
 
     return (
       <>
         <Navbar />
         <main id="main-content" style={styles.main}>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '24px', textAlign: 'center' }}>
-            Results — <span className="text-gradient">{paper.title}</span>
-          </h1>
+          <div className="ai-result-layout" style={styles.resultLayout}>
+            <section style={styles.resultContent}>
+              <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '24px', textAlign: 'center' }}>
+                Results — <span className="text-gradient">{paper.title}</span>
+              </h1>
 
           {/* Score card */}
           <section aria-label="Score overview" className="glass-panel" style={{ padding: '32px', marginBottom: '20px', textAlign: 'center' }}>
@@ -253,6 +290,7 @@ export default function CustomTestPage() {
                 { label: 'Correct',     value: correct,           color: '#00f5d4' },
                 { label: 'Wrong',       value: wrong,             color: '#ff5a7e' },
                 { label: 'Unattempted', value: unattempted,       color: '#8e8e9f' },
+                { label: 'AI Assisted', value: invalidated.size,  color: '#8a7248' },
                 { label: 'Penalty',     value: `-${penalty}`,     color: wrongMarks < 0 ? '#ff5a7e' : '#8e8e9f' },
                 { label: 'Accuracy',    value: `${accuracy}%`,    color: '#c77dff' },
                 { label: 'Time Taken',  value: formatTime(timeTaken), color: '#fee440' },
@@ -278,8 +316,8 @@ export default function CustomTestPage() {
                       <span style={{ color: m.color, fontWeight: 700 }}>{pct}% correct</span>
                     </div>
                     <div style={{ display: 'flex', height: '8px', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: `${(c / total) * 100}%`, background: '#00f5d4' }} />
-                      <div style={{ width: `${(w / total) * 100}%`, background: '#ff5a7e' }} />
+                      <div style={{ width: `${total ? (c / total) * 100 : 0}%`, background: '#00f5d4' }} />
+                      <div style={{ width: `${total ? (w / total) * 100 : 0}%`, background: '#ff5a7e' }} />
                       <div style={{ flex: 1, background: 'rgba(255,255,255,0.07)' }} />
                     </div>
                     <div style={{ display: 'flex', gap: '16px', marginTop: '4px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -299,14 +337,16 @@ export default function CustomTestPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {questions.map((q, idx) => {
                 const given   = answers[q.id];
+                const isInvalidated = invalidated.has(q.id);
                 const isRight = given === q.correct;
                 const skipped = given === undefined;
                 const m       = sectionMetaMap[q.subject] || PALETTE[0];
                 const borderCol = skipped ? 'rgba(255,255,255,0.07)' : isRight ? 'rgba(0,245,212,0.3)' : 'rgba(255,90,126,0.3)';
                 return (
-                  <article key={q.id} className="glass-panel" style={{ padding: '18px 20px', borderLeft: `3px solid ${borderCol}` }}>
+                  <article key={q.id} className="glass-panel" style={{ padding: '18px 20px', borderLeft: `3px solid ${isInvalidated ? '#8a7248' : borderCol}` }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', flexWrap: 'wrap', gap: '6px' }}>
                       <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700 }}>Q{idx + 1}</span>
+                      {isInvalidated && <span style={{ fontSize: '0.75rem', color: '#8a7248', fontWeight: 800 }}>AI-assisted · excluded</span>}
                       <span style={{ fontSize: '0.75rem', color: m.color, fontWeight: 700, background: m.bg, padding: '2px 10px', borderRadius: '20px' }}>{q.subject}</span>
                     </div>
                     <p style={{ fontWeight: 600, marginBottom: '12px', lineHeight: 1.6 }}>{q.text}</p>
@@ -331,6 +371,7 @@ export default function CustomTestPage() {
                         <strong style={{ color: '#c77dff' }}>Explanation: </strong>{q.explanation}
                       </div>
                     )}
+                    <AiQuestionHelp examType={paper.examType || 'Custom Mock'} question={q} invalidated={isInvalidated} />
                   </article>
                 );
               })}
@@ -339,10 +380,13 @@ export default function CustomTestPage() {
 
           {/* Actions */}
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '32px' }}>
-            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setPhase('intro'); }}>
+            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged(new Set()); setInvalidated(new Set()); setCurrent(0); setTimeLeft(TOTAL_SECS); setPhase('intro'); }}>
               Retake Test
             </button>
             <Link href="/upload"><button className="btn-secondary">My Papers</button></Link>
+          </div>
+            </section>
+            <AiPerformancePanel payload={aiPayload} />
           </div>
         </main>
       </>
@@ -419,6 +463,20 @@ export default function CustomTestPage() {
               <p style={{ fontWeight: 600, lineHeight: 1.8, fontSize: '1rem' }}>{q.text}</p>
             </div>
 
+            <AiQuestionHelp
+              examType={paper.examType || 'Custom Mock'}
+              question={q}
+              label={invalidated.has(q.id) ? 'AI help opened' : 'I do not know this'}
+              adText="Opening AI help during a live test will exclude this question from your score."
+              onHelpOpened={invalidateForAi}
+              invalidated={invalidated.has(q.id)}
+            />
+            {invalidated.has(q.id) && (
+              <div style={{ margin: '12px 0 16px', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(138,114,72,0.32)', background: 'rgba(138,114,72,0.10)', color: '#8a7248', fontSize: '0.86rem', fontWeight: 800 }}>
+                This question is AI-assisted and excluded from scoring.
+              </div>
+            )}
+
             <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
               <legend className="sr-only">Select your answer for question {current + 1}</legend>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -429,10 +487,11 @@ export default function CustomTestPage() {
                       display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '13px 16px',
                       background: selected ? `${meta.color}18` : 'rgba(255,255,255,0.03)',
                       border: `1px solid ${selected ? meta.color : 'rgba(255,255,255,0.08)'}`,
-                      borderRadius: '12px', cursor: 'pointer', transition: 'all 0.15s', lineHeight: 1.6,
+                      borderRadius: '12px', cursor: invalidated.has(q.id) ? 'not-allowed' : 'pointer', transition: 'all 0.15s', lineHeight: 1.6,
+                      opacity: invalidated.has(q.id) ? 0.58 : 1,
                     }}>
                       <input type="radio" name={`q-${q.id}`} value={oi} checked={selected}
-                        onChange={() => handleOption(q.id, oi)} style={{ marginTop: '3px', accentColor: meta.color }} />
+                        onChange={() => handleOption(q.id, oi)} disabled={invalidated.has(q.id)} style={{ marginTop: '3px', accentColor: meta.color }} />
                       <span style={{ fontWeight: 600, color: selected ? meta.color : 'var(--text-muted)', minWidth: '20px' }}>
                         {String.fromCharCode(65 + oi)}.
                       </span>
@@ -477,6 +536,7 @@ export default function CustomTestPage() {
                 { col: '#00f5d4',                 label: 'Answered' },
                 { col: 'rgba(255,255,255,0.08)',  label: 'Not yet'  },
                 { col: '#fee440',                 label: 'Flagged'  },
+                { col: '#8a7248',                 label: 'AI'       },
               ].map(({ col, label }) => (
                 <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.67rem', color: 'var(--text-muted)' }}>
                   <div style={{ width: '10px', height: '10px', background: col, borderRadius: '2px' }} aria-hidden="true" />
@@ -500,13 +560,15 @@ export default function CustomTestPage() {
                       const isCurrent  = idx === current;
                       const isAnswered = answers[id] !== undefined;
                       const isFlagged  = flagged.has(id);
+                      const isInvalidated = invalidated.has(id);
                       let bg = 'rgba(255,255,255,0.06)', border = 'rgba(255,255,255,0.1)', col = 'var(--text-muted)';
                       if (isCurrent)       { bg = m.color; border = m.color; col = '#fff'; }
+                      else if (isInvalidated) { bg = 'rgba(138,114,72,0.18)'; border = '#8a7248'; col = '#8a7248'; }
                       else if (isFlagged)  { bg = 'rgba(254,228,64,0.15)'; border = '#fee440'; col = '#fee440'; }
                       else if (isAnswered) { bg = 'rgba(0,245,212,0.15)'; border = '#00f5d4'; col = '#00f5d4'; }
                       return (
                         <button key={id} onClick={() => { setCurrent(idx); setActiveSection(sec); }}
-                          aria-label={`Q${idx+1}${isFlagged?' (flagged)':''}${isAnswered?' (answered)':''}`}
+                          aria-label={`Q${idx+1}${isInvalidated?' (AI-assisted)':''}${isFlagged?' (flagged)':''}${isAnswered?' (answered)':''}`}
                           aria-current={isCurrent ? 'true' : undefined}
                           style={{ width: '30px', height: '30px', borderRadius: '6px', background: bg, border: `1px solid ${border}`, color: col, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
                           {idx + 1}
@@ -523,7 +585,7 @@ export default function CustomTestPage() {
               <div style={styles.miniHeading}>Live Score</div>
               <div style={{ fontWeight: 800, fontSize: '1.05rem', color: score >= 0 ? '#00f5d4' : '#ff5a7e' }}>{score} / {maxScore}</div>
               <div style={{ color: 'var(--text-muted)', marginTop: '4px' }}>
-                {correct} correct · {wrong} wrong
+                {correct} correct · {wrong} wrong · {invalidated.size} AI-assisted
               </div>
             </div>
           </aside>
@@ -534,7 +596,9 @@ export default function CustomTestPage() {
 }
 
 const styles = {
-  main:       { padding: '20px 40px 60px', maxWidth: '900px', margin: '0 auto' },
+  main:       { padding: '20px 40px 60px', maxWidth: '1240px', margin: '0 auto' },
+  resultLayout: { display: 'flex', alignItems: 'flex-start', gap: '24px' },
+  resultContent: { flex: 1, minWidth: 0 },
   breadcrumb: { display: 'flex', gap: '8px', alignItems: 'center', listStyle: 'none', fontSize: '0.82rem', marginBottom: '14px' },
   breadLink:  { color: 'var(--accent-secondary)', textDecoration: 'none' },
   statBox:    { padding: '12px 14px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)', textAlign: 'center' },

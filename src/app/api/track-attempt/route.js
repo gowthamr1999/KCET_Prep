@@ -6,21 +6,30 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+function toNumber(value, fallback = Number.NaN) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
     const { paperId, paperName, score, totalMarks, timeTaken, examType, candidateName } = body;
+    const numericPaperId = toNumber(paperId);
+    const numericScore = toNumber(score);
+    const numericTotalMarks = toNumber(totalMarks);
+    const numericTimeTaken = toNumber(timeTaken, null);
 
-    if (typeof paperId !== 'number' || typeof score !== 'number' || typeof totalMarks !== 'number') {
+    if (!Number.isFinite(numericPaperId) || !Number.isFinite(numericScore) || !Number.isFinite(numericTotalMarks)) {
       return Response.json({ error: 'Invalid payload' }, { status: 400 });
     }
 
     const baseInsertRow = {
-      paper_id: paperId,
+      paper_id: numericPaperId,
       paper_name: paperName ?? null,
-      score,
-      total_marks: totalMarks,
-      time_taken_seconds: timeTaken ?? null,
+      score: numericScore,
+      total_marks: numericTotalMarks,
+      time_taken_seconds: numericTimeTaken,
       exam_type: examType ?? 'kcet',
     };
 

@@ -27,6 +27,7 @@ const NAV_GROUPS = [
 const NAV_DIRECT = [
   { href: '/rooms', label: 'Create Room' },
   { href: '/upload', label: '📤 Upload Paper' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {

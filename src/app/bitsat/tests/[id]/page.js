@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { AiPerformancePanel, AiQuestionHelp } from '@/components/AiStudyTools';
 import { getBitsatPaper, bitsatRankBands } from '@/data/bitsatQuestions';
 
 function safeNumber(value, fallback = 0) {
@@ -99,13 +100,22 @@ export default function BitsatTestPage() {
   // Start with static data (zero loading flash). A useEffect below silently
   // upgrades with live MongoDB data if the paper exists in the database.
   const [paper, setPaper] = useState(() => getBitsatPaper(params.id));
-  const { questions, duration, correctMarks, wrongMarks, totalMarks } = paper;
+  const questions = useMemo(() => (
+    Array.isArray(paper.questions) ? paper.questions : []
+  ), [paper.questions]);
+  const duration = Number.isFinite(Number(paper.duration)) ? Number(paper.duration) : 180;
+  const correctMarks = Number.isFinite(Number(paper.correctMarks)) ? Number(paper.correctMarks) : 3;
+  const wrongMarks = Number.isFinite(Number(paper.wrongMarks)) ? Number(paper.wrongMarks) : -1;
+  const totalMarks = Number.isFinite(Number(paper.totalMarks))
+    ? Number(paper.totalMarks)
+    : questions.length * correctMarks;
 
   const TOTAL_SECS = duration * 60;
 
   const [phase,     setPhase]    = useState('intro');  // 'intro' | 'test' | 'result'
   const [answers,   setAnswers]  = useState({});        // { qId: optionIndex }
   const [flagged,   setFlagged]  = useState(new Set());
+  const [invalidated, setInvalidated] = useState(new Set());
   const [current,   setCurrent]  = useState(0);
   const [timeLeft,  setTimeLeft] = useState(TOTAL_SECS);
   const [timeTaken, setTimeTaken]= useState(0);
@@ -194,8 +204,9 @@ export default function BitsatTestPage() {
       return;
     }
 
-    const targetScore = questions.filter(q => answers[q.id] === q.correct).length * correctMarks
-      + questions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length * wrongMarks;
+    const scoredQuestions = questions.filter(q => !invalidated.has(q.id));
+    const targetScore = scoredQuestions.filter(q => answers[q.id] === q.correct).length * correctMarks
+      + scoredQuestions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length * wrongMarks;
 
     const durationMs = 700;
     const startTime = performance.now();
@@ -219,7 +230,7 @@ export default function BitsatTestPage() {
         window.cancelAnimationFrame(frameId);
       }
     };
-  }, [phase, answers, correctMarks, wrongMarks, questions]);
+  }, [phase, answers, correctMarks, wrongMarks, questions, invalidated]);
 
   useEffect(() => {
     if (phase !== 'result' || isSavedResult || hasSyncedResultRef.current) return;
@@ -233,11 +244,12 @@ export default function BitsatTestPage() {
         setIsSyncingInsight(true);
         setInsightError('');
 
-        const correctNow = questions.filter(q => answers[q.id] === q.correct).length;
-        const wrongNow = questions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
+        const scoredQuestionsNow = questions.filter(q => !invalidated.has(q.id));
+        const correctNow = scoredQuestionsNow.filter(q => answers[q.id] === q.correct).length;
+        const wrongNow = scoredQuestionsNow.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
         const scoreNow = correctNow * correctMarks + wrongNow * wrongMarks;
         const sectionStatsNow = sections.map(sec => {
-          const qs = questions.filter(q => q.subject === sec);
+          const qs = questions.filter(q => q.subject === sec && !invalidated.has(q.id));
           const c = qs.filter(q => answers[q.id] === q.correct).length;
           const w = qs.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
           const u = qs.length - c - w;
@@ -247,7 +259,7 @@ export default function BitsatTestPage() {
             correct: c,
             wrong: w,
             unattempted: u,
-            pct: Math.round((c / qs.length) * 100),
+            pct: qs.length ? Math.round((c / qs.length) * 100) : 0,
           };
         });
 
@@ -263,6 +275,7 @@ export default function BitsatTestPage() {
             timeTaken,
             roomId,
             sectionStats: sectionStatsNow,
+            invalidatedCount: invalidated.size,
           }),
         });
 
@@ -338,12 +351,14 @@ export default function BitsatTestPage() {
     sections,
     userName,
     roomId,
+    invalidated,
   ]);
 
   // Scoring
-  const correct    = questions.filter(q => answers[q.id] === q.correct).length;
-  const wrong      = questions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
-  const unattempted = questions.length - correct - wrong;
+  const scoredQuestions = questions.filter(q => !invalidated.has(q.id));
+  const correct    = scoredQuestions.filter(q => answers[q.id] === q.correct).length;
+  const wrong      = scoredQuestions.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
+  const unattempted = scoredQuestions.length - correct - wrong;
   const score      = correct * correctMarks + wrong * wrongMarks;   // +3/−1
 
   const challengeOutcome = challenge
@@ -380,6 +395,7 @@ export default function BitsatTestPage() {
   function resetTest() {
     setAnswers({});
     setFlagged(new Set());
+    setInvalidated(new Set());
     setCurrent(0);
     setTimeLeft(TOTAL_SECS);
     setIsPaused(false);
@@ -401,12 +417,12 @@ export default function BitsatTestPage() {
 
   // Section-wise breakdown
   const sectionStats = sections.map(sec => {
-    const qs = questions.filter(q => q.subject === sec);
+    const qs = questions.filter(q => q.subject === sec && !invalidated.has(q.id));
     const c  = qs.filter(q => answers[q.id] === q.correct).length;
     const w  = qs.filter(q => answers[q.id] !== undefined && answers[q.id] !== q.correct).length;
     const u  = qs.length - c - w;
     return { sec, total: qs.length, correct: c, wrong: w, unattempted: u,
-             pct: Math.round((c / qs.length) * 100) };
+             pct: qs.length ? Math.round((c / qs.length) * 100) : 0 };
   });
 
   // Navigation helpers
@@ -418,6 +434,7 @@ export default function BitsatTestPage() {
 
   function handleOption(qId, optIdx) {
     if (isPaused) return;
+    if (invalidated.has(qId)) return;
     setAnswers(prev => ({ ...prev, [qId]: optIdx }));
   }
   function clearAnswer(qId) {
@@ -430,6 +447,21 @@ export default function BitsatTestPage() {
       const n = new Set(prev);
       n.has(qId) ? n.delete(qId) : n.add(qId);
       return n;
+    });
+  }
+  function invalidateForAi(qId) {
+    if (!qId) return;
+    setInvalidated(prev => {
+      if (prev.has(qId)) return prev;
+      const next = new Set(prev);
+      next.add(qId);
+      return next;
+    });
+    setAnswers(prev => {
+      if (prev[qId] === undefined) return prev;
+      const next = { ...prev };
+      delete next[qId];
+      return next;
     });
   }
 
@@ -559,6 +591,7 @@ export default function BitsatTestPage() {
               setDisplayScore(0);
               setShareStatus('');
               setShowReview(false);
+              setInvalidated(new Set());
               setLeaderboard([]);
               setLeaderboardError('');
               setRoomLeaderboard([]);
@@ -578,17 +611,33 @@ export default function BitsatTestPage() {
   if (phase === 'result') {
     const rankPred = predictRank(score);
     const penalty  = wrong * Math.abs(wrongMarks);
+    const aiPayload = {
+      examType: 'BITSAT',
+      paperTitle: paper.title,
+      score,
+      totalMarks,
+      correct,
+      wrong,
+      unattempted,
+      timeTaken,
+      sectionStats,
+      questions,
+      answers,
+      invalidatedCount: invalidated.size,
+    };
 
     return (
       <>
         <Navbar />
         <main id="main-content" style={styles.main}>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '24px', textAlign: 'center' }}>
-            Test Results — <span className="text-gradient">{paper.title}</span>
-          </h1>
-          <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '16px' }}>
-            Candidate: <span style={{ color: '#fff', fontWeight: 700 }}>{userName || 'Anonymous'}</span>
-          </p>
+          <div className="ai-result-layout" style={styles.resultLayout}>
+            <section style={styles.resultContent}>
+              <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '24px', textAlign: 'center' }}>
+                Test Results — <span className="text-gradient">{paper.title}</span>
+              </h1>
+              <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '16px' }}>
+                Candidate: <span style={{ color: '#fff', fontWeight: 700 }}>{userName || 'Anonymous'}</span>
+              </p>
 
           {/* Score card */}
           <section aria-label="Score overview" className="glass-panel animate-fade-in-up" style={{ padding: '32px', marginBottom: '20px', textAlign: 'center' }}>
@@ -603,6 +652,7 @@ export default function BitsatTestPage() {
                 { label: 'Correct',      value: correct,         color: '#9cb4ab' },
                 { label: 'Wrong',        value: wrong,           color: '#a77f85' },
                 { label: 'Unattempted',  value: unattempted,     color: '#8e8e9f' },
+                { label: 'AI Assisted',  value: invalidated.size, color: '#8a7248' },
                 { label: 'Penalty',      value: `-${penalty}`,   color: '#a77f85' },
                 { label: 'Accuracy',     value: `${correct + wrong > 0 ? Math.round(correct / (correct + wrong) * 100) : 0}%`, color: '#a5a0b2' },
                 { label: 'Time Taken',   value: formatTime(timeTaken), color: '#b5a98a' },
@@ -793,12 +843,12 @@ export default function BitsatTestPage() {
                 return (
                   <div key={sec}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', fontSize: '0.9rem' }}>
-                      <span style={{ fontWeight: 700 }}>{sec} <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>({total} Qs)</span></span>
+                      <span style={{ fontWeight: 700 }}>{sec} <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>({total} scored Qs)</span></span>
                       <span style={{ color: m.color, fontWeight: 700 }}>{pct}% accuracy</span>
                     </div>
                     <div style={{ display: 'flex', height: '8px', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: `${(c / total) * 100}%`, background: '#9cb4ab', transition: 'width 0.45s ease' }} title={`Correct: ${c}`} />
-                      <div style={{ width: `${(w / total) * 100}%`, background: '#a77f85', transition: 'width 0.45s ease' }} title={`Wrong: ${w}`} />
+                      <div style={{ width: `${total ? (c / total) * 100 : 0}%`, background: '#9cb4ab', transition: 'width 0.45s ease' }} title={`Correct: ${c}`} />
+                      <div style={{ width: `${total ? (w / total) * 100 : 0}%`, background: '#a77f85', transition: 'width 0.45s ease' }} title={`Wrong: ${w}`} />
                       <div style={{ flex: 1, background: 'rgba(255,255,255,0.07)' }} title={`Unattempted: ${u}`} />
                     </div>
                     <div style={{ display: 'flex', gap: '16px', marginTop: '4px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -831,15 +881,17 @@ export default function BitsatTestPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {questions.map((q, idx) => {
                   const given   = answers[q.id];
+                  const isInvalidated = invalidated.has(q.id);
                   const correct = given === q.correct;
                   const skipped = given === undefined;
                   const m       = SECTION_META[q.subject] || { color: '#fff' };
                   const borderCol = skipped ? 'rgba(255,255,255,0.08)' : correct ? 'rgba(0,245,212,0.3)' : 'rgba(255,90,126,0.3)';
                   return (
-                    <article key={q.id} className="glass-panel" style={{ padding: '20px', borderLeft: `3px solid ${borderCol}` }}
-                      aria-label={`Question ${idx + 1}: ${skipped ? 'skipped' : correct ? 'correct' : 'incorrect'}`}>
+                    <article key={q.id} className="glass-panel" style={{ padding: '20px', borderLeft: `3px solid ${isInvalidated ? '#8a7248' : borderCol}` }}
+                      aria-label={`Question ${idx + 1}: ${isInvalidated ? 'AI assisted' : skipped ? 'skipped' : correct ? 'correct' : 'incorrect'}`}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', flexWrap: 'wrap', gap: '6px' }}>
                         <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700 }}>Q{idx + 1}</span>
+                        {isInvalidated && <span style={{ fontSize: '0.75rem', color: '#8a7248', fontWeight: 800 }}>AI-assisted · excluded</span>}
                         <span style={{ fontSize: '0.75rem', color: m.color, fontWeight: 700, background: m.bg, padding: '2px 10px', borderRadius: '20px' }}>{q.subject}</span>
                       </div>
                       <p style={{ fontWeight: 600, marginBottom: '14px', lineHeight: 1.6 }}>{q.text}</p>
@@ -866,12 +918,16 @@ export default function BitsatTestPage() {
                           <strong style={{ color: '#a5a0b2' }}>Explanation: </strong>{q.explanation}
                         </div>
                       )}
+                      <AiQuestionHelp examType="BITSAT" question={q} invalidated={isInvalidated} />
                     </article>
                   );
                 })}
               </div>
             )}
           </section>
+            </section>
+            <AiPerformancePanel payload={aiPayload} />
+          </div>
         </main>
       </>
     );
@@ -973,6 +1029,20 @@ export default function BitsatTestPage() {
               <p style={{ fontWeight: 700, lineHeight: 1.75, fontSize: '1.35rem', color: 'var(--text-main)', letterSpacing: '-0.01em' }}>{q.text}</p>
             </div>
 
+            <AiQuestionHelp
+              examType="BITSAT"
+              question={q}
+              label={invalidated.has(q.id) ? 'AI help opened' : 'I do not know this'}
+              adText="Opening AI help during a live test will exclude this question from your score."
+              onHelpOpened={invalidateForAi}
+              invalidated={invalidated.has(q.id)}
+            />
+            {invalidated.has(q.id) && (
+              <div style={{ margin: '12px 0 16px', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(138,114,72,0.32)', background: 'rgba(138,114,72,0.10)', color: '#8a7248', fontSize: '0.86rem', fontWeight: 800 }}>
+                This question is AI-assisted and excluded from scoring.
+              </div>
+            )}
+
             {/* Options */}
             <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
               <legend className="sr-only">Select your answer for question {current + 1}</legend>
@@ -984,11 +1054,12 @@ export default function BitsatTestPage() {
                       display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '14px 18px',
                       background: selected ? `${meta.color}18` : 'var(--surface-soft)',
                       border: `1px solid ${selected ? meta.color : 'var(--surface-border)'}`,
-                      borderRadius: '12px', cursor: 'pointer', transition: 'all 0.15s', lineHeight: 1.6,
+                      borderRadius: '12px', cursor: invalidated.has(q.id) ? 'not-allowed' : 'pointer', transition: 'all 0.15s', lineHeight: 1.6,
+                      opacity: invalidated.has(q.id) ? 0.58 : 1,
                     }}>
                       <input type="radio" name={`q-${q.id}`} value={oi} checked={selected}
                         onChange={() => handleOption(q.id, oi)}
-                        disabled={isPaused}
+                        disabled={isPaused || invalidated.has(q.id)}
                         style={{ marginTop: '3px', accentColor: meta.color }} />
                       <span style={{ fontWeight: 700, color: selected ? meta.color : 'var(--text-main)', minWidth: '24px', fontSize: '1rem' }}>
                         {String.fromCharCode(65 + oi)}.
@@ -1005,13 +1076,13 @@ export default function BitsatTestPage() {
               <button onClick={() => toggleFlag(q.id)}
                 aria-pressed={flagged.has(q.id)}
                 aria-label={flagged.has(q.id) ? 'Unflag question' : 'Flag for review'}
-                disabled={isPaused}
+                disabled={isPaused || invalidated.has(q.id)}
                 style={{ ...styles.controlBtn, color: flagged.has(q.id) ? '#8a7248' : 'var(--text-main)', borderColor: flagged.has(q.id) ? '#8a7248' : 'var(--surface-border-strong)' }}>
                 {flagged.has(q.id) ? '🚩 Flagged' : '⚑ Flag'}
               </button>
               {answers[q.id] !== undefined && (
                 <button onClick={() => clearAnswer(q.id)} aria-label="Clear answer"
-                  disabled={isPaused}
+                  disabled={isPaused || invalidated.has(q.id)}
                   style={{ ...styles.controlBtn, color: '#8a5b62', borderColor: 'rgba(138,91,98,0.26)' }}>
                   ✕ Clear
                 </button>
@@ -1056,6 +1127,7 @@ export default function BitsatTestPage() {
                 { color: '#517567',                        label: 'Answered' },
                 { color: 'rgba(31,35,40,0.16)',            label: 'Not visited' },
                 { color: '#8a7248',                        label: 'Flagged' },
+                { color: 'rgba(138,114,72,0.32)',          label: 'AI-assisted' },
               ].map(({ color, label }) => (
                 <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', color: 'var(--text-main)' }}>
                   <div style={{ width: '10px', height: '10px', background: color, borderRadius: '2px' }} aria-hidden="true" />
@@ -1078,16 +1150,18 @@ export default function BitsatTestPage() {
                       const isCurrent  = idx === current;
                       const isAnswered = answers[id] !== undefined;
                       const isFlagged  = flagged.has(id);
+                      const isInvalidated = invalidated.has(id);
                       let bg     = 'var(--surface-soft)';
                       let border = 'var(--surface-border)';
                       let color  = 'var(--text-main)';
                       if (isCurrent)  { bg = m.color; border = m.color; color = '#fff'; }
+                      else if (isInvalidated) { bg = 'rgba(138,114,72,0.18)'; border = '#8a7248'; color = '#8a7248'; }
                       else if (isFlagged) { bg = 'rgba(138,114,72,0.14)'; border = '#8a7248'; color = '#8a7248'; }
                       else if (isAnswered) { bg = 'rgba(81,117,103,0.14)'; border = '#517567'; color = '#517567'; }
                       return (
                         <button key={id} onClick={() => { if (!isPaused) { setCurrent(idx); setActiveSection(sec); } }}
                           disabled={isPaused}
-                          aria-label={`Go to question ${idx + 1}${isFlagged ? ' (flagged)' : ''}${isAnswered ? ' (answered)' : ''}`}
+                          aria-label={`Go to question ${idx + 1}${isInvalidated ? ' (AI-assisted)' : ''}${isFlagged ? ' (flagged)' : ''}${isAnswered ? ' (answered)' : ''}`}
                           aria-current={isCurrent ? 'true' : undefined}
                           style={{ width: '30px', height: '30px', borderRadius: '6px', background: bg, border: `1px solid ${border}`, color, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
                           {idx + 1}
@@ -1104,7 +1178,7 @@ export default function BitsatTestPage() {
               <div style={{ color: 'var(--text-main)', marginBottom: '6px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Live Score</div>
               <div style={{ fontWeight: 800, fontSize: '1.2rem', color: score >= 0 ? '#517567' : '#8a5b62' }}>{score} / {totalMarks}</div>
               <div style={{ color: 'var(--text-main)', marginTop: '4px' }}>
-                {correct} correct · {wrong} wrong · −{wrong * Math.abs(wrongMarks)} pts
+                {correct} correct · {wrong} wrong · {invalidated.size} AI-assisted
               </div>
             </div>
           </aside>
@@ -1115,7 +1189,9 @@ export default function BitsatTestPage() {
 }
 
 const styles = {
-  main: { padding: '20px 40px 60px', maxWidth: '900px', margin: '0 auto' },
+  main: { padding: '20px 40px 60px', maxWidth: '1240px', margin: '0 auto' },
+  resultLayout: { display: 'flex', alignItems: 'flex-start', gap: '24px' },
+  resultContent: { flex: 1, minWidth: 0 },
   statBox: { padding: '12px 16px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)', textAlign: 'center' },
   predBox: { padding: '14px 18px', background: 'var(--surface-soft)', borderRadius: '10px', border: '1px solid var(--surface-border)' },
   resultActions: {

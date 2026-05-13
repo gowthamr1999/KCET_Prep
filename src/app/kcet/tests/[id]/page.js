@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { AiPerformancePanel, AiQuestionHelp } from '@/components/AiStudyTools';
 import { getKcetPaper } from '@/data/kcetQuestions';
 import { estimateKcetRank, kcetResearchSignals } from '@/lib/kcetPredictor';
 import { getScoreHistory, getStanding, saveAttempt } from '@/lib/kcetScoreHistory';
@@ -39,6 +40,7 @@ export default function KcetTestPage() {
   const [current, setCurrent]   = useState(0);
   const [answers, setAnswers]   = useState({});       // { questionId: optionIndex }
   const [flagged, setFlagged]   = useState({});       // { questionId: bool }
+  const [invalidated, setInvalidated] = useState(new Set());
   const [timeTaken, setTimeTaken] = useState(0);
   const [rankEstimate, setRankEstimate] = useState(null);
   const [history, setHistory] = useState(() => getScoreHistory());
@@ -67,6 +69,7 @@ export default function KcetTestPage() {
 
   const handleSelect = (qId, optIdx) => {
     if (phase !== 'test') return;
+    if (invalidated.has(qId)) return;
     const qSubject = questions.find(q => q.id === qId)?.subject;
     if (qSubject !== activeSubject) return;
     if (lockedSubjects.has(qSubject)) return; // time up for this subject
@@ -132,6 +135,7 @@ export default function KcetTestPage() {
     let correct = 0, wrong = 0, unattempted = 0;
     const perSubject = {};
     questions.forEach(q => {
+      if (invalidated.has(q.id)) return;
       const sub = q.subject;
       if (!perSubject[sub]) perSubject[sub] = { correct: 0, wrong: 0, total: 0 };
       perSubject[sub].total++;
@@ -150,7 +154,7 @@ export default function KcetTestPage() {
     async function finalizeResult() {
       let correct = 0;
       questions.forEach(q => {
-        if (answers[q.id] === q.correct) correct++;
+        if (!invalidated.has(q.id) && answers[q.id] === q.correct) correct++;
       });
       const score = correct;
       const kcetEquivalent = (score / paper.totalMarks) * 180;
@@ -210,7 +214,7 @@ export default function KcetTestPage() {
     return () => {
       ignore = true;
     };
-  }, [phase, isSavedResult, paper.id, paper.totalMarks, paper.name, timeTaken, userName, questions, answers]);
+  }, [phase, isSavedResult, paper.id, paper.totalMarks, paper.name, timeTaken, userName, questions, answers, invalidated]);
 
   // Intro screen
   if (phase === 'intro') {
@@ -302,6 +306,7 @@ export default function KcetTestPage() {
                 }
                 setAnswers({});
                 setFlagged({});
+                setInvalidated(new Set());
                 setCurrent(questions.findIndex(q => q.subject === subjects[0]));
                 setTimeTaken(0);
                 setSubjectTimers(Object.fromEntries(subjects.map(s => [s, SUBJECT_DURATION])));
@@ -335,18 +340,45 @@ export default function KcetTestPage() {
     });
     const effectiveEstimate = rankEstimate || fallbackEstimate;
     const effectiveStanding = standing || getStanding(history, score);
+    const sectionStats = subjects.map((sub) => {
+      const data = perSubject[sub] || { correct: 0, wrong: 0, total: 0 };
+      return {
+        sec: sub,
+        total: data.total,
+        correct: data.correct,
+        wrong: data.wrong,
+        unattempted: data.total - data.correct - data.wrong,
+        pct: data.total ? Math.round((data.correct / data.total) * 100) : 0,
+      };
+    });
+    const aiPayload = {
+      examType: 'KCET',
+      paperTitle: paper.title,
+      score,
+      totalMarks: paper.totalMarks,
+      correct,
+      wrong,
+        unattempted,
+        timeTaken,
+        sectionStats,
+        questions,
+        answers,
+        invalidatedCount: invalidated.size,
+      };
 
     return (
       <>
         <Navbar />
-        <main style={{ padding: '20px 40px 60px', maxWidth: '1100px', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '8px' }}>
-            Test <span className="text-gradient">Results</span>
-          </h1>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>{paper.title}</p>
-          <p style={{ color: 'var(--text-muted)', marginTop: '-20px', marginBottom: '22px' }}>
-            Candidate: <span style={{ color: '#fff', fontWeight: 700 }}>{userName || 'Anonymous'}</span>
-          </p>
+        <main style={{ padding: '20px 40px 60px', maxWidth: '1240px', margin: '0 auto' }}>
+          <div className="ai-result-layout" style={styles.resultLayout}>
+            <section style={styles.resultContent}>
+              <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '8px' }}>
+                Test <span className="text-gradient">Results</span>
+              </h1>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>{paper.title}</p>
+              <p style={{ color: 'var(--text-muted)', marginTop: '-20px', marginBottom: '22px' }}>
+                Candidate: <span style={{ color: '#fff', fontWeight: 700 }}>{userName || 'Anonymous'}</span>
+              </p>
 
           {/* Score Overview */}
           <div style={styles.resultGrid}>
@@ -360,6 +392,7 @@ export default function KcetTestPage() {
                 ['✅ Correct', correct, '#9cb4ab'],
                 ['❌ Wrong', wrong, '#a77f85'],
                 ['⬜ Unattempted', unattempted, '#8e8e9f'],
+                ['AI Assisted', invalidated.size, '#8a7248'],
                 ['⏱ Time Taken', `${formatTime(timeTaken)}`, '#b5a98a'],
               ].map(([label, val, color]) => (
                 <div key={label} className="glass-panel" style={{ ...styles.statRow, borderLeft: `3px solid ${color}` }}>
@@ -439,7 +472,7 @@ export default function KcetTestPage() {
                     <div style={styles.subStat}><span style={{ color: 'var(--text-muted)' }}>Accuracy</span><span style={{ color: 'var(--accent-secondary)', fontWeight: 700 }}>{accuracy}%</span></div>
                   </div>
                   <div style={{ marginTop: '16px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', height: '8px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${(data.correct / data.total) * 100}%`, background: c.text, borderRadius: '8px', transition: 'width 0.6s ease' }} />
+                    <div style={{ height: '100%', width: `${data.total ? (data.correct / data.total) * 100 : 0}%`, background: c.text, borderRadius: '8px', transition: 'width 0.6s ease' }} />
                   </div>
                 </div>
               );
@@ -451,15 +484,17 @@ export default function KcetTestPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {questions.map((q, idx) => {
               const userAns = answers[q.id];
+              const isInvalidated = invalidated.has(q.id);
               const isCorrect = userAns === q.correct;
               const isAttempted = userAns !== undefined;
               const borderColor = !isAttempted ? '#8e8e9f' : isCorrect ? '#9cb4ab' : '#a77f85';
               return (
-                <div key={q.id} className="glass-panel" style={{ padding: '20px', borderLeft: `3px solid ${borderColor}` }}>
+                <div key={q.id} className="glass-panel" style={{ padding: '20px', borderLeft: `3px solid ${isInvalidated ? '#8a7248' : borderColor}` }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <span style={{ fontSize: '0.8rem', fontWeight: 600, color: subjectColor(q.subject).text }}>
                       Q{idx + 1} · {q.subject}
                     </span>
+                    {isInvalidated && <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#8a7248' }}>AI-assisted · excluded</span>}
                     <span style={{ fontSize: '0.8rem', fontWeight: 700, color: !isAttempted ? '#8e8e9f' : isCorrect ? '#9cb4ab' : '#a77f85' }}>
                       {!isAttempted ? 'Skipped' : isCorrect ? '+1 ✓' : '0 ✗'}
                     </span>
@@ -486,6 +521,7 @@ export default function KcetTestPage() {
                       💡 {q.explanation}
                     </div>
                   )}
+                  <AiQuestionHelp examType="KCET" question={q} invalidated={isInvalidated} />
                 </div>
               );
             })}
@@ -493,10 +529,13 @@ export default function KcetTestPage() {
 
           <div style={{ display: 'flex', gap: '16px', marginTop: '32px', justifyContent: 'center' }}>
             <Link href="/kcet/tests"><button className="btn-secondary">← All Tests</button></Link>
-            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged({}); setCurrent(0); setTimeTaken(0); setSubjectTimers(Object.fromEntries(subjects.map(s => [s, SUBJECT_DURATION]))); setLockedSubjects(new Set()); setActiveSubjectIndex(0); setRankEstimate(null); setStanding(null); setLeaderboard([]); setLeaderboardError(''); setIsSavedResult(false); setPhase('intro'); }}>
+            <button className="btn-primary" onClick={() => { setAnswers({}); setFlagged({}); setInvalidated(new Set()); setCurrent(0); setTimeTaken(0); setSubjectTimers(Object.fromEntries(subjects.map(s => [s, SUBJECT_DURATION]))); setLockedSubjects(new Set()); setActiveSubjectIndex(0); setRankEstimate(null); setStanding(null); setLeaderboard([]); setLeaderboardError(''); setIsSavedResult(false); setPhase('intro'); }}>
               Retake Test
             </button>
             <Link href="/kcet"><button className="btn-secondary">Rank Predictor →</button></Link>
+          </div>
+            </section>
+            <AiPerformancePanel payload={aiPayload} />
           </div>
         </main>
       </>
@@ -518,6 +557,21 @@ export default function KcetTestPage() {
   const isFirstInSubject = activePosition <= 0;
   const isLastInSubject = activePosition === activeQuestionIndices.length - 1;
   const totalSubjects = subjects.length;
+  function invalidateForAi(qId) {
+    if (!qId) return;
+    setInvalidated(prev => {
+      if (prev.has(qId)) return prev;
+      const next = new Set(prev);
+      next.add(qId);
+      return next;
+    });
+    setAnswers(prev => {
+      if (prev[qId] === undefined) return prev;
+      const next = { ...prev };
+      delete next[qId];
+      return next;
+    });
+  }
 
   return (
     <>
@@ -609,12 +663,26 @@ export default function KcetTestPage() {
                 </div>
               )}
               <p style={{ fontSize: '1.05rem', lineHeight: 1.6, marginBottom: '24px', fontWeight: 500 }}>{q.text}</p>
+              <AiQuestionHelp
+                examType="KCET"
+                question={q}
+                label={invalidated.has(q.id) ? 'AI help opened' : 'I do not know this'}
+                adText="Opening AI help during a live test will exclude this question from your score."
+                onHelpOpened={invalidateForAi}
+                invalidated={invalidated.has(q.id)}
+              />
+              {invalidated.has(q.id) && (
+                <div style={{ margin: '12px 0 16px', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(138,114,72,0.32)', background: 'rgba(138,114,72,0.10)', color: '#8a7248', fontSize: '0.86rem', fontWeight: 800 }}>
+                  This question is AI-assisted and excluded from scoring.
+                </div>
+              )}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {q.options.map((opt, i) => {
                   const sel = answers[q.id] === i;
                   return (
                     <div key={i} onClick={() => !isCurrentLocked && handleSelect(q.id, i)} style={{
-                      cursor: isCurrentLocked ? 'not-allowed' : 'pointer',
+                      cursor: (isCurrentLocked || invalidated.has(q.id)) ? 'not-allowed' : 'pointer',
+                      opacity: invalidated.has(q.id) ? 0.58 : 1,
                       padding: '14px 18px', borderRadius: '12px',
                       background: sel ? 'rgba(95,118,111,0.18)' : 'rgba(255,255,255,0.03)',
                       border: `1px solid ${sel ? 'var(--accent-primary)' : 'rgba(255,255,255,0.08)'}`,
@@ -635,8 +703,8 @@ export default function KcetTestPage() {
                 </button>
                 {answers[q.id] !== undefined && (
                   <button onClick={() => !isCurrentLocked && setAnswers(prev => { const n = { ...prev }; delete n[q.id]; return n; })}
-                    disabled={isCurrentLocked}
-                    style={{ background: 'transparent', border: '1px solid rgba(167,127,133,0.4)', borderRadius: '20px', padding: '8px 16px', cursor: isCurrentLocked ? 'not-allowed' : 'pointer', opacity: isCurrentLocked ? 0.5 : 1, color: '#a77f85', fontSize: '0.85rem' }}>
+                    disabled={isCurrentLocked || invalidated.has(q.id)}
+                    style={{ background: 'transparent', border: '1px solid rgba(167,127,133,0.4)', borderRadius: '20px', padding: '8px 16px', cursor: (isCurrentLocked || invalidated.has(q.id)) ? 'not-allowed' : 'pointer', opacity: (isCurrentLocked || invalidated.has(q.id)) ? 0.5 : 1, color: '#a77f85', fontSize: '0.85rem' }}>
                     Clear Answer
                   </button>
                 )}
@@ -679,14 +747,15 @@ export default function KcetTestPage() {
                           const globalIdx = questions.indexOf(sq);
                           const isAns    = answers[sq.id] !== undefined;
                           const isFlagged = flagged[sq.id];
+                          const isInvalidated = invalidated.has(sq.id);
                           const isCur    = globalIdx === safeCurrent;
                           return (
                             <button key={sq.id} onClick={() => { if (isActiveSub) setCurrent(globalIdx); }}
                               disabled={!isActiveSub}
                               style={{
                                 width: '34px', height: '34px', borderRadius: '8px', border: 'none', cursor: isActiveSub ? 'pointer' : 'not-allowed', fontSize: '0.8rem', fontWeight: 700,
-                                background: isCur ? 'var(--accent-primary)' : isAns ? 'rgba(156,180,171,0.22)' : 'rgba(255,255,255,0.06)',
-                                color: isCur ? 'white' : isAns ? '#9cb4ab' : 'var(--text-muted)',
+                                background: isCur ? 'var(--accent-primary)' : isInvalidated ? 'rgba(138,114,72,0.18)' : isAns ? 'rgba(156,180,171,0.22)' : 'rgba(255,255,255,0.06)',
+                                color: isCur ? 'white' : isInvalidated ? '#8a7248' : isAns ? '#9cb4ab' : 'var(--text-muted)',
                                 opacity: isActiveSub ? 1 : 0.45,
                                 outline: isFlagged ? '2px solid #b5a98a' : 'none',
                                 outlineOffset: '1px',
@@ -708,6 +777,7 @@ export default function KcetTestPage() {
                   ['■', 'rgba(156,180,171,0.42)', 'Answered'],
                   ['■', 'rgba(255,255,255,0.06)', 'Not visited'],
                   ['□', '#b5a98a', 'Flagged'],
+                  ['■', '#8a7248', 'AI-assisted'],
                 ].map(([icon, color, label]) => (
                   <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                     <span style={{ color }}>{icon}</span>{label}
@@ -728,6 +798,15 @@ export default function KcetTestPage() {
 }
 
 const styles = {
+  resultLayout: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '24px',
+  },
+  resultContent: {
+    flex: 1,
+    minWidth: 0,
+  },
   subjectBadgeIntro: {
     display: 'inline-block',
     background: 'rgba(95,118,111,0.2)',

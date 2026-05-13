@@ -27,6 +27,11 @@ function normalizeRoomId(roomId) {
   return /^[a-z0-9-]{6,64}$/.test(cleaned) ? cleaned : '';
 }
 
+function toNumber(value, fallback = Number.NaN) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -40,11 +45,15 @@ export async function POST(request) {
       roomId,
       sectionStats = [],
     } = body;
+    const numericPaperId = toNumber(paperId);
+    const numericScore = toNumber(score);
+    const numericTotalMarks = toNumber(totalMarks);
+    const numericTimeTaken = toNumber(timeTaken, null);
 
     if (
-      typeof paperId !== 'number' ||
-      typeof score !== 'number' ||
-      typeof totalMarks !== 'number'
+      !Number.isFinite(numericPaperId) ||
+      !Number.isFinite(numericScore) ||
+      !Number.isFinite(numericTotalMarks)
     ) {
       return Response.json({ error: 'Invalid payload' }, { status: 400 });
     }
@@ -53,7 +62,7 @@ export async function POST(request) {
       .from('test_attempts')
       .select('score')
       .eq('exam_type', 'bitsat')
-      .eq('paper_id', paperId);
+      .eq('paper_id', numericPaperId);
 
     if (paperRowsError) {
       console.error('bitsat-insights read error (paper):', paperRowsError.message);
@@ -65,17 +74,17 @@ export async function POST(request) {
       ? Math.max(...historicalPaperScores)
       : null;
 
-    const seededPaperBest = getPaperBenchmarkOverall(paperId);
+    const seededPaperBest = getPaperBenchmarkOverall(numericPaperId);
     const previousBestOverall = historicalPaperBest == null
       ? seededPaperBest
       : Math.max(historicalPaperBest, seededPaperBest);
 
     const baseInsertRow = {
-      paper_id: paperId,
+      paper_id: numericPaperId,
       paper_name: paperName ?? null,
-      score,
-      total_marks: totalMarks,
-      time_taken_seconds: typeof timeTaken === 'number' ? timeTaken : null,
+      score: numericScore,
+      total_marks: numericTotalMarks,
+      time_taken_seconds: numericTimeTaken,
       exam_type: 'bitsat',
     };
 
@@ -101,7 +110,7 @@ export async function POST(request) {
       return Response.json({ error: 'DB insert error' }, { status: 500 });
     }
 
-    const paperScoresWithCurrent = [...historicalPaperScores, score];
+    const paperScoresWithCurrent = [...historicalPaperScores, numericScore];
 
     const { data: allBitsatRows, error: allBitsatError } = await supabase
       .from('test_attempts')
@@ -114,8 +123,8 @@ export async function POST(request) {
     }
 
     const globalScores = (allBitsatRows || []).map((r) => r.score);
-    if (!globalScores.length || globalScores[globalScores.length - 1] !== score) {
-      globalScores.push(score);
+    if (!globalScores.length || globalScores[globalScores.length - 1] !== numericScore) {
+      globalScores.push(numericScore);
     }
 
     const subjectScoresNow = sectionStats.map((section) => ({
@@ -127,7 +136,7 @@ export async function POST(request) {
     const { data: subjectRows, error: subjectReadError } = await supabase
       .from('bitsat_subject_attempts')
       .select('subject, score')
-      .eq('paper_id', paperId);
+      .eq('paper_id', numericPaperId);
 
     if (!subjectReadError && Array.isArray(subjectRows)) {
       for (const row of subjectRows) {
@@ -139,7 +148,7 @@ export async function POST(request) {
     }
 
     const subjectInsertRows = subjectScoresNow.map((row) => ({
-      paper_id: paperId,
+      paper_id: numericPaperId,
       paper_name: paperName ?? null,
       subject: row.subject,
       score: row.score,
@@ -173,11 +182,11 @@ export async function POST(request) {
       ok: true,
       benchmarkNote: getBitsatBenchmarkNote(),
       previousBestOverall,
-      currentScore: score,
+      currentScore: numericScore,
       testStanding: {
         attempts: paperScoresWithCurrent.length,
-        rank: rankAmong(paperScoresWithCurrent, score),
-        percentile: percentile(paperScoresWithCurrent, score),
+        rank: rankAmong(paperScoresWithCurrent, numericScore),
+        percentile: percentile(paperScoresWithCurrent, numericScore),
         averageScore: Number(
           (
             paperScoresWithCurrent.reduce((sum, value) => sum + value, 0) /
@@ -187,8 +196,8 @@ export async function POST(request) {
       },
       globalStanding: {
         attempts: globalScores.length,
-        rank: rankAmong(globalScores, score),
-        percentile: percentile(globalScores, score),
+        rank: rankAmong(globalScores, numericScore),
+        percentile: percentile(globalScores, numericScore),
       },
       previousBestBySubject,
     });
