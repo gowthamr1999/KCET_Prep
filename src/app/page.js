@@ -113,6 +113,40 @@ const HOME_LEADERBOARDS = [
   },
 ];
 
+const CONTENT_PILLARS = [
+  {
+    title: 'Pattern-Faithful Mock Design',
+    desc: 'Each test is aligned to real exam timing and section flow so students build stamina, pacing, and decision discipline under realistic pressure.',
+  },
+  {
+    title: 'Actionable Performance Feedback',
+    desc: 'Score summaries are broken down by subject and attempt behavior, helping students convert every mock into a concrete next-week study plan.',
+  },
+  {
+    title: 'Continuous Correction Loop',
+    desc: 'Student reports are reviewed and verified to improve answer keys, wording clarity, and paper quality over time.',
+  },
+];
+
+const HOME_FAQS = [
+  {
+    q: 'Are these official exam papers?',
+    a: 'No. PrepMaster provides educational practice material and reconstructed mock sets. It is not affiliated with exam authorities.',
+  },
+  {
+    q: 'How should I use mock scores?',
+    a: 'Use them as directional feedback. Focus on weak-topic trends over multiple tests instead of judging performance from a single attempt.',
+  },
+  {
+    q: 'Can I report wrong answers?',
+    a: 'Yes. Use the Contact page with paper name and question number. Verified issues are prioritized in updates.',
+  },
+  {
+    q: 'Do I need an account to start?',
+    a: 'No. Core test-taking features are open without login so students can start practice immediately.',
+  },
+];
+
 export default function Home() {
   const [leaderboards, setLeaderboards] = useState({
     kcet: { rows: [], error: '', loading: true },
@@ -370,6 +404,35 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section" aria-labelledby="quality-heading">
+          <div className="section-header">
+            <h2 id="quality-heading" className="section-title">Why This Content Is Built for Real Prep</h2>
+            <p className="section-subtitle">
+              We focus on educational usefulness: exam-pattern relevance, measurable feedback, and
+              regular quality corrections.
+            </p>
+          </div>
+          <div className="features-grid">
+            {CONTENT_PILLARS.map((item) => (
+              <article key={item.title} className="feature-card glass-panel">
+                <h3 className="feature-title">{item.title}</h3>
+                <p className="feature-desc">{item.desc}</p>
+              </article>
+            ))}
+          </div>
+          <div className="glass-panel" style={{ marginTop: '18px', padding: '22px' }}>
+            <h3 style={{ marginBottom: '14px', fontSize: '1.15rem' }}>Student FAQ</h3>
+            <div style={{ display: 'grid', gap: '12px' }}>
+              {HOME_FAQS.map((item) => (
+                <article key={item.q} style={{ padding: '12px 14px', borderRadius: '12px', border: '1px solid var(--surface-border)', background: 'var(--surface-soft)' }}>
+                  <h4 style={{ fontSize: '0.95rem', marginBottom: '6px', color: 'var(--text-main)' }}>{item.q}</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{item.a}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Upload CTA */}
         <section className="upload-cta glass-panel" aria-labelledby="upload-heading">
           <div className="upload-cta-content">
@@ -410,6 +473,13 @@ export default function Home() {
               <h3 className="footer-col-heading">Tools</h3>
               <Link href="/rooms" className="footer-link">Create Room</Link>
               <Link href="/upload" className="footer-link">Upload Paper</Link>
+            </div>
+            <div className="footer-col">
+              <h3 className="footer-col-heading">Trust</h3>
+              <Link href="/about" className="footer-link">About</Link>
+              <Link href="/contact" className="footer-link">Contact</Link>
+              <Link href="/privacy" className="footer-link">Privacy Policy</Link>
+              <Link href="/terms" className="footer-link">Terms of Use</Link>
             </div>
           </nav>
         </div>

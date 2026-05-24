@@ -3,8 +3,24 @@ import Script from "next/script";
 import BitsatUpdateNotifier from "@/components/BitsatUpdateNotifier";
 
 export const metadata = {
-  title: "PrepMaster | Crack KCET & BITSAT",
-  description: "Free mock tests, 5-year paper analysis, and rank prediction for KCET and BITSAT engineering entrance exams.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://prepmaster.in'),
+  title: {
+    default: 'PrepMaster | BITSAT & KCET Mock Tests',
+    template: '%s | PrepMaster',
+  },
+  description:
+    'Free BITSAT and KCET mock tests, score analysis, rank prediction tools, and student-focused exam practice resources.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'PrepMaster | BITSAT & KCET Mock Tests',
+    description:
+      'Practice with full-length mocks, review your performance, and improve exam readiness with focused BITSAT and KCET tools.',
+    url: '/',
+    siteName: 'PrepMaster',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }) {
